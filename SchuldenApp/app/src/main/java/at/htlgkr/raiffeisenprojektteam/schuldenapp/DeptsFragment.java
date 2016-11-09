@@ -11,11 +11,11 @@ import android.widget.TextView;
  * Created by Alexander on 09.11.16.
  */
 
-public class MyDeptsFragment extends Fragment {
+public class DeptsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout resource that'll be returned
-        View rootView = inflater.inflate(R.layout.fragment_demo, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_debt_list, container, false);
 
         // Get the arguments that was supplied when
         // the fragment was instantiated in the

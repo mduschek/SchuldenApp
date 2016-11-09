@@ -23,7 +23,7 @@ class CustomPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         // Create fragment object
-        Fragment fragment = new DemoFragment();
+        Fragment fragment = new DeptsFragment();
 
         // Attach some data to the fragment
         // that we'll use to populate our fragment layouts
