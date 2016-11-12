@@ -64,13 +64,14 @@ public class MainActivity extends AppCompatActivity {
     public ViewPager.OnPageChangeListener getOnPageChangedListener() {
         return new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
             }
 
             @Override
             public void onPageSelected(int position) {
-
+                Log.d("*=", "onPageSelected: "+position);
+                actionBar.setSelectedNavigationItem(position);
             }
 
             @Override
