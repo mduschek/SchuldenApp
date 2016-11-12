@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
         // Create a tab listener that is called when the user changes tabs.
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                // show the given tab
+                Log.w("*=", ""+actionBar.getSelectedNavigationIndex());
+
             }
 
             public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -38,12 +40,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        // Add 3 tabs, specifying the tab's text and TabListener
-        for (int i = 0; i < 3; i++) {
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText("Tab " + (i + 1))
-                            .setTabListener(tabListener));
-        }
+        // Add 2 tabs, specifying the tab's text and TabListener
+        actionBar.addTab(actionBar.newTab().setText("Ich schulde").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("Mir schuldet").setTabListener(tabListener));
     }
 }
