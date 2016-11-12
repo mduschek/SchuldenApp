@@ -12,18 +12,19 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static ViewPager viewPager;
+    private ViewPager viewPager;
     private PagerTabStrip tabStrip;
     private CustomPagerAdapter customPagerAdapter;
+    private ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        actionBar = getSupportActionBar();
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),this);
         viewPager.setAdapter(customPagerAdapter);
-
-        final ActionBar actionBar = getSupportActionBar();
+        viewPager.addOnPageChangeListener(getOnPageChangedListener());
         ActionBar.TabListener tabListener = getTabListener(actionBar);
         // Specify that tabs should be displayed in the action bar.
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBar.TabListener getTabListener(final ActionBar actionBar)
     {
-        final ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+        return new ActionBar.TabListener() {
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
                 Log.w("*=", "" + actionBar.getSelectedNavigationIndex());
                 changeTab(tab.getPosition());
@@ -52,12 +53,30 @@ public class MainActivity extends AppCompatActivity {
                 // probably ignore this event
             }
         };
-        return tabListener;
     }
 
 
-    public static void changeTab(int position)
+    public void changeTab(int position)
     {
         viewPager.setCurrentItem(position);
+    }
+
+    public ViewPager.OnPageChangeListener getOnPageChangedListener() {
+        return new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        };
     }
 }
