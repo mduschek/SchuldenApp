@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FEED01</color>
-    <color name="colorPrimaryDark">#00203C</color>
+    <color name="yellow">#FED700</color>
+    <color name="blue">#00203C</color>
     <color name="colorAccent">#EC382F</color>
-    <color name="textColor">#000000</color>
 </resources>

@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 /**
  * Created by Alexander on 09.11.16.
  */
 
-class CustomPagerAdapter extends FragmentPagerAdapter {
+class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
     Context mContext;
 
@@ -20,27 +21,24 @@ class CustomPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
-
-        // Create fragment object
+    public Fragment getItem(int i) {
         Fragment fragment = new DeptsFragment();
-
-        // Attach some data to the fragment
-        // that we'll use to populate our fragment layouts
         Bundle args = new Bundle();
-        args.putInt("page_position", position + 1);
-
-        // Set the arguments on the fragment
-        // that will be fetched in the
-        // DemoFragment@onCreateView
+        // Our object is just an integer :-P
+        if (i==0)
+        {
+            args.putBoolean("showMyDepts",true);
+        }else
+        {
+            args.putBoolean("showMyDepts",false);
+        }
         fragment.setArguments(args);
-
         return fragment;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
