@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),this);
         viewPager.setAdapter(customPagerAdapter);
         viewPager.addOnPageChangeListener(getOnPageChangedListener());
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
         ActionBar.TabListener tabListener = getTabListener(actionBar);
         // Specify that tabs should be displayed in the action bar.
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
