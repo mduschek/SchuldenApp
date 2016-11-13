@@ -24,7 +24,7 @@ class CustomPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         Fragment fragment = new DeptsFragment();
         Bundle args = new Bundle();
-        // Our object is just an integer :-P
+        // Our object is just a boolean :-P
         if (i==0)
         {
             args.putBoolean("showMyDepts",true);
