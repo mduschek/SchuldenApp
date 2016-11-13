@@ -34,11 +34,11 @@ public class DeptsFragment extends Fragment
         //Database is going to be queried
         if (args.getBoolean("showMyDepts")==true)
         {
-            listItems.add("Ich schulde");
+            for(int i=0;i<20;i++) listItems.add("Ich schulde");
         }
         else
         {
-            listItems.add("Mir schuldet");
+            for(int i=0;i<20;i++)listItems.add("Mir schuldet");
         }
 
         adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,listItems);
