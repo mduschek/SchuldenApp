@@ -21,6 +21,7 @@ public class DeptsFragment extends Fragment
     private ListView listView;
     private ArrayList<String> listItems = new ArrayList<>();
     private ArrayAdapter<String> adapter;
+    private boolean showMyDepts;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout resource that'll be returned
@@ -31,6 +32,7 @@ public class DeptsFragment extends Fragment
         // the fragment was instantiated in the
         // CustomPagerAdapter
         Bundle args = getArguments();
+        showMyDepts = args.getBoolean("showMyDepts");
         //Database is going to be queried
         if (args.getBoolean("showMyDepts")==true)
         {
