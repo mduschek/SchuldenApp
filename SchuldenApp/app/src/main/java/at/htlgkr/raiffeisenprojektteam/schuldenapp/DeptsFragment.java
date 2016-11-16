@@ -33,6 +33,7 @@ public class DeptsFragment extends Fragment
         // CustomPagerAdapter
         Bundle args = getArguments();
         showMyDepts = args.getBoolean("showMyDepts");
+
         //Database is going to be queried
         if (args.getBoolean("showMyDepts")==true)
         {

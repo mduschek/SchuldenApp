@@ -22,17 +22,30 @@
         android:id="@+id/editTextSum" />
 
     <TextView
-        android:text="Notiz"
+        android:text="Verwendung"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewNote" />
+        android:id="@+id/textViewVerwndung" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editTextNote" />
+        android:id="@+id/editTextUsuage" />
+
+    <TextView
+        android:text="IBAN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/iban" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextIban" />
 
     <ListView
         android:layout_width="match_parent"

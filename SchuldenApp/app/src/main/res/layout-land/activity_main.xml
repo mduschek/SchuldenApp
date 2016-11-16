@@ -10,9 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.MainActivity">
 
-    <android.support.v4.view.ViewPager
-        android:layout_height="match_parent"
+
+    <fragment
         android:layout_width="match_parent"
-        android:id="@+id/viewPager">
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/fragmentLeft"
+        android:name="at.htlgkr.raiffeisenprojektteam.schuldenapp.DeptsFragment"
+        tools:layout="@layout/fragment_debt_list" />
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/fragmentRight"
+        android:name="at.htlgkr.raiffeisenprojektteam.schuldenapp.DetailFragment"
+        tools:layout="@layout/fragment_detail" />
 </LinearLayout>
