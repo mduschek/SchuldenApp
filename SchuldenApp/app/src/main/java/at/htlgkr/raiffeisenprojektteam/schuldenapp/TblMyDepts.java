@@ -7,16 +7,19 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 public class TblMyDepts {
     public static final String TABLE_NAME="MyDepts";
 
-    //          <PrimaryKeys>
+
+    //region PrimaryKeys
     public static final String PERS_I_OWE_ID="pers_i_owe_id AS _id";
     public static final String PERS_I_OWE_IBAN="pers_i_owe_iban";
     public static final String PERS_I_OWE_DATE="pers_i_owe_date";
-    //          </PrimaryKeys>
+    //endregion
 
-    //          <ForeignKeys>
+    //region ForeignKeys
     public static final String CLIENT_ID= TblClients.CLIENT_ID;
     public static final String STATUS_ID=TblStatus.STATUS_ID;
-    //          </ForeignKeys>
+    //endregion
+
+
 
     public static final String PERS_I_OWE_FIRSTNAME="person_i_owe_firstname";
     public static final String PERS_I_OWE_LASTNAME="person_i_owe_lastname";

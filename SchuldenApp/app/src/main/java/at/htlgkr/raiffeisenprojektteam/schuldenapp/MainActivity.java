@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ViewPager.OnPageChangeListener getOnPageChangedListener() {
+        //region OnPageChangedListener
         return new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
@@ -81,5 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
+        //endregion
     }
 }
