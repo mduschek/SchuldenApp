@@ -19,7 +19,7 @@ public class DeptsFragment extends Fragment
 {
     private View view;
     private ListView listView;
-    private ArrayList<String> listItems = new ArrayList<>();
+    private ArrayList<String> listItems = new ArrayList<String>();
     private ArrayAdapter<String> adapter;
     private boolean showMyDepts;
     @Override
