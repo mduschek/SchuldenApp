@@ -24,7 +24,7 @@ public class TblMyDepts {
     public static final String PERS_I_OWE_FIRSTNAME="person_i_owe_firstname";
     public static final String PERS_I_OWE_LASTNAME="person_i_owe_lastname";
     public static final String PERS_I_OWE_VALUE="person_i_owe_value";
-    public static final String PERS_I_OWE_COMMENT="person_i_owe_comment";
+    public static final String PERS_I_OWE_USUAGE="person_i_owe_usuage";
 
     public static final String SQL_CREATE_TABLE="CREATE TABLE "+TABLE_NAME+"("+
             PERS_I_OWE_ID+" PRIMARY KEY NUMBER,"+
@@ -35,7 +35,7 @@ public class TblMyDepts {
             PERS_I_OWE_FIRSTNAME+" VARCHAR2," +
             PERS_I_OWE_LASTNAME+" VARCHAR2," +
             PERS_I_OWE_VALUE+" DOUBLE," +
-            PERS_I_OWE_COMMENT+" VARCHAR2);";
+            PERS_I_OWE_USUAGE+" VARCHAR2);";
 
     public static final String SQL_DROP_TABLE="DROP TABLE "+TABLE_NAME+";";
 
