@@ -11,18 +11,17 @@
     tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.MainActivity">
 
 
-    <fragment
+    <include
+        layout="@layout/fragment_debt_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/fragmentLeft"
-        android:name="at.htlgkr.raiffeisenprojektteam.schuldenapp.DeptsFragment"
-        tools:layout="@layout/fragment_debt_list" />
-    <fragment
+        ></include>
+    <include
+        layout="@layout/fragment_debt_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/fragmentRight"
-        android:name="at.htlgkr.raiffeisenprojektteam.schuldenapp.DetailFragment"
-        tools:layout="@layout/fragment_detail" />
+        android:id="@+id/myDeptList"
+        ></include>
 </LinearLayout>

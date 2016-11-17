@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 /**
@@ -22,7 +21,7 @@ class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        Fragment fragment = new DeptsFragment();
+        Fragment fragment = new DeptListFragment();
         Bundle args = new Bundle();
         // Our object is just a boolean :-P
         if (i==0)
