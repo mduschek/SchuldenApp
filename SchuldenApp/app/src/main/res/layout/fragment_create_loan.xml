@@ -6,7 +6,7 @@
     tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.CreateLoanFragment"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
+
 
     <TextView
         android:text="@string/value"
@@ -22,21 +22,77 @@
         android:id="@+id/editTextSum" />
 
     <TextView
-        android:text="Notiz"
+        android:text="Verwendung"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewNote" />
+        android:id="@+id/textViewUsuage" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editTextNote" />
+        android:id="@+id/editTextUsuage" />
 
-    <ListView
+    <TextView
+        android:text="IBAN"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ListViewTransfer" />
+        android:layout_height="wrap_content"
+        android:id="@+id/tvIban" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextIban" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+       <!-- <TextView
+            android:text="Vorname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvFirstname"
+            android:layout_weight="1"/>
+       -->
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextFirstName"
+            android:layout_weight="1"
+            android:hint="Vorname Schuldner"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextLasrName"
+            android:layout_weight="1"
+            android:hint="Nachname Schuldner"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ListViewTransfer"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:textStyle="italic"
+            android:id="@+id/btnOk"/>
+
+    </LinearLayout>
 
 </LinearLayout>

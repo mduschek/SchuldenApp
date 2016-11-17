@@ -1,90 +1,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.DetailFragment"
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
 
-
-    <EditText
+    <Button
+        android:text="Whatsapp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:contentDescription="Name"
-        android:ems="10"
-        android:id="@+id/editTextName"/>
+        android:id="@+id/button2" />
 
-    <EditText
+    <Button
+        android:text="Bluetooth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPostalAddress"
-        android:contentDescription="Address"
-        android:ems="10"
-        android:id="@+id/editTextAddress" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="IBAN"
-        android:ems="10"
-        android:id="@+id/editTextIBAN"
-        android:inputType="text" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:contentDescription="Date"
-        android:ems="10"
-        android:id="@+id/editTextDate" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:contentDescription="Sum"
-        android:ems="10"
-        android:id="@+id/editTextDebtSum" />
-
-
-    <LinearLayout
-        android:id="@+id/linearLayoutStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <TextView
-        android:text="Status:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewStatusDesc" />
-
-    <TextView
-        android:layout_marginLeft="16px"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewStatus" />
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/buttonRemember"
-            android:text="Remember Friend" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/buttonConfirmPayment"
-            android:text="Confirm Payment" />
-
-    </LinearLayout>
+        android:id="@+id/button" />
 </LinearLayout>
