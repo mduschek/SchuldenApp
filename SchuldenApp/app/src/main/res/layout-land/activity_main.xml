@@ -11,11 +11,14 @@
     tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.MainActivity">
 
 
-    <android.support.v4.ViewPager
-        layout="@layout/fragment_debt_list"
+    <fragment
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+
+    </fragment>
+    <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        />
-
+        android:layout_weight="1"></fragment>
 </LinearLayout>
