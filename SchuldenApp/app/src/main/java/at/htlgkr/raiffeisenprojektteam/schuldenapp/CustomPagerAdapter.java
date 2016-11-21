@@ -24,12 +24,14 @@ class CustomPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = new DeptListFragment();
         Bundle args = new Bundle();
         // Our object is just a boolean :-P
-        if (i==0)
-        {
-            args.putBoolean("showMyDepts",true);
-        }else
-        {
-            args.putBoolean("showMyDepts",false);
+        switch (i) {
+            case 0:
+                args.putBoolean("showMyDepts", true);
+                break;
+            case 1:
+                args.putBoolean("showMyDepts", false);
+                break;
+
         }
         fragment.setArguments(args);
         return fragment;
