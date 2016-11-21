@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 public class DetailFragment extends Fragment
 {
     private View view;
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_create_or_detail, container);
-        Log.e("*=", "onCreateView: Detail Fragment");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_create_or_detail, container,false);
+        Log.d("*=", "onCreateView: Detail Fragment");
         return view;
     }
 }

@@ -29,6 +29,7 @@ class CustomPagerAdapter extends FragmentStatePagerAdapter {
             Log.e("*=", "getItem: "+i );
         }else
         {
+            Log.w("*=", "getItem: "+i );
             fragment = new DetailFragment();
         }
         Bundle args = new Bundle();
@@ -48,7 +49,7 @@ class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
