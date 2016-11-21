@@ -1,5 +1,6 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
+import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerTabStrip;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private PagerTabStrip tabStrip;
     private CustomPagerAdapter customPagerAdapter;
     private ActionBar actionBar;
+    private static boolean isInLandscape;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,13 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         // Create a tab listener that is called when the user changes tabs.
 
+        switch (getResources().getConfiguration().orientation)
+        {
+            case Configuration.ORIENTATION_LANDSCAPE: isInLandscape=true; break;
+            case Configuration.ORIENTATION_PORTRAIT: isInLandscape=false; break;
+        }
 
+        Log.d("*=", "isinlandscape "+ isInLandscape);
 
         // region AddTabs
         actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.iOwe)).setTabListener(tabListener));
