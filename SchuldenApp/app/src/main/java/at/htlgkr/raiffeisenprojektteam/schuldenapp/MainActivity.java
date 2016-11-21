@@ -33,10 +33,12 @@ public class MainActivity extends AppCompatActivity {
         // Create a tab listener that is called when the user changes tabs.
 
 
-        // Add 2 tabs, specifying the tab's text and TabListener
-        ActionBar.Tab iOweTab = actionBar.newTab();
+
+        // region AddTabs
         actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.iOwe)).setTabListener(tabListener));
         actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.owesMe)).setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.details)).setTabListener(tabListener));
+        // endregion
     }
 
     private ActionBar.TabListener getTabListener(final ActionBar actionBar)

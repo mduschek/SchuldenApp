@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Alexander on 09.11.16.
@@ -21,7 +23,14 @@ class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        Fragment fragment = new DeptListFragment();
+        Fragment fragment;
+        if (i<=1) {
+            fragment = new DeptListFragment();
+            Log.e("*=", "getItem: "+i );
+        }else
+        {
+            fragment = new DetailFragment();
+        }
         Bundle args = new Bundle();
         // Our object is just a boolean :-P
         switch (i) {
