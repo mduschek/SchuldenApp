@@ -1,5 +1,6 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +10,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +50,33 @@ public class MainActivity extends AppCompatActivity {
         actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.owesMe)).setTabListener(tabListener));
         //actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.details)).setTabListener(tabListener));
         // endregion
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.option_menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent intent;
+        switch (id){
+            case R.id.option_menu_new_entry:
+                intent = new Intent(this,CreateOrDetailActivity.class);
+                //intent.putExtra("object", -1);
+                startActivity(intent);
+                return true;
+            //case R.id.option_menu_userdata:
+            //    return true;
+            case R.id.option_menu_preferences:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private ActionBar.TabListener getTabListener(final ActionBar actionBar)

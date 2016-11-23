@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:title="User Data"
+        android:key="pref_userdata">
+        <EditTextPreference
+            android:key="pref_userdata_firstname"
+            android:title="Firstname"
+            android:summary="Enter your fist name"/>
+        <EditTextPreference
+            android:key="pref_userdata_lastname"
+            android:title="Lastname"
+            android:summary="Enter your last name"/>
+        <EditTextPreference
+            android:key="pref_userdata_iban"
+            android:title="IBAN"
+            android:summary="Enter your IBAN"/>
+    </PreferenceScreen>
+</PreferenceScreen>
