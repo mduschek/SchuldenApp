@@ -9,33 +9,28 @@ public class TblMyDepts {
 
 
     //region PrimaryKeys
-    public static final String PERS_I_OWE_ID="pers_i_owe_id AS _id";
     public static final String PERS_I_OWE_IBAN="pers_i_owe_iban";
-    public static final String PERS_I_OWE_DATE="pers_i_owe_date";
     //endregion
 
     //region ForeignKeys
-    public static final String CLIENT_ID= TblClients.CLIENT_ID;
     public static final String STATUS_ID=TblStatus.STATUS_ID;
     //endregion
 
 
-
+    public static final String PERS_I_OWE_DATE="pers_i_owe_date";
     public static final String PERS_I_OWE_FIRSTNAME="person_i_owe_firstname";
     public static final String PERS_I_OWE_LASTNAME="person_i_owe_lastname";
     public static final String PERS_I_OWE_VALUE="person_i_owe_value";
     public static final String PERS_I_OWE_USUAGE="person_i_owe_usuage";
 
     public static final String SQL_CREATE_TABLE="CREATE TABLE "+TABLE_NAME+"("+
-            PERS_I_OWE_ID+" PRIMARY KEY NUMBER,"+
-            PERS_I_OWE_IBAN+" PRIMARY KEY NUMBER,"+
+            PERS_I_OWE_IBAN+" INTEGER PRIMARY KEY AUTO_INCREMENT,"+
             PERS_I_OWE_DATE+" DATETIME DEFAULT current_timestamp,"+
-            CLIENT_ID+" FOREIGN KEY NUMBER,"+
-            STATUS_ID+" FOREIGN KEY NUMBER,"+
-            PERS_I_OWE_FIRSTNAME+" VARCHAR2," +
-            PERS_I_OWE_LASTNAME+" VARCHAR2," +
+            STATUS_ID+" BOOLEAN,"+
+            PERS_I_OWE_FIRSTNAME+" TEXT," +
+            PERS_I_OWE_LASTNAME+" TEXT," +
             PERS_I_OWE_VALUE+" DOUBLE," +
-            PERS_I_OWE_USUAGE+" VARCHAR2);";
+            PERS_I_OWE_USUAGE+" TEXT);";
 
     public static final String SQL_DROP_TABLE="DROP TABLE "+TABLE_NAME+";";
 
