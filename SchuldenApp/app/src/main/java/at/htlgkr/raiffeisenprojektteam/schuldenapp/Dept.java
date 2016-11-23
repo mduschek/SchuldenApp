@@ -1,10 +1,12 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
+import java.io.Serializable;
+
 /**
  * Created by Alexander on 16.11.16.
  */
 
-public class Dept
+public class Dept implements Serializable
 {
     public static int OWN_DEPT = 0, SBDY_OWES_ME_DEPT = 1;
 
@@ -19,5 +21,10 @@ public class Dept
         this.usuage = usuage;
         this.iBan = iBan;
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return deptorFirstName+" "+deptorLastName+" "+value+"€";
     }
 }
