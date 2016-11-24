@@ -13,10 +13,10 @@ public class TblMyDepts {
     //endregion
 
     //region ForeignKeys
-    public static final String STATUS_ID=TblStatus.STATUS_ID;
+    public static final String STATUS="status";
     //endregion
 
-
+    public static final String ID = "id AS _id";
     public static final String PERS_I_OWE_DATE="pers_i_owe_date";
     public static final String PERS_I_OWE_FIRSTNAME="person_i_owe_firstname";
     public static final String PERS_I_OWE_LASTNAME="person_i_owe_lastname";
@@ -24,13 +24,15 @@ public class TblMyDepts {
     public static final String PERS_I_OWE_USUAGE="person_i_owe_usuage";
 
     public static final String SQL_CREATE_TABLE="CREATE TABLE "+TABLE_NAME+"("+
-            PERS_I_OWE_IBAN+" INTEGER PRIMARY KEY AUTO_INCREMENT,"+
-            PERS_I_OWE_DATE+" DATETIME DEFAULT current_timestamp,"+
-            STATUS_ID+" BOOLEAN,"+
+            ID+" INTEGER PRIMARY KEY AUTO_INCREMENT"+
+            PERS_I_OWE_IBAN+" TEXT NOT NULL,"+
+            PERS_I_OWE_DATE+" DATE NOT NULL,"+
+            STATUS+" TEXT NOT NULL,"+
             PERS_I_OWE_FIRSTNAME+" TEXT," +
-            PERS_I_OWE_LASTNAME+" TEXT," +
-            PERS_I_OWE_VALUE+" DOUBLE," +
-            PERS_I_OWE_USUAGE+" TEXT);";
+            PERS_I_OWE_LASTNAME+" TEXT NOT NULL," +
+            PERS_I_OWE_VALUE+" DOUBLE NOT NULL," +
+            PERS_I_OWE_USUAGE+" TEXT," +
+            "FOREIGN KEY(status) REFERENCES (Statuses.STATUS);";
 
     public static final String SQL_DROP_TABLE="DROP TABLE "+TABLE_NAME+";";
 
