@@ -5,7 +5,7 @@
         android:key="pref_userdata">
         <EditTextPreference
             android:key="pref_userdata_firstname"
-            android:title="Firstname"
+            android:title="@string/firstname"
             android:summary="Enter your fist name"/>
         <EditTextPreference
             android:key="pref_userdata_lastname"

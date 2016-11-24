@@ -7,4 +7,6 @@
     <string name="iOwe">Ich schulde</string>
     <string name="owesMe">Mir schuldet</string>
     <string name="details">Details</string>
+
+    <string name="firstname">Vorname</string>
 </resources>
