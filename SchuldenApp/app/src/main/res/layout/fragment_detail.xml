@@ -7,15 +7,86 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <Button
-        android:text="Whatsapp"
+    <TextView
+        android:text="@string/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewSum" />
+
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button2" />
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editTextSum" />
+
+    <TextView
+        android:text="@string/using"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewUsuage" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextUsuage" />
+
+    <TextView
+        android:text="@string/iban"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvIban" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextIban" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!-- <TextView
+             android:text="Vorname"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/tvFirstname"
+             android:layout_weight="1"/>
+        -->
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextFirstName"
+            android:layout_weight="1"
+            android:hint="Vorname Schuldner"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextLastName"
+            android:layout_weight="1"
+            android:hint="Nachname Schuldner"/>
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
     <Button
-        android:text="Bluetooth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button" />
+        android:text="@string/ok"
+        android:textStyle="italic"
+        android:id="@+id/btnOk" />
 </LinearLayout>

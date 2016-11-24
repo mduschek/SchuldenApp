@@ -15,8 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateOrDetailActivity"/>
+        <activity android:name=".CreateLoanActivity"/>
         <activity android:name=".SettingsActivity"/>
+        <activity android:name=".DetailActivity"/>
     </application>
 
 </manifest>

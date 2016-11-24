@@ -2,7 +2,6 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch (id){
             case R.id.option_menu_new_entry:
-                intent = new Intent(this,CreateOrDetailActivity.class);
+                intent = new Intent(this,CreateLoanActivity.class);
                 //intent.putExtra("object", -1);
                 startActivity(intent);
                 return true;

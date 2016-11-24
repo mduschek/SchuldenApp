@@ -11,15 +11,18 @@ import android.widget.ListView;
  * Created by Alexander on 21.11.16.
  */
 
-public class CreateOrDetailActivity extends AppCompatActivity
+public class CreateLoanActivity extends AppCompatActivity
 {
-    EditText iban, firstname, lastname, value,usuage;
+    /*EditText iban, firstname, lastname, value,usuage;
     ListView transfer;
     Button btnOk;
+    */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_create_or_detail);
+        setContentView(R.layout.fragment_create_loan);
+
+        /*
         Dept d = (Dept) getIntent().getSerializableExtra("object");
 
         iban = (EditText) findViewById(R.id.editTextIban);
@@ -28,7 +31,7 @@ public class CreateOrDetailActivity extends AppCompatActivity
         value = (EditText) findViewById(R.id.editTextSum);
         usuage = (EditText) findViewById(R.id.editTextUsuage);
 
-        transfer = (ListView) findViewById(R.id.ListViewTransfer);
         btnOk = (Button) findViewById(R.id.btnOk);
+        */
     }
 }
