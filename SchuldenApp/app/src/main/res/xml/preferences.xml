@@ -9,11 +9,11 @@
             android:summary="Enter your fist name"/>
         <EditTextPreference
             android:key="pref_userdata_lastname"
-            android:title="Lastname"
+            android:title="@string/lastname"
             android:summary="Enter your last name"/>
         <EditTextPreference
             android:key="pref_userdata_iban"
-            android:title="IBAN"
+            android:title="@string/iban"
             android:summary="Enter your IBAN"/>
     </PreferenceScreen>
 </PreferenceScreen>

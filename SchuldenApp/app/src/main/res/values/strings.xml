@@ -7,6 +7,13 @@
     <string name="iOwe">Ich schulde</string>
     <string name="owesMe">Mir schuldet</string>
     <string name="details">Details</string>
+    <string name="using">Verwendung</string>
+    <string name="ok">OK</string>
 
     <string name="firstname">Vorname</string>
+    <string name="lastname">Nachname</string>
+    <string name="iban">IBAN</string>
+    <string name="view">View</string>
+    <string name="newDept">Neue Schuld</string>
+    <string name="settings">Einstellungen</string>
 </resources>

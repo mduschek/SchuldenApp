@@ -26,7 +26,7 @@
             android:id="@+id/editTextSum" />
 
         <TextView
-            android:text="Verwendung"
+            android:text="@string/using"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textViewUsuage" />
@@ -39,7 +39,7 @@
             android:id="@+id/editTextUsuage" />
 
         <TextView
-            android:text="IBAN"
+            android:text="@string/iban"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvIban" />
@@ -90,7 +90,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="OK"
+            android:text="@string/ok"
             android:textStyle="italic"
             android:id="@+id/btnOk"
             android:layout_weight="1"/>

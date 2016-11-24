@@ -5,7 +5,7 @@
         android:id="@+id/option_menu_new_entry"
         android:icon="@android:drawable/ic_menu_add"
         app:showAsAction="always"
-        android:title="New Debt"/>
+        android:title="@string/newDept"/>
 
     <!--<item
         android:id="@+id/option_menu_userdata"
@@ -13,5 +13,5 @@
 
     <item
         android:id="@+id/option_menu_preferences"
-        android:title="Settings"/>
+        android:title="@string/settings"/>
 </menu>
