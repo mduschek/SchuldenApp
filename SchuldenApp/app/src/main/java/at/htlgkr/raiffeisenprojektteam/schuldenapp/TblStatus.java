@@ -13,6 +13,5 @@ public class TblStatus {
     public static final String SQL_CREATE_TABEL="CREATE TABLE "+TABLE_NAME+"("+
             STATUS_ID+" INTEGER PRIMARY KEY AUTO_INCREMENT,"+
             STATUS+" TEXT NOT NULL);";
-
     public static final String SQL_DROP_TABLE="DROP TABLE "+TABLE_NAME+";";
 }
