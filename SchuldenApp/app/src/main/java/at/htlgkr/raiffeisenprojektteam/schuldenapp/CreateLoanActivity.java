@@ -40,17 +40,17 @@ public class CreateLoanActivity extends AppCompatActivity
         Intent intent;
         switch (source.getId()){
             case R.id.buttonManualInput:
-                intent = new Intent(this,DetailActivity.class);
-                intent.putExtra("object", -1);
+                intent = new Intent(this, DetailActivity.class);
+                //intent.putExtra("object", -1);
                 startActivity(intent);
-            break;
+                break;
             case R.id.buttonBluetooth:
                 //an dieser Stelle Bluetooth aktivieren
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent, "Titel"));
+                intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                intent.setType("text/plain");
+                startActivity(Intent.createChooser(intent, "Titel"));
                 break;
             case R.id.buttonNfc:
                 //an dieser Stelle NFC aktivieren
