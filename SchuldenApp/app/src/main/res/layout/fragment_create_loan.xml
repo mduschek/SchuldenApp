@@ -1,4 +1,4 @@
-<ScrollView
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -11,17 +11,47 @@
         tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.CreateLoanFragment"
         android:orientation="vertical">
 
-        <Button
-            android:text="Whatsapp"
+        <TextView
+            android:text="Wählen Sie eine Methode, eine neue Schuld zu Erstellen:"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button2" />
+            android:id="@+id/textViewCreateLoanDescription" />
+
+        <Button
+            android:text="Manuelle Eingabe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonManualInput"
+            android:elevation="0dp"
+            android:onClick="onButtonPressed" />
 
         <Button
             android:text="Bluetooth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button" />
-    </LinearLayout>
+            android:id="@+id/buttonBluetooth"
+            android:onClick="onButtonPressed" />
 
+        <Button
+            android:text="NFC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonNfc"
+            android:onClick="onButtonPressed" />
+
+        <Button
+            android:text="SMS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonSms"
+            android:onClick="onButtonPressed" />
+
+        <Button
+            android:text="Whatsapp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonWhatsapp"
+            android:onClick="onButtonPressed" />
+
+    </LinearLayout>
 </ScrollView>
