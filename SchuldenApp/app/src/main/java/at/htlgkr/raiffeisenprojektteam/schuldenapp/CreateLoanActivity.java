@@ -45,11 +45,11 @@ public class CreateLoanActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.buttonBluetooth:
-                //an dieser Stelle Bluetooth aktivieren
                 intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                intent.putExtra(Intent.EXTRA_TEXT, "test msg");
                 intent.setType("text/plain");
+
                 startActivity(Intent.createChooser(intent, "Titel"));
                 break;
             case R.id.buttonNfc:
