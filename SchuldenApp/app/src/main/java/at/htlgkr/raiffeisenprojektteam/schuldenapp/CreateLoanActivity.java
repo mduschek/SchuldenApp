@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * Created by Alexander on 21.11.16.
  */
@@ -18,6 +21,7 @@ public class CreateLoanActivity extends AppCompatActivity
 {
     TextView textViewCreateLoanDescription;
     Button buttonManualInput, buttonBluetooth, buttonNfc, buttonSms, buttonWhatsapp;
+    public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,12 +80,20 @@ public class CreateLoanActivity extends AppCompatActivity
                 //startActivity(intent);
                 break;
             case R.id.buttonOther:
-                Uri adress = Uri.parse("URL");  //URL parsen
+
+
+                Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, adress);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, LINK);
+                //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress);
                 sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent, "Titel"));
+                startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
+
+                /*Intent sendIntent = new Intent();
+                sendIntent.setData (Uri.parse("schuldenapp://createloan"));
+                startActivity(Intent.createChooser(sendIntent, "Titel"));*/
+
                 break;
         }
     }
