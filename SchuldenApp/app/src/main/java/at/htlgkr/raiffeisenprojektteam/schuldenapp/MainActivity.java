@@ -2,6 +2,7 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -14,15 +15,27 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String TAG = "*=";
     private ViewPager viewPager;
     private PagerTabStrip tabStrip;
     private CustomPagerAdapter customPagerAdapter;
     private ActionBar actionBar;
     private static boolean isInLandscape;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //region incoming intent from deeplinking
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        Uri data = intent.getData();
+
+//        Log.d(TAG, action+" "+data.getPath());
+        //endregion
+
+
         actionBar = getSupportActionBar();
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),this);
