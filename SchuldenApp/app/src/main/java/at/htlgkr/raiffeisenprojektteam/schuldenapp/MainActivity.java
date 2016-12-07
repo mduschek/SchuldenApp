@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String action = intent.getAction();
         Uri data = intent.getData();
+        Log.e(TAG, "onCreate:");
+        if(data!=null)
+        {
+
+            Log.d(TAG, data.getHost()+ " "+ data.getPath());
+        }
 
 //        Log.d(TAG, action+" "+data.getPath());
         //endregion
