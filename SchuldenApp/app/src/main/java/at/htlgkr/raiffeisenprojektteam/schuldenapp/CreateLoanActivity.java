@@ -72,8 +72,8 @@ public class CreateLoanActivity extends AppCompatActivity
                 Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, LINK);
-                //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, LINK+"?value=30?name=DuschekMichael");
+                //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
 
