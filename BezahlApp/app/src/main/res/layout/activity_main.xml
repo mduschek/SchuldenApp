@@ -10,8 +10,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="at.htlgkr.raiffeisenprojektteam.bezahlapp.MainActivity">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:id="@+id/list_view"
+        android:visibility="visible"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Preis"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/text"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bezahlen"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

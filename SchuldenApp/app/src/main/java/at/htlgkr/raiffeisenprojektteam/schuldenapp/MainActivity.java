@@ -141,4 +141,12 @@ public class MainActivity extends AppCompatActivity {
         };
         //endregion
     }
+
+    public void getIntentData(){
+        Uri data = getIntent().getData();
+        String strData = data.toString();
+        //if (strScreenName.equals("com.your_package.something://"))  {
+            // THIS IS OPTIONAL IN CASE YOU NEED TO VERIFY. THE ACTUAL USAGE IN MY APP IS BELOW THIS BLOCK
+        //}
+    }
 }

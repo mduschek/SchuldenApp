@@ -4,6 +4,8 @@
     package="at.htlgkr.raiffeisenprojektteam.schuldenapp">
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.NFC" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,9 +15,14 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+                <intent-filter>
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <action android:name="android.intent.action.VIEW" />
+                    <data android:scheme="at.htlgkr.raiffeisenprojektteam.schuldenapp" />
+                </intent-filter>
+
 
             <intent-filter android:label="schuldenapp">
                 <action android:name="android.intent.action.VIEW" />
@@ -37,11 +44,16 @@
                 <!-- note that the leading "/" is required for pathPrefix-->
                 <!-- Accepts URIs that begin with "example://gizmos” -->
 
+>>>>>>> 7d89e901307e46ae52a032e0879e5b9be7d4785f
             </intent-filter>
         </activity>
         <activity android:name=".CreateLoanActivity"/>
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".DetailActivity"/>
     </application>
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
 
 </manifest>
