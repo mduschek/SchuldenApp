@@ -17,14 +17,12 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-<<<<<<< HEAD
-            <intent-filter>
                 <intent-filter>
                     <category android:name="android.intent.category.DEFAULT" />
                     <action android:name="android.intent.action.VIEW" />
                     <data android:scheme="at.htlgkr.raiffeisenprojektteam.schuldenapp" />
                 </intent-filter>
-=======
+
 
             <intent-filter android:label="schuldenapp">
                 <action android:name="android.intent.action.VIEW" />
