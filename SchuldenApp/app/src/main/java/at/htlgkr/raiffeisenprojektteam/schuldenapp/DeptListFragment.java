@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by Alexander on 09.11.16.
  */
 
-public class DeptListFragment extends Fragment
+public class   DeptListFragment extends Fragment
 {
     private View view;
     private ListView listView;
