@@ -7,11 +7,9 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 public class TblStatus {
     public static final String TABLE_NAME="Statuses";
 
-    public static final String STATUS_ID="status_id";
     public static final String STATUS="status";
 
     public static final String SQL_CREATE_TABEL="CREATE TABLE "+TABLE_NAME+" ( "+
-            STATUS_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
             STATUS+" TEXT NOT NULL);";
     public static final String SQL_DROP_TABLE="DROP TABLE "+TABLE_NAME+";";
 }

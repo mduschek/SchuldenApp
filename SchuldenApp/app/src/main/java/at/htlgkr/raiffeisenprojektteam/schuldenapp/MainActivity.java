@@ -1,6 +1,8 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -16,12 +18,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdefPushCompleteCallback {
 
@@ -54,9 +59,30 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         //region incoming intent from deeplinking
         Intent intent = getIntent();
         Log.e(TAG, "onCreate:");
-        if (intent.getData() != null) {
+        if (intent.getData() != null)
+        {
+            //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;24.12.2016
             String params = intent.getData().getQueryParameter("content");
-            String split[] = params.split(";");
+            final String split[] = params.split(";");
+            AlertDialog.Builder builder= new AlertDialog.Builder(this);
+            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\nIch schulde "+split[0]+ " "+split[1]+ " "+split[4]+"€ für "+split[2]);
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    ContentValues cv = new ContentValues();
+                    cv.put(TblMyDepts.PERS_I_OWE_DATE, split[5]);
+                    cv.put(TblMyDepts.PERS_I_OWE_FIRSTNAME,split[0]);
+                    cv.put(TblMyDepts.PERS_I_OWE_IBAN,split[3]);
+                    cv.put(TblMyDepts.PERS_I_OWE_USUAGE,split[2]);
+                    cv.put(TblMyDepts.PERS_I_OWE_LASTNAME,split[1]);
+                    cv.put(TblMyDepts.PERS_I_OWE_VALUE, split[4]);
+                    cv.put(TblMyDepts.STATUS,"open");
+                    db.insert(TblMyDepts.TABLE_NAME,null,cv);
+                }
+            });
+            builder.setNegativeButton("Nein",null);
+            builder.create().show();
         }
 
         //endregion

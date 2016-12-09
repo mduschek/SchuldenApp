@@ -1,8 +1,11 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +19,7 @@ import java.util.ArrayList;
  * Created by Alexander on 09.11.16.
  */
 
-public class   DeptListFragment extends Fragment
+public class DeptListFragment extends Fragment
 {
     private View view;
     private ListView listView;
@@ -39,7 +42,12 @@ public class   DeptListFragment extends Fragment
         //Database is going to be queried
         if (args.getBoolean("showMyDepts")==true)
         {
-            for(int i=0;i<20;i++) listItems.add(new Dept(Dept.OWN_DEPT,"Michael", "Duschek", "Essen", "AT 98 34442 8899 8908", i));
+            Cursor c = MainActivity.db.rawQuery("SELECT * FROM myDepts;",null);
+            while (c.moveToNext())
+            {
+                String name = c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_FIRSTNAME)) + " "+ c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_LASTNAME));
+                listItems.add(new Dept(Dept.OWN_DEPT,name,"","","",c.getDouble(c.getColumnIndex(TblMyDepts.PERS_I_OWE_VALUE))));
+            }
         }
         else
         {
