@@ -42,7 +42,7 @@ public class CreateLoanActivity extends AppCompatActivity
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
         buttonSms = (Button) findViewById(R.id.buttonSms);
         buttonWhatsapp= (Button) findViewById(R.id.buttonOther);
-        if (MainActivity.nfcIsAvailable==false) buttonNfc.setActivated(false);
+        if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
 
     }
 
@@ -50,8 +50,6 @@ public class CreateLoanActivity extends AppCompatActivity
         Intent intent;
         switch (source.getId()){
             case R.id.buttonManualInput:
-
-                intent = new Intent(this, DetailActivity.class);
 
                 intent = new Intent(this,DetailActivity.class);
 

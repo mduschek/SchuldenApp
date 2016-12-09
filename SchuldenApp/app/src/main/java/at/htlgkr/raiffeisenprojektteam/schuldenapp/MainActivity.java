@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private static boolean isInLandscape;
     public static boolean nfcIsAvailable = false;
+    public static NfcAdapter nfcAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,10 +37,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = dbHelper.getWritableDatabase();
-        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter!= null)
         {
             nfcIsAvailable = true;
+
+            nfcAdapter.setNdefPushMessageCallback(this, this);
+            nfcAdapter.setOnNdefPushCompleteCallback(this, this);
         }
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         UserData.firstname = sharedPreferences.getString("pref_userdata_firstname",null);

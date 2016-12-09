@@ -31,18 +31,13 @@
                 <data
                     android:scheme="http"
                     android:host="at.htlgkr.schuldenapp.createloan"
-                    android:pathPrefix="/schuldenapp"
-                    />
+                    android:pathPrefix="/schuldenapp"/>
+            </intent-filter>
 
-                <!--<data
-
-                    android:scheme="schuldenapp"
-                    android:host="createloan"
-
-                    />-->
-                <!-- note that the leading "/" is required for pathPrefix-->
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
         <activity android:name=".CreateLoanActivity"/>
