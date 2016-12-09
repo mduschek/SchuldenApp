@@ -44,7 +44,6 @@
                 <!-- note that the leading "/" is required for pathPrefix-->
                 <!-- Accepts URIs that begin with "example://gizmos” -->
 
->>>>>>> 7d89e901307e46ae52a032e0879e5b9be7d4785f
             </intent-filter>
         </activity>
         <activity android:name=".CreateLoanActivity"/>
