@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceScreen
-        android:title="User Data"
+    <PreferenceCategory
+        android:title="@string/userdata"
         android:key="pref_userdata">
         <EditTextPreference
             android:key="pref_userdata_firstname"
@@ -15,5 +15,5 @@
             android:key="pref_userdata_iban"
             android:title="@string/iban"
             android:summary="Geben Sie Ihren IBAN ein"/>
-    </PreferenceScreen>
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -1,9 +1,13 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -32,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = dbHelper.getWritableDatabase();
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (nfcAdapter!= null)
+        {
+            nfcIsAvailable = true;
+        }
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        UserData.firstname = sharedPreferences.getString("pref_userdata_firstname",null);
+        UserData.lastname = sharedPreferences.getString("pref_userdata_lastname",null);
+        UserData.iban = sharedPreferences.getString("pref_userdata_iban",null);
 
         //region incoming intent from deeplinking
         Intent intent = getIntent();
@@ -62,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
             case Configuration.ORIENTATION_LANDSCAPE: isInLandscape=true; break;
             case Configuration.ORIENTATION_PORTRAIT: isInLandscape=false; break;
         }
-
-        Log.d("*=", "isinlandscape "+ isInLandscape);
 
 
         actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.iOwe)).setTabListener(tabListener));

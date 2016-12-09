@@ -1,8 +1,11 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,15 +25,16 @@ public class CreateLoanActivity extends AppCompatActivity
     TextView textViewCreateLoanDescription;
     Button buttonManualInput, buttonBluetooth, buttonNfc, buttonSms, buttonWhatsapp;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp";
+    SharedPreferences sharedPreferences;
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65
+    private static final String TAG = "CreateLoanActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_loan);
 
-        Dept d = (Dept) getIntent().getSerializableExtra("object");
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
 
         buttonManualInput = (Button) findViewById(R.id.buttonManualInput);
@@ -38,6 +42,8 @@ public class CreateLoanActivity extends AppCompatActivity
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
         buttonSms = (Button) findViewById(R.id.buttonSms);
         buttonWhatsapp= (Button) findViewById(R.id.buttonOther);
+        if (MainActivity.nfcIsAvailable==false) buttonNfc.setActivated(false);
+
     }
 
     public void onButtonPressed (View source){
