@@ -11,13 +11,13 @@ public class TblClients {
     public static final String CLIENT_IBAN="client_iban";
     //          </PrimaryKeys>
 
-    public static final String ID="id AS _id";
+    public static final String ID="_id";
     public static final String CLIENT_FIRSTNAME="client_firstname";
     public static final String CLIENT_LASTNAME="client_lastname";
     public static final String CLIENT_BANK_BALANCE="client_bank_balance";
 
-    public static final String SQL_CREATE_TABEL="CREATE TABLE "+TABLE_NAME+"("+
-            ID+"INTEGER PRIMARY KEY AUTO_INCREMENT"+
+    public static final String SQL_CREATE_TABEL="CREATE TABLE "+TABLE_NAME+" ( "+
+            ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
             CLIENT_IBAN+" TEXT NOT NULL,"+
             CLIENT_FIRSTNAME+" TEXT,"+
             CLIENT_LASTNAME+" TEXT,"+

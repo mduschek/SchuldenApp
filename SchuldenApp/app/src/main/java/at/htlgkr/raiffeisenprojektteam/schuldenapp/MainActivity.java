@@ -2,6 +2,7 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerTabStrip;
@@ -15,33 +16,35 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final DeptsDbHelper dbHelper = new DeptsDbHelper(this);
+    public static SQLiteDatabase db;
     private String TAG = "*=";
     private ViewPager viewPager;
     private PagerTabStrip tabStrip;
     private CustomPagerAdapter customPagerAdapter;
     private ActionBar actionBar;
     private static boolean isInLandscape;
+    public static boolean nfcIsAvailable = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = dbHelper.getWritableDatabase();
 
         //region incoming intent from deeplinking
         Intent intent = getIntent();
-        String action = intent.getAction();
-        Uri data = intent.getData();
         Log.e(TAG, "onCreate:");
-        if(data!=null)
+        if(intent.getData()!=null)
         {
-
-            Log.d(TAG, data.getHost()+ " "+ data.getPath());
+            String params = intent.getData().getQueryParameter("content");
+            String split [] = params.split(";");
         }
 
-//        Log.d(TAG, action+" "+data.getPath());
         //endregion
 
-
+        //region pager
         actionBar = getSupportActionBar();
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),this);
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("*=", "isinlandscape "+ isInLandscape);
 
-        // region AddTabs
+
         actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.iOwe)).setTabListener(tabListener));
         actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.owesMe)).setTabListener(tabListener));
         //actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.details)).setTabListener(tabListener));

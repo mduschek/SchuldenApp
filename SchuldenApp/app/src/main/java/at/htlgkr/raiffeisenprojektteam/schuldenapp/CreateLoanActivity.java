@@ -22,6 +22,7 @@ public class CreateLoanActivity extends AppCompatActivity
     TextView textViewCreateLoanDescription;
     Button buttonManualInput, buttonBluetooth, buttonNfc, buttonSms, buttonWhatsapp;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp";
+    //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,7 +86,7 @@ public class CreateLoanActivity extends AppCompatActivity
                 Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, LINK+"?value=30?name=DuschekMichael");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, LINK+"?content=Alexander;Perndorfer;Essen;AT34442566756567;30.65");
                 //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
