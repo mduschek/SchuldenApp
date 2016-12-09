@@ -6,7 +6,11 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerTabStrip;
@@ -17,8 +21,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdefPushCompleteCallback {
 
     private final DeptsDbHelper dbHelper = new DeptsDbHelper(this);
     public static SQLiteDatabase db;
@@ -32,31 +37,26 @@ public class MainActivity extends AppCompatActivity {
     public static NfcAdapter nfcAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = dbHelper.getWritableDatabase();
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if (nfcAdapter!= null)
-        {
+        if (nfcAdapter != null) {
             nfcIsAvailable = true;
-
-            nfcAdapter.setNdefPushMessageCallback(this, this);
             nfcAdapter.setOnNdefPushCompleteCallback(this, this);
         }
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        UserData.firstname = sharedPreferences.getString("pref_userdata_firstname",null);
-        UserData.lastname = sharedPreferences.getString("pref_userdata_lastname",null);
-        UserData.iban = sharedPreferences.getString("pref_userdata_iban",null);
+        UserData.firstname = sharedPreferences.getString("pref_userdata_firstname", null);
+        UserData.lastname = sharedPreferences.getString("pref_userdata_lastname", null);
+        UserData.iban = sharedPreferences.getString("pref_userdata_iban", null);
 
         //region incoming intent from deeplinking
         Intent intent = getIntent();
         Log.e(TAG, "onCreate:");
-        if(intent.getData()!=null)
-        {
+        if (intent.getData() != null) {
             String params = intent.getData().getQueryParameter("content");
-            String split [] = params.split(";");
+            String split[] = params.split(";");
         }
 
         //endregion
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         //region pager
         actionBar = getSupportActionBar();
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),this);
+        customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(customPagerAdapter);
         viewPager.addOnPageChangeListener(getOnPageChangedListener());
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
@@ -74,10 +74,13 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         // Create a tab listener that is called when the user changes tabs.
 
-        switch (getResources().getConfiguration().orientation)
-        {
-            case Configuration.ORIENTATION_LANDSCAPE: isInLandscape=true; break;
-            case Configuration.ORIENTATION_PORTRAIT: isInLandscape=false; break;
+        switch (getResources().getConfiguration().orientation) {
+            case Configuration.ORIENTATION_LANDSCAPE:
+                isInLandscape = true;
+                break;
+            case Configuration.ORIENTATION_PORTRAIT:
+                isInLandscape = false;
+                break;
         }
 
 
@@ -97,9 +100,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        switch (id){
+        switch (id) {
             case R.id.option_menu_new_entry:
-                intent = new Intent(this,CreateLoanActivity.class);
+                intent = new Intent(this, CreateLoanActivity.class);
                 //intent.putExtra("object", -1);
                 startActivity(intent);
                 return true;
@@ -114,8 +117,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private ActionBar.TabListener getTabListener(final ActionBar actionBar)
-    {
+    private ActionBar.TabListener getTabListener(final ActionBar actionBar) {
         return new ActionBar.TabListener() {
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
                 Log.w("*=", "" + actionBar.getSelectedNavigationIndex());
@@ -133,8 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void changeTab(int position)
-    {
+    public void changeTab(int position) {
         viewPager.setCurrentItem(position);
     }
 
@@ -142,13 +143,12 @@ public class MainActivity extends AppCompatActivity {
         //region OnPageChangedListener
         return new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
-            {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
             public void onPageSelected(int position) {
-                Log.d("*=", "onPageSelected: "+position);
+                Log.d("*=", "onPageSelected: " + position);
                 actionBar.setSelectedNavigationItem(position);
             }
 
@@ -160,11 +160,41 @@ public class MainActivity extends AppCompatActivity {
         //endregion
     }
 
-    public void getIntentData(){
-        Uri data = getIntent().getData();
-        String strData = data.toString();
-        //if (strScreenName.equals("com.your_package.something://"))  {
-            // THIS IS OPTIONAL IN CASE YOU NEED TO VERIFY. THE ACTUAL USAGE IN MY APP IS BELOW THIS BLOCK
-        //}
+
+    //region NFC implementation
+    @Override
+    public void onNdefPushComplete(NfcEvent nfcEvent) {
+        final String eventString = "onNdefPushComplete\n" + nfcEvent.toString();
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(),
+                        eventString,
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
+
+   /* @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+    }*/
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        if (action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED)) {
+            Parcelable[] parcelables = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            NdefMessage inNdefMessage = (NdefMessage) parcelables[0];
+            NdefRecord[] inNdefRecords = inNdefMessage.getRecords();
+            NdefRecord NdefRecord_0 = inNdefRecords[0];
+            String inMsg = new String(NdefRecord_0.getPayload());
+            Log.d(TAG, "onResume "+inMsg);
+        }
+    }
+    //endregion
 }

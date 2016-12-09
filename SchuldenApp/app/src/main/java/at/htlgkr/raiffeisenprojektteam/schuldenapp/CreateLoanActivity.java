@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -20,7 +24,7 @@ import java.net.URL;
  * Created by Alexander on 21.11.16.
  */
 
-public class CreateLoanActivity extends AppCompatActivity
+public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback
 {
     TextView textViewCreateLoanDescription;
     Button buttonManualInput, buttonBluetooth, buttonNfc, buttonSms, buttonWhatsapp;
@@ -28,7 +32,6 @@ public class CreateLoanActivity extends AppCompatActivity
     SharedPreferences sharedPreferences;
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65
     private static final String TAG = "CreateLoanActivity";
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +46,7 @@ public class CreateLoanActivity extends AppCompatActivity
         buttonSms = (Button) findViewById(R.id.buttonSms);
         buttonWhatsapp= (Button) findViewById(R.id.buttonOther);
         if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
-
+        MainActivity.nfcAdapter.setNdefPushMessageCallback(this,this);
     }
 
     public void onButtonPressed (View source){
@@ -101,5 +104,13 @@ public class CreateLoanActivity extends AppCompatActivity
 
                 break;
         }
+    }
+
+    @Override
+    public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
+        String stringOut = "Michael;Duschek;Usuage;IBAN;30.65";
+        NdefRecord ndefRecord = NdefRecord.createMime("text/plain", stringOut.getBytes());
+        NdefMessage ndefMessage = new NdefMessage(ndefRecord);
+        return ndefMessage;
     }
 }
