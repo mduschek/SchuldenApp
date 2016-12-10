@@ -45,6 +45,8 @@ public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
         buttonSms = (Button) findViewById(R.id.buttonSms);
         buttonWhatsapp= (Button) findViewById(R.id.buttonOther);
+
+        //NFC
         if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
         MainActivity.nfcAdapter.setNdefPushMessageCallback(this,this);
     }
@@ -66,7 +68,7 @@ public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.
                 intent.putExtra(Intent.EXTRA_TEXT, "test msg");
                 intent.setType("text/plain");
 
-                startActivity(Intent.createChooser(intent, "Titel"));
+                //startActivity(Intent.createChooser(intent, "Titel"));
 
                 /*Uri bluetooth = Uri.parse("URL");  //URL parsen
                 Intent sendIntent = new Intent();
