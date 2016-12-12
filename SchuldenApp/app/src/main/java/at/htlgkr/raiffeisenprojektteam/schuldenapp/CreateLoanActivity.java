@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,6 +27,7 @@ import java.net.URL;
 
 public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback
 {
+    private Context context = this;
     TextView textViewCreateLoanDescription;
     Button buttonManualInput, buttonBluetooth, buttonNfc, buttonSms, buttonWhatsapp;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp";
@@ -81,6 +83,7 @@ public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.
                 //intent = new Intent(this,DetailActivity.class);
                 //intent.putExtra("object", -1);
                 //startActivity(intent);
+
                 break;
             case R.id.buttonSms:
                 //intent = new Intent(this,DetailActivity.class);
@@ -108,7 +111,13 @@ public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
-        String stringOut = "Michael;Duschek;Usuage;IBAN;30.65";
+        final String stringOut = "Michael;Duschek;Usuage;IBAN;30.65";
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context,stringOut,Toast.LENGTH_LONG).show();
+            }
+        });
         NdefRecord ndefRecord = NdefRecord.createMime("text/plain", stringOut.getBytes());
         NdefMessage ndefMessage = new NdefMessage(ndefRecord);
         return ndefMessage;

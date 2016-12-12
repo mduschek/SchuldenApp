@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             NdefRecord NdefRecord_0 = inNdefRecords[0];
             String inMsg = new String(NdefRecord_0.getPayload());
             Log.d(TAG, "onResume "+inMsg);
+            Toast.makeText(this,inMsg,Toast.LENGTH_LONG).show();
         }
     }
     //endregion
