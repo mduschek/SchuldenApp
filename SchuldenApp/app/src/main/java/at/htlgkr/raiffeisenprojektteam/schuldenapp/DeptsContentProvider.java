@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 /**
  * Created by yg on 15/11/16.
  */
-
+@Deprecated
 public class DeptsContentProvider extends ContentProvider {
 
     private static final String AUTH="at.htlgkr.raiffeisenprojektteam.schuldenapp.DeptsContentProvider";

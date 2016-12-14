@@ -32,12 +32,18 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
 
     private final DeptsDbHelper dbHelper = new DeptsDbHelper(this);
     public static SQLiteDatabase db;
+
     private String TAG = "*=";
+
     private ViewPager viewPager;
     private PagerTabStrip tabStrip;
+
     private CustomPagerAdapter customPagerAdapter;
     private ActionBar actionBar;
+
     private static boolean isInLandscape;
+
+    //NFC
     public static boolean nfcIsAvailable = false;
     public static NfcAdapter nfcAdapter;
 
@@ -47,14 +53,17 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         db = dbHelper.getWritableDatabase();
+
+        //NFC
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter != null) {
             nfcIsAvailable = true;
             nfcAdapter.setOnNdefPushCompleteCallback(this, this);
         }
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         //region incoming intent from deeplinking
         Intent intent = getIntent();
@@ -132,8 +141,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                 //intent.putExtra("object", -1);
                 startActivity(intent);
                 return true;
-            //case R.id.option_menu_userdata:
-            //    return true;
             case R.id.option_menu_preferences:
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -200,7 +207,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                         Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
    /*@Override

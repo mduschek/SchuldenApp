@@ -30,18 +30,20 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     private static final String TAG = "DetailActivity";
     private String nfcString="";
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_detail_create);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
 
         buttonBluetooth = (Button) findViewById(R.id.buttonBluetooth);
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
         buttonOther = (Button) findViewById(R.id.buttonOther);
-
-
 
         //NFC
         if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
