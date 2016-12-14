@@ -25,6 +25,7 @@ import android.widget.Toast;
 public class DetailActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
     private TextView textViewCreateLoanDescription;
     private Button buttonManualInput, buttonBluetooth, buttonNfc, buttonOther;
+    private EditText edSum;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp";
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65
     private static final String TAG = "DetailActivity";
