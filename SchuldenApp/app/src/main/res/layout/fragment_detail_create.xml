@@ -79,21 +79,50 @@
 
     </LinearLayout>
 
-    <DatePicker
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:clickable="false"
-        />
-   <!-- <Space
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />-->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.CreateLoanFragment"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:text="Wählen Sie eine Methode, eine neue Schuld zu übertragen:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewCreateLoanDescription" />
+
+            <Button
+                android:text="Bluetooth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonBluetooth"
+                android:onClick="onButtonPressed" />
+
+            <Button
+                android:text="NFC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonNfc"
+                android:onClick="onButtonPressed" />
+
+
+            <Button
+                android:text="Andere Methoden"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonOther"
+                android:onClick="onButtonPressed" />
+
+        </LinearLayout>
 
     <Button
-        android:id="@+id/btnOk"
+        android:id="@+id/btnManualInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ok"
+        android:text="Manuelle Eingabe"
         android:textStyle="italic" />
+
 </LinearLayout>

@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         Intent intent;
         switch (id) {
             case R.id.option_menu_new_entry:
-                intent = new Intent(this, CreateLoanActivity.class);
+                intent = new Intent(this, DetailActivity.class);
                 //intent.putExtra("object", -1);
                 startActivity(intent);
                 return true;
@@ -203,13 +203,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
 
     }
 
-   /* @Override
+   /*@Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
     }*/
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
         Intent intent = getIntent();
         String action = intent.getAction();

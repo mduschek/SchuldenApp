@@ -1,6 +1,5 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -12,23 +11,19 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
  * Created by Alexander on 21.11.16.
  */
-
+@Deprecated
 public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback
 {
     TextView textViewCreateLoanDescription;
-    Button buttonManualInput, buttonBluetooth, buttonNfc, buttonSms, buttonWhatsapp;
+    Button buttonManualInput, buttonBluetooth, buttonNfc, buttonOther;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp";
     SharedPreferences sharedPreferences;
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65
@@ -36,16 +31,14 @@ public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_create_loan);
+        setContentView(R.layout.fragment_detail_create);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
 
-        buttonManualInput = (Button) findViewById(R.id.buttonManualInput);
         buttonBluetooth = (Button) findViewById(R.id.buttonBluetooth);
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
-        buttonSms = (Button) findViewById(R.id.buttonSms);
-        buttonWhatsapp= (Button) findViewById(R.id.buttonOther);
+        buttonOther= (Button) findViewById(R.id.buttonOther);
 
         //NFC
         if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);

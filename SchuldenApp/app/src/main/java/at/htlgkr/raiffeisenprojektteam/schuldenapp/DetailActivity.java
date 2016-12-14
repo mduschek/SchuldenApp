@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 /**
  * Created by michael on 24.11.16.
@@ -18,7 +17,7 @@ public class DetailActivity extends AppCompatActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_detail);
+        setContentView(R.layout.fragment_detail_create);
         Dept d = (Dept) getIntent().getSerializableExtra("object");
 
         iban = (EditText) findViewById(R.id.editTextIban);
