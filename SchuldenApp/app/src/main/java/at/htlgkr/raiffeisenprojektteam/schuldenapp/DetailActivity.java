@@ -10,6 +10,7 @@ import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -58,32 +59,11 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 break;
             case R.id.buttonBluetooth:
 
-                intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, "test msg");
-                intent.setType("text/plain");
 
-                //startActivity(Intent.createChooser(intent, "Titel"));
-
-                /*Uri bluetooth = Uri.parse("URL");  //URL parsen
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, bluetooth);
-                sendIntent.setType("text/plain");
-                startActivity((sendIntent, "Titel"));*/
 
                 break;
             case R.id.buttonNfc:
-                //an dieser Stelle NFC aktivieren
-                //intent = new Intent(this,DetailActivity.class);
-                //intent.putExtra("object", -1);
-                //startActivity(intent);
 
-                break;
-            case R.id.buttonSms:
-                //intent = new Intent(this,DetailActivity.class);
-                //intent.putExtra("object", -1);
-                //startActivity(intent);
                 break;
             case R.id.buttonOther:
 
