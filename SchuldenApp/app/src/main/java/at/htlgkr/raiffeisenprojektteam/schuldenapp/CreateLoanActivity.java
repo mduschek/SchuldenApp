@@ -27,7 +27,6 @@ import java.net.URL;
 
 public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback
 {
-    private Context context = this;
     TextView textViewCreateLoanDescription;
     Button buttonManualInput, buttonBluetooth, buttonNfc, buttonSms, buttonWhatsapp;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp";
@@ -117,7 +116,7 @@ public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(context,stringOut,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),stringOut,Toast.LENGTH_LONG).show();
             }
         });
         NdefRecord ndefRecord = NdefRecord.createMime("text/plain", stringOut.getBytes());

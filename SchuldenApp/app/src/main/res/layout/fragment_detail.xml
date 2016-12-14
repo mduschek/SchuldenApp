@@ -2,49 +2,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.DetailFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp"
+    tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.DetailActivity">
 
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:text="@string/value"
+        android:id="@+id/textViewSum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewSum" />
+        android:text="@string/value" />
 
     <EditText
+        android:id="@+id/editTextSum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
         android:ems="10"
-        android:id="@+id/editTextSum" />
+        android:inputType="numberDecimal" />
 
     <TextView
-        android:text="@string/using"
+        android:id="@+id/textViewUsuage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewUsuage" />
+        android:text="@string/using" />
 
     <EditText
+        android:id="@+id/editTextUsuage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editTextUsuage" />
+        android:inputType="textPersonName" />
 
     <TextView
-        android:text="@string/iban"
+        android:id="@+id/tvIban"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvIban" />
+        android:text="@string/iban" />
 
     <EditText
+        android:id="@+id/editTextIban"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editTextIban" />
+        android:inputType="textPersonName" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,22 +60,22 @@
         -->
 
         <EditText
+            android:id="@+id/editTextFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextFirstName"
             android:layout_weight="1"
-            android:hint="Vorname Schuldner"/>
+            android:ems="10"
+            android:hint="Vorname Schuldner"
+            android:inputType="textPersonName" />
 
         <EditText
+            android:id="@+id/editTextLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextLastName"
             android:layout_weight="1"
-            android:hint="Nachname Schuldner"/>
+            android:ems="10"
+            android:hint="Nachname Schuldner"
+            android:inputType="textPersonName" />
 
     </LinearLayout>
 
@@ -84,9 +85,9 @@
         android:layout_weight="1" />
 
     <Button
+        android:id="@+id/btnOk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ok"
-        android:textStyle="italic"
-        android:id="@+id/btnOk" />
+        android:textStyle="italic" />
 </LinearLayout>
