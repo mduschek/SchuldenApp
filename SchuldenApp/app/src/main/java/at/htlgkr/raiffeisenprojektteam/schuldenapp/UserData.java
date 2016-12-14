@@ -9,5 +9,6 @@ public class UserData
     public static String firstname;
     public static String lastname;
     public static String iban;
+    public static String email;
 
 }

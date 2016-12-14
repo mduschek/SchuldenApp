@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         UserData.firstname = sharedPreferences.getString("pref_userdata_firstname", null);
         UserData.lastname = sharedPreferences.getString("pref_userdata_lastname", null);
         UserData.iban = sharedPreferences.getString("pref_userdata_iban", null);
-
+        UserData.email = sharedPreferences.getString("pref_userdata_email",null);
         //region incoming intent from deeplinking
         Intent intent = getIntent();
         Log.e(TAG, "onCreate:");

@@ -22,37 +22,38 @@ import android.widget.Toast;
  * Created by michael on 24.11.16.
  */
 
-public class DetailActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback
-{
-    TextView textViewCreateLoanDescription;
-    Button buttonManualInput, buttonBluetooth, buttonNfc, buttonOther;
+public class DetailActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
+    private TextView textViewCreateLoanDescription;
+    private Button buttonManualInput, buttonBluetooth, buttonNfc, buttonOther;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp";
-    SharedPreferences sharedPreferences;
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65
     private static final String TAG = "DetailActivity";
+    private String nfcString="";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_detail_create);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
 
         buttonBluetooth = (Button) findViewById(R.id.buttonBluetooth);
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
-        buttonOther= (Button) findViewById(R.id.buttonOther);
+        buttonOther = (Button) findViewById(R.id.buttonOther);
+
+
 
         //NFC
         if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
-        MainActivity.nfcAdapter.setNdefPushMessageCallback(this,this);
+        MainActivity.nfcAdapter.setNdefPushMessageCallback(this, this);
     }
 
-    public void onButtonPressed (View source){
+    public void onButtonPressed(View source) {
         Intent intent;
-        switch (source.getId()){
+        switch (source.getId()) {
             case R.id.buttonManualInput:
 
-                intent = new Intent(this,DetailActivity.class);
+                intent = new Intent(this, DetailActivity.class);
 
                 //intent.putExtra("object", -1);
                 startActivity(intent);
@@ -60,9 +61,15 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             case R.id.buttonBluetooth:
 
 
-
                 break;
             case R.id.buttonNfc:
+
+                if (MainActivity.nfcAdapter.isEnabled() == false) {
+
+                    Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                }
+
 
                 break;
             case R.id.buttonOther:
@@ -71,7 +78,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, LINK+"?content=Alexander;Perndorfer;Essen;AT34442566756567;30.65");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, LINK + "?content=Alexander;Perndorfer;Essen;AT34442566756567;30.65");
                 //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
@@ -90,7 +97,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(),stringOut,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), stringOut, Toast.LENGTH_LONG).show();
             }
         });
         NdefRecord ndefRecord = NdefRecord.createMime("text/plain", stringOut.getBytes());
