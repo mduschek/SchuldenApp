@@ -79,12 +79,10 @@
 
     </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
-            tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.CreateLoanFragment"
+            android:paddingTop="16dp"
             android:orientation="vertical"
             android:layout_weight="1">
 
@@ -95,18 +93,28 @@
                 android:id="@+id/textViewCreateLoanDescription" />
 
             <Button
+                android:id="@+id/buttonManualInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Manuelle Eingabe"
+                android:textStyle="italic"
+                style="@style/Widget.AppCompat.Button.Colored" />
+
+            <Button
                 android:text="Bluetooth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonBluetooth"
-                android:onClick="onButtonPressed" />
+                android:onClick="onButtonPressed"
+                style="@style/Widget.AppCompat.Button.Colored" />
 
             <Button
                 android:text="NFC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonNfc"
-                android:onClick="onButtonPressed" />
+                android:onClick="onButtonPressed"
+                style="@style/Widget.AppCompat.Button.Colored" />
 
 
             <Button
@@ -114,15 +122,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonOther"
-                android:onClick="onButtonPressed" />
+                android:onClick="onButtonPressed"
+                style="@style/Widget.AppCompat.Button.Colored" />
 
         </LinearLayout>
-
-    <Button
-        android:id="@+id/btnManualInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Manuelle Eingabe"
-        android:textStyle="italic" />
-
 </LinearLayout>

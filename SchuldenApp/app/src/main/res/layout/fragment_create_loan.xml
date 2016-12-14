@@ -23,35 +23,40 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonManualInput"
             android:elevation="0dp"
-            android:onClick="onButtonPressed" />
+            android:onClick="onButtonPressed"
+            style="@style/Widget.AppCompat.Button.Colored" />
 
         <Button
             android:text="Bluetooth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/buttonBluetooth"
-            android:onClick="onButtonPressed" />
+            android:onClick="onButtonPressed"
+            style="@style/Widget.AppCompat.Button.Colored" />
 
         <Button
             android:text="NFC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/buttonNfc"
-            android:onClick="onButtonPressed" />
+            android:onClick="onButtonPressed"
+            style="@style/Widget.AppCompat.Button.Colored" />
 
         <Button
             android:text="SMS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/buttonSms"
-            android:onClick="onButtonPressed" />
+            android:onClick="onButtonPressed"
+            style="@style/Widget.AppCompat.Button.Colored" />
 
         <Button
             android:text="Anderes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/buttonOther"
-            android:onClick="onButtonPressed" />
+            android:onClick="onButtonPressed"
+            style="@style/Widget.AppCompat.Button.Colored" />
 
     </LinearLayout>
 </ScrollView>

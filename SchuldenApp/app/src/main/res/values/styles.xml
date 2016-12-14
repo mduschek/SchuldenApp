@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/yellow</item>
         <item name="colorPrimaryDark">@color/yellow</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/blue</item>
         <item name="colorControlActivated">@color/blue</item>
     </style>
 </resources>
