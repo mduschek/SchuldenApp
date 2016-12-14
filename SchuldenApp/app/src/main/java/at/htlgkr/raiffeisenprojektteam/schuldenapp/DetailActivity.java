@@ -27,9 +27,11 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     TextView textViewCreateLoanDescription;
     Button buttonManualInput, buttonBluetooth, buttonNfc, buttonOther;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp";
-    SharedPreferences sharedPreferences;
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65
     private static final String TAG = "DetailActivity";
+
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,9 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         //NFC
         if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
         MainActivity.nfcAdapter.setNdefPushMessageCallback(this,this);
+
+        //SharedPreferences
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     public void onButtonPressed (View source){
@@ -66,7 +71,6 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
                 break;
             case R.id.buttonOther:
-
 
                 Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();

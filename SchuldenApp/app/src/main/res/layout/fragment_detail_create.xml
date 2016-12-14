@@ -1,83 +1,87 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+
     android:padding="5dp"
     tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.DetailActivity">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-        android:id="@+id/textViewSum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/value" />
-
-    <EditText
-        android:id="@+id/editTextSum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberDecimal" />
-
-    <TextView
-        android:id="@+id/textViewUsuage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/using" />
-
-    <EditText
-        android:id="@+id/editTextUsuage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:id="@+id/tvIban"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/iban" />
-
-    <EditText
-        android:id="@+id/editTextIban"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <!-- <TextView
-             android:text="Vorname"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:id="@+id/tvFirstname"
-             android:layout_weight="1"/>
-        -->
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/value" />
 
         <EditText
-            android:id="@+id/editTextFirstName"
+            android:id="@+id/editTextSum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
-            android:hint="Vorname Schuldner"
-            android:inputType="textPersonName" />
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:id="@+id/textViewUsuage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/using" />
 
         <EditText
-            android:id="@+id/editTextLastName"
+            android:id="@+id/editTextUsuage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
-            android:hint="Nachname Schuldner"
             android:inputType="textPersonName" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tvIban"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/iban" />
+
+        <EditText
+            android:id="@+id/editTextIban"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- <TextView
+                 android:text="Vorname"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/tvFirstname"
+                 android:layout_weight="1"/>
+            -->
+
+            <EditText
+                android:id="@+id/editTextFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Vorname Schuldner"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editTextLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Nachname Schuldner"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -98,7 +102,8 @@
                 android:layout_height="wrap_content"
                 android:text="Manuelle Eingabe"
                 android:textStyle="italic"
-                style="@style/Widget.AppCompat.Button.Colored" />
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:elevation="0dp" />
 
             <Button
                 android:text="Bluetooth"
@@ -125,5 +130,8 @@
                 android:onClick="onButtonPressed"
                 style="@style/Widget.AppCompat.Button.Colored" />
 
+    </LinearLayout>
+
+
         </LinearLayout>
-</LinearLayout>
+</ScrollView>

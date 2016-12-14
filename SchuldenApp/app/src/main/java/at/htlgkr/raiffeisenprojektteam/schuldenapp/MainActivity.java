@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
     public static boolean nfcIsAvailable = false;
     public static NfcAdapter nfcAdapter;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +53,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             nfcIsAvailable = true;
             nfcAdapter.setOnNdefPushCompleteCallback(this, this);
         }
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        UserData.firstname = sharedPreferences.getString("pref_userdata_firstname", null);
-        UserData.lastname = sharedPreferences.getString("pref_userdata_lastname", null);
-        UserData.iban = sharedPreferences.getString("pref_userdata_iban", null);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         //region incoming intent from deeplinking
         Intent intent = getIntent();

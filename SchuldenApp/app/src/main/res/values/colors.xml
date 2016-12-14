@@ -2,5 +2,5 @@
 <resources>
     <color name="yellow">#FED700</color>
     <color name="blue">#00203C</color>
-    <color name="colorAccent">#EC382F</color>
+    <color name="red">#EC382F</color>
 </resources>

@@ -15,5 +15,9 @@
             android:key="pref_userdata_iban"
             android:title="@string/iban"
             android:summary="Geben Sie Ihren IBAN ein"/>
+        <EditTextPreference
+            android:key="pref_userdata_email"
+            android:title="@string/email"
+            android:summary="Geben Sie Ihre E-Mail Adresse ein"/>
     </PreferenceCategory>
 </PreferenceScreen>
