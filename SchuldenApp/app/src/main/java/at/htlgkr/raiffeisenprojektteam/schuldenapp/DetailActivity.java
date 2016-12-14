@@ -25,7 +25,7 @@ import android.widget.Toast;
 public class DetailActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
     private TextView textViewCreateLoanDescription;
     private Button buttonManualInput, buttonBluetooth, buttonNfc, buttonOther;
-    private EditText edSum;
+    private EditText edSum, edUsuage, edIban, edFirstname, edLastname;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp";
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65
     private static final String TAG = "DetailActivity";
@@ -41,6 +41,10 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         buttonBluetooth = (Button) findViewById(R.id.buttonBluetooth);
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
         buttonOther = (Button) findViewById(R.id.buttonOther);
+
+        edSum = (EditText) findViewById(R.id.editTextSum);
+        edUsuage = (EditText) findViewById(R.id.editTextSum);
+        edFirstname = (EditText) findViewById(R.id.editTextFirstName);
 
 
 
