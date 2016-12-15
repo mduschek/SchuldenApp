@@ -92,6 +92,21 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         }
     }
 
+    public void onRadioButtonClicked(View source)
+    {
+        switch (source.getId()){
+            case R.id.radioButtonDateNow:
+
+                break;
+
+            case R.id.radioButtonManualDate:
+
+                break;
+        }
+
+
+    }
+
     @Override
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
         final String stringOut = "Michael;Duschek;Usuage;IBAN;30.65";

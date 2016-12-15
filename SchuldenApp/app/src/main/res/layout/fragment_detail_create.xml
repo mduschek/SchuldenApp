@@ -83,6 +83,31 @@
 
         </LinearLayout>
 
+        <!--<EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/editTextEmailAdress"
+            android:layout_weight="1"
+            android:hint="E-Mail Adresse Schuldner" />-->
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton android:id="@+id/radioButtonDateNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Heute als Datum"
+                android:onClick="onRadioButtonClicked" />
+            <RadioButton android:id="@+id/radioButtonManualDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Datum auswählen"
+                android:onClick="onRadioButtonClicked" />
+        </RadioGroup>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
