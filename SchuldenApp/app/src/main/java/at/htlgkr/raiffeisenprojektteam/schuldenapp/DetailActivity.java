@@ -25,6 +25,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
@@ -59,6 +60,8 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     private String firstname = "", lastname = "", usuage = "", value = "", iban = "";
     private Date date = new Date();
+
+    public int dialogWich = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -190,10 +193,14 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 Set<BluetoothDevice> bondedDevices = blueAdapter.getBondedDevices();
 
                 if (bondedDevices.size() > 0) {
-                    Object[] devices = (Object[]) bondedDevices.toArray();
-                    BluetoothDevice device = (BluetoothDevice) devices[0];
+                    BluetoothDevice[] devices = (BluetoothDevice[]) bondedDevices.toArray();
+
+                    //ListDialog
+                    bluetootDevicesDialog(devices);
+
+                    BluetoothDevice device = (BluetoothDevice) devices[dialogWich];
                     ParcelUuid[] uuids = device.getUuids();
-                    BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuids[0].getUuid());
+                    BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuids[dialogWich].getUuid());
                     socket.connect();
                     outputStream = socket.getOutputStream();
                     inStream = socket.getInputStream();
@@ -208,8 +215,35 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         {
 
         }
-
-
     }
-    //endregion
+
+    private AlertDialog bluetootDevicesDialog (BluetoothDevice[] devices) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Bluetooth Gerät auswählen");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
+        for (BluetoothDevice device : devices){
+            arrayAdapter.add(device.getName());
+        }
+
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialogWich = which;
+                // The 'which' argument contains the index position
+                // of the selected item
+            }
+        });
+        return builder.create();
+    }
+
 }
+    //endregion
+
