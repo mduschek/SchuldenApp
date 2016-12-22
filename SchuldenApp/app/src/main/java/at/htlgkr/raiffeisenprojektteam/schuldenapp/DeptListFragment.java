@@ -40,18 +40,35 @@ public class DeptListFragment extends Fragment
         showMyDepts = args.getBoolean("showMyDepts");
 
         //Database is going to be queried
+        //Struktur  public Dept(int deptType, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value)
         if (args.getBoolean("showMyDepts")==true)
         {
             Cursor c = MainActivity.db.rawQuery("SELECT * FROM myDepts;",null);
             while (c.moveToNext())
             {
-                String name = c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_FIRSTNAME)) + " "+ c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_LASTNAME));
-                listItems.add(new Dept(Dept.OWN_DEPT,name,"","","",c.getDouble(c.getColumnIndex(TblMyDepts.PERS_I_OWE_VALUE))));
+                String firstname = c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_FIRSTNAME));
+                String lastname = c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_LASTNAME));
+                double value = c.getDouble(c.getColumnIndex(TblMyDepts.PERS_I_OWE_VALUE));
+                String usuage = c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_USUAGE));
+                String iban = c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_IBAN));
+                String status = c.getString(c.getColumnIndex(TblMyDepts.STATUS));
+                listItems.add(new Dept(Dept.OWN_DEPT,firstname,lastname,usuage,iban,status,value));
             }
         }
         else
         {
-            for(int i=0;i<20;i++)listItems.add(new Dept(Dept.SBDY_OWES_ME_DEPT,"Flo", "Huemer", "Proteine", "AT 98 34442 8899 1233", i));
+            Cursor c = MainActivity.db.rawQuery("SELECT * FROM WhoOwesMe;",null);
+            while (c.moveToNext())
+            {
+                String firstname = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME));
+                String lastname = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME));
+                double value = c.getDouble(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE));
+                String usuage = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE));
+                String iban = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN));
+                String status = c.getString(c.getColumnIndex(TblWhoOwesMe.STATUS));
+                listItems.add(new Dept(Dept.SBDY_OWES_ME_DEPT,firstname,lastname,usuage,iban,status,value));
+
+            }
         }
 
         adapter = new ArrayAdapter<Dept>(getActivity(),android.R.layout.simple_list_item_1,listItems);

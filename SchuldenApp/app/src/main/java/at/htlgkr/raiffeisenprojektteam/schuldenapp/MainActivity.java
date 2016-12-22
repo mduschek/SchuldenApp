@@ -26,45 +26,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.net.URLDecoder;
 import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdefPushCompleteCallback {
 
     private final DeptsDbHelper dbHelper = new DeptsDbHelper(this);
     public static SQLiteDatabase db;
-
     private String TAG = "*=";
-
     private ViewPager viewPager;
     private PagerTabStrip tabStrip;
-
     private CustomPagerAdapter customPagerAdapter;
     private ActionBar actionBar;
-
     private static boolean isInLandscape;
-
-    //NFC
     public static boolean nfcIsAvailable = false;
     public static NfcAdapter nfcAdapter;
-
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
         db = dbHelper.getWritableDatabase();
-
-        //NFC
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter != null) {
             nfcIsAvailable = true;
             nfcAdapter.setOnNdefPushCompleteCallback(this, this);
         }
-
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         //region incoming intent from deeplinking
         Intent intent = getIntent();
         Log.e(TAG, "onCreate:");
@@ -72,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         {
             //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;24.12.2016
             String params = intent.getData().getQueryParameter("content");
+            params = URLDecoder.decode(params);
+            Log.e(TAG, params);
             final String split[] = params.split(";");
             AlertDialog.Builder builder= new AlertDialog.Builder(this);
             builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\nIch schulde "+split[0]+ " "+split[1]+ " "+split[4]+"€ für "+split[2]);
@@ -86,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                     cv.put(TblMyDepts.PERS_I_OWE_USUAGE,split[2]);
                     cv.put(TblMyDepts.PERS_I_OWE_LASTNAME,split[1]);
                     cv.put(TblMyDepts.PERS_I_OWE_VALUE, split[4]);
-                    cv.put(TblMyDepts.STATUS,"open");
+                    cv.put(TblMyDepts.STATUS,"not_paid");
                     db.insert(TblMyDepts.TABLE_NAME,null,cv);
                 }
             });
@@ -141,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                 //intent.putExtra("object", -1);
                 startActivity(intent);
                 return true;
+            //case R.id.option_menu_userdata:
+            //    return true;
             case R.id.option_menu_preferences:
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -207,12 +199,9 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                         Toast.LENGTH_LONG).show();
             }
         });
+
     }
 
-   /*@Override
-    protected void onNewIntent(Intent intent) {
-        setIntent(intent);
-    }*/
 
     @Override
     protected void onResume()

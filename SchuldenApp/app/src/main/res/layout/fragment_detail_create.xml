@@ -19,7 +19,7 @@
             android:text="@string/value" />
 
         <EditText
-            android:id="@+id/editTextSum"
+            android:id="@+id/editTextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -99,6 +99,7 @@
             <RadioButton android:id="@+id/radioButtonDateNow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="Heute als Datum"
                 android:onClick="onRadioButtonClicked" />
             <RadioButton android:id="@+id/radioButtonManualDate"
@@ -127,6 +128,7 @@
                 android:layout_height="wrap_content"
                 android:text="Manuelle Eingabe"
                 android:textStyle="italic"
+                android:onClick="onButtonPressed"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:elevation="0dp" />
 
