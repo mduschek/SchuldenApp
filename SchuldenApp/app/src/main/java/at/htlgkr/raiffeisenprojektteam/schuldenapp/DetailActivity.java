@@ -87,7 +87,12 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 /*Intent sendIntent = new Intent();
                 sendIntent.setData (Uri.parse("schuldenapp://createloan"));
                 startActivity(Intent.createChooser(sendIntent, "Titel"));*/
-
+                break;
+            case R.id.buttonBezahlApp:
+                Intent bezahlIntent=new Intent();
+                bezahlIntent.setAction(Intent.ACTION_SEND);
+                bezahlIntent.putExtra("BezahlApp","Alexander;Perndorfer;Essen;AT34442566756567;30.65");
+                startActivity(bezahlIntent);
                 break;
         }
     }
