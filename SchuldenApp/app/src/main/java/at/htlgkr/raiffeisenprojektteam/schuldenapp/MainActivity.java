@@ -67,25 +67,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             params = URLDecoder.decode(params);
             Log.e(TAG, params);
             final String split[] = params.split(";");
-            AlertDialog.Builder builder= new AlertDialog.Builder(this);
-            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\nIch schulde "+split[0]+ " "+split[1]+ " "+split[4]+"€ für "+split[2]);
-            builder.setIcon(android.R.drawable.ic_dialog_alert);
-            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    ContentValues cv = new ContentValues();
-                    cv.put(TblMyDepts.PERS_I_OWE_DATE, split[5]);
-                    cv.put(TblMyDepts.PERS_I_OWE_FIRSTNAME,split[0]);
-                    cv.put(TblMyDepts.PERS_I_OWE_IBAN,split[3]);
-                    cv.put(TblMyDepts.PERS_I_OWE_USUAGE,split[2]);
-                    cv.put(TblMyDepts.PERS_I_OWE_LASTNAME,split[1]);
-                    cv.put(TblMyDepts.PERS_I_OWE_VALUE, split[4]);
-                    cv.put(TblMyDepts.STATUS,"not_paid");
-                    db.insert(TblMyDepts.TABLE_NAME,null,cv);
-                }
-            });
-            builder.setNegativeButton("Nein",null);
-            builder.create().show();
+            insertIntoDb(split);
         }
 
         //endregion
@@ -221,7 +203,32 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             String inMsg = new String(NdefRecord_0.getPayload());
             Log.d(TAG, "onResume "+inMsg);
             Toast.makeText(this,inMsg,Toast.LENGTH_LONG).show();
+            final String split[] = inMsg.split(";");
+            insertIntoDb(split);
         }
     }
     //endregion
+
+    private void insertIntoDb(final String [] split)
+    {
+        AlertDialog.Builder builder= new AlertDialog.Builder(this);
+        builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\nIch schulde "+split[0]+ " "+split[1]+ " "+split[4]+"€ für "+split[2]);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ContentValues cv = new ContentValues();
+                cv.put(TblMyDepts.PERS_I_OWE_DATE, split[5]);
+                cv.put(TblMyDepts.PERS_I_OWE_FIRSTNAME,split[0]);
+                cv.put(TblMyDepts.PERS_I_OWE_IBAN,split[3]);
+                cv.put(TblMyDepts.PERS_I_OWE_USUAGE,split[2]);
+                cv.put(TblMyDepts.PERS_I_OWE_LASTNAME,split[1]);
+                cv.put(TblMyDepts.PERS_I_OWE_VALUE, split[4]);
+                cv.put(TblMyDepts.STATUS,"not_paid");
+                db.insert(TblMyDepts.TABLE_NAME,null,cv);
+            }
+        });
+        builder.setNegativeButton("Nein",null);
+        builder.create().show();
+    }
 }
