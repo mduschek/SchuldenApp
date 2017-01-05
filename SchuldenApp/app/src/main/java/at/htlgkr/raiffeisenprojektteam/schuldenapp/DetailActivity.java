@@ -33,8 +33,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,8 +57,6 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "DetailActivity";
     private String nfcString = "";
-    private OutputStream outputStream;
-    private InputStream inStream;
 
     private String firstname = "", lastname = "", usuage = "", value = "", iban = "";
     private Date date = new Date();
@@ -126,15 +126,12 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 /*Intent sendIntent = new Intent();
                 sendIntent.setData (Uri.parse("schuldenapp://createloan"));
                 startActivity(Intent.createChooser(sendIntent, "Titel"));*/
-<<<<<<< HEAD
                 break;
             case R.id.buttonBezahlApp:
                 Intent bezahlIntent=new Intent();
                 bezahlIntent.setAction(Intent.ACTION_SEND);
                 bezahlIntent.putExtra("BezahlApp","Alexander;Perndorfer;Essen;AT34442566756567;30.65");
                 startActivity(bezahlIntent);
-=======
->>>>>>> 1acee45b1ca3846eac8c54ab204f44107767ec9e
                 break;
         }
     }
@@ -195,12 +192,13 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     //region Bluetooth
     private void Bluetooth() {
+        initTexts();
         BluetoothAdapter blueAdapter = BluetoothAdapter.getDefaultAdapter();
 
         try {
             if (blueAdapter.isEnabled()) {
                 Set<BluetoothDevice> bondedDevices = blueAdapter.getBondedDevices();
-
+                //Michael;Duschek;Usuage;IBAN;30.65;12.12.16
                 if (bondedDevices.size() > 0) {
                     BluetoothDevice[] devices = (BluetoothDevice[]) bondedDevices.toArray();
 
@@ -211,18 +209,20 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                     ParcelUuid[] uuids = device.getUuids();
                     BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuids[dialogWich].getUuid());
                     socket.connect();
-                    outputStream = socket.getOutputStream();
-                    inStream = socket.getInputStream();
+                    MainActivity.bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    MainActivity.bw.write(firstname+";"+lastname+";"+usuage+";"+iban+";"+value+";"+date);
+                    //SENDER VERBINDET SICH IMMER MIR DEM EMPFÄNGER
                 }
 
                 Log.e("error", "No appropriate paired devices.");
-            } else {
+            } else
+            {
                 Log.e("error", "Bluetooth is disabled.");
             }
         }
         catch (Exception ex)
         {
-
+            Log.e(TAG, "Bluetooth: ", ex);
         }
     }
 

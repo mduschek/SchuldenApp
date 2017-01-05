@@ -26,6 +26,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.net.URLDecoder;
 import java.util.Properties;
 
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
     private static boolean isInLandscape;
     public static boolean nfcIsAvailable = false;
     public static NfcAdapter nfcAdapter;
+    public static BufferedReader br;
+    public static BufferedWriter bw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
