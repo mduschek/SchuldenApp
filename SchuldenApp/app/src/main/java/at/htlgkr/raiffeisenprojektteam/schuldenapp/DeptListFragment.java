@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +44,12 @@ public class DeptListFragment extends Fragment
             Cursor c = MainActivity.db.rawQuery("SELECT * FROM myDepts;",null);
             while (c.moveToNext())
             {
-                String firstname = c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_FIRSTNAME));
-                String lastname = c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_LASTNAME));
-                double value = c.getDouble(c.getColumnIndex(TblMyDepts.PERS_I_OWE_VALUE));
-                String usuage = c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_USUAGE));
-                String iban = c.getString(c.getColumnIndex(TblMyDepts.PERS_I_OWE_IBAN));
-                String status = c.getString(c.getColumnIndex(TblMyDepts.STATUS));
+                String firstname = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_FIRSTNAME));
+                String lastname = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_LASTNAME));
+                double value = c.getDouble(c.getColumnIndex(TblMyDebts.PERS_I_OWE_VALUE));
+                String usuage = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_USUAGE));
+                String iban = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_IBAN));
+                String status = c.getString(c.getColumnIndex(TblMyDebts.STATUS));
                 listItems.add(new Dept(Dept.OWN_DEPT,firstname,lastname,usuage,iban,status,value));
             }
         }

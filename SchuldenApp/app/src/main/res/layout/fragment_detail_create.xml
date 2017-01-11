@@ -13,6 +13,29 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textViewIamThe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ich bin der" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton android:id="@+id/radioButtonDebtor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Schuldner"
+                android:onClick="onRadioButtonClicked" />
+            <RadioButton android:id="@+id/radioButtonPayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zahler"
+                android:onClick="onRadioButtonClicked" />
+        </RadioGroup>
+
+        <TextView
             android:id="@+id/textViewSum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Vorname Schuldner"
+                android:hint="Vorname Partner"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -78,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Nachname Schuldner"
+                android:hint="Nachname Partner"
                 android:inputType="textPersonName" />
 
         </LinearLayout>
@@ -148,6 +171,13 @@
                 android:onClick="onButtonPressed"
                 style="@style/Widget.AppCompat.Button.Colored" />
 
+            <Button
+                android:text="QR Code Generieren"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonGenerateQrCode"
+                android:onClick="onButtonPressed"
+                style="@style/Widget.AppCompat.Button.Colored" />
 
             <Button
                 android:text="Andere Methoden"
@@ -160,12 +190,10 @@
                 android:text="Bezahlen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonBezahlApp"
+                android:id="@+id/buttonPayDebt"
                 android:onClick="onButtonPressed"
                 style="@style/Widget.AppCompat.Button.Colored" />
 
-    </LinearLayout>
-
-
         </LinearLayout>
+    </LinearLayout>
 </ScrollView>
