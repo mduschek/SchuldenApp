@@ -102,7 +102,10 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
                 break;
             case R.id.buttonGenerateQrCode:
-                //PAWEL HIER QR CODE REIN
+                Intent qrgenint=new Intent(this,QrScannerActivity.class);
+                qrgenint.setAction(Intent.ACTION_SEND);
+                String data = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                qrgenint.putExtra("qr", data);
                 break;
             case R.id.buttonOther:
 

@@ -12,6 +12,9 @@
         android:title="Userdata"/>-->
 
     <item
+        android:id="@+id/option_menu_qr_scanner"
+        android:title="@string/qrCodeScanner"/>
+    <item
         android:id="@+id/option_menu_preferences"
         android:title="@string/settings"/>
 </menu>

@@ -18,4 +18,5 @@
     <string name="view">View</string>
     <string name="newDept">Neue Schuld</string>
     <string name="settings">Einstellungen</string>
+    <string name="qrCodeScanner">QR-Code Scanner</string>
 </resources>

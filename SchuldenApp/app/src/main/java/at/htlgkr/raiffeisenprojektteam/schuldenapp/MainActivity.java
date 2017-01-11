@@ -24,6 +24,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.net.URLDecoder;
@@ -116,6 +119,16 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                 return true;
             //case R.id.option_menu_userdata:
             //    return true;
+            case R.id.activity_qr_scanner:
+                IntentIntegrator integrator=new IntentIntegrator(this);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                integrator.setPrompt("Scan");
+                integrator.setCameraId(0);
+                integrator.setBeepEnabled(false);
+                integrator.setBarcodeImageEnabled(false);
+                integrator.initiateScan();
+                return true;
+
             case R.id.option_menu_preferences:
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -227,5 +240,21 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         });
         builder.setNegativeButton("Nein",null);
         builder.create().show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result=IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+
+        if(result==null) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+        else{
+            if (result.getContents()==null){
+                Toast.makeText(this,"Cancelled",Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
