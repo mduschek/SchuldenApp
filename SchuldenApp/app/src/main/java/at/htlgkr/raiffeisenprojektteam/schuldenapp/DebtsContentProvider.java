@@ -12,15 +12,15 @@ import android.support.annotation.Nullable;
  * Created by yg on 15/11/16.
  */
 @Deprecated
-public class DeptsContentProvider extends ContentProvider {
+public class DebtsContentProvider extends ContentProvider {
 
-    private static final String AUTH="at.htlgkr.raiffeisenprojektteam.schuldenapp.DeptsContentProvider";
+    private static final String AUTH="at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider";
     //public static final Uri URI=Uri.parse("content//:"+AUTH+"/"+TblClients);
     private static final int CLIENTS_VERZ=1;
     private static final int CLIENT_ID=2;
     private static final int STATUSES_VERZ=3;
     private static final int STATUS_ID=4;
-    private static final int MYDEPTS_VERZ=5;
+    private static final int MYDEBTS_VERZ =5;
     private static final int MYDEPT_ID=6;
     private static final int WHOOWESME_VERZ=7;
     private static final int WHOOWESME_ID=8;
@@ -30,8 +30,8 @@ public class DeptsContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTH,TblClients.TABLE_NAME+"/#",CLIENT_ID);
         uriMatcher.addURI(AUTH,TblStatus.TABLE_NAME,STATUSES_VERZ);
         uriMatcher.addURI(AUTH,TblStatus.TABLE_NAME+"/#",STATUS_ID);
-        uriMatcher.addURI(AUTH,TblMyDepts.TABLE_NAME,MYDEPTS_VERZ);
-        uriMatcher.addURI(AUTH,TblMyDepts.TABLE_NAME+"/#",MYDEPT_ID);
+        uriMatcher.addURI(AUTH, TblMyDebts.TABLE_NAME, MYDEBTS_VERZ);
+        uriMatcher.addURI(AUTH, TblMyDebts.TABLE_NAME+"/#",MYDEPT_ID);
         uriMatcher.addURI(AUTH,TblWhoOwesMe.TABLE_NAME,WHOOWESME_VERZ);
         uriMatcher.addURI(AUTH,TblWhoOwesMe.TABLE_NAME+"/#",WHOOWESME_ID);
     }
@@ -71,15 +71,15 @@ public class DeptsContentProvider extends ContentProvider {
                 selection = "_id = " + uri.getPathSegments().get(1);
                 cursor = dbHelper.query(TblStatus.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
-            case MYDEPTS_VERZ:
-                cursor=dbHelper.query(TblMyDepts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
+            case MYDEBTS_VERZ:
+                cursor=dbHelper.query(TblMyDebts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
             case MYDEPT_ID:
                 if(selection != null) {
                     throw new UnsupportedOperationException("No Arguments plz");
                 }
                 selection = "_id = " + uri.getPathSegments().get(1);
-                cursor = dbHelper.query(TblMyDepts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
+                cursor = dbHelper.query(TblMyDebts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
             case WHOOWESME_VERZ:
                 cursor=dbHelper.query(TblWhoOwesMe.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
@@ -115,8 +115,8 @@ public class DeptsContentProvider extends ContentProvider {
             case STATUSES_VERZ:
                 dbHelper.insert(TblStatus.TABLE_NAME,null,contentValues);
                 break;
-            case MYDEPTS_VERZ:
-                dbHelper.insert(TblMyDepts.TABLE_NAME,null,contentValues);
+            case MYDEBTS_VERZ:
+                dbHelper.insert(TblMyDebts.TABLE_NAME,null,contentValues);
                 break;
             case WHOOWESME_VERZ:
                 dbHelper.insert(TblWhoOwesMe.TABLE_NAME,null,contentValues);

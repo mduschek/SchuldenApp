@@ -1,13 +1,11 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -29,7 +27,6 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.net.URLDecoder;
-import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdefPushCompleteCallback {
 
@@ -218,14 +215,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 ContentValues cv = new ContentValues();
-                cv.put(TblMyDepts.PERS_I_OWE_DATE, split[5]);
-                cv.put(TblMyDepts.PERS_I_OWE_FIRSTNAME,split[0]);
-                cv.put(TblMyDepts.PERS_I_OWE_IBAN,split[3]);
-                cv.put(TblMyDepts.PERS_I_OWE_USUAGE,split[2]);
-                cv.put(TblMyDepts.PERS_I_OWE_LASTNAME,split[1]);
-                cv.put(TblMyDepts.PERS_I_OWE_VALUE, split[4]);
-                cv.put(TblMyDepts.STATUS,"not_paid");
-                db.insert(TblMyDepts.TABLE_NAME,null,cv);
+                cv.put(TblMyDebts.PERS_I_OWE_DATE, split[5]);
+                cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME,split[0]);
+                cv.put(TblMyDebts.PERS_I_OWE_IBAN,split[3]);
+                cv.put(TblMyDebts.PERS_I_OWE_USUAGE,split[2]);
+                cv.put(TblMyDebts.PERS_I_OWE_LASTNAME,split[1]);
+                cv.put(TblMyDebts.PERS_I_OWE_VALUE, split[4]);
+                cv.put(TblMyDebts.STATUS,"not_paid");
+                db.insert(TblMyDebts.TABLE_NAME,null,cv);
             }
         });
         builder.setNegativeButton("Nein",null);

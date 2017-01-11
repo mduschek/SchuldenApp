@@ -4,7 +4,7 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
  * Created by yg on 15/11/16.
  */
 
-public class TblMyDepts {
+public class TblMyDebts {
     public static final String TABLE_NAME="MyDepts";
 
 
