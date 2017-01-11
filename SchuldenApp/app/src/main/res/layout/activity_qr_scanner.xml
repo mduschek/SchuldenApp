@@ -8,26 +8,25 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.QrScannerActivity">
+    tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.QrGeneratorActivity">
 
     <LinearLayout>
         <TextView
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#c5e0d8"
             android:text="Teilen Sie Ihre Bezahlinformation als QR-Code. Folgende Informationen werden geteilt: Kontoinhaber, Betrag, Verwendung, IBAN, Datum"/>
     </LinearLayout>
-    <LinearLayout>
         <ImageView
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/imgView"/>
-    </LinearLayout>
     <LinearLayout>
         <TextView
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#c5e0d8"
             android:text="Scannen Sie mit einem anderen Handy diese Daten ab"/>
     </LinearLayout>
 </TableLayout>

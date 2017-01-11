@@ -11,7 +11,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-public class QrScannerActivity extends AppCompatActivity {
+public class QrGeneratorActivity extends AppCompatActivity {
 
     ImageView imgVw;
     @Override
@@ -31,7 +31,7 @@ public class QrScannerActivity extends AppCompatActivity {
         MultiFormatWriter multiFormatWriter=new MultiFormatWriter();
 
         try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(data, BarcodeFormat.QR_CODE,200,200); //boom schaka laka
+            BitMatrix bitMatrix = multiFormatWriter.encode(data, BarcodeFormat.QR_CODE,800,800); //boom schaka laka
             BarcodeEncoder barcodeEncoder=new BarcodeEncoder(); //simsalabim
             Bitmap bitmap=barcodeEncoder.createBitmap(bitMatrix);//expiliamos
             imgVw.setImageBitmap(bitmap);//stupor

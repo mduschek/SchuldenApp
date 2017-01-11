@@ -52,7 +52,7 @@
         <activity android:name=".CreateLoanActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".DetailActivity" />
-        <activity android:name=".QrScannerActivity"></activity>
+        <activity android:name=".QrGeneratorActivity"></activity>
     </application>
 
 </manifest>
