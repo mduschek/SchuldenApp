@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +38,6 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     private TextView textViewCreateLoanDescription;
-    private RadioButton radioButtonDebtor, radioButtonCreditor;
     private Button buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt;
     private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp?content=";
@@ -53,7 +51,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     public int dialogWich = -1;
 
     public boolean isDebt;
-
+//KOMMENTAr
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +66,6 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         buttonOther = (Button) findViewById(R.id.buttonOther);      //Activity Chooser mit anderen Apps
         buttonPayDebt = (Button) findViewById(R.id.buttonPayDebt);  //Button setzt den Status auf Bezahlt
 
-        radioButtonDebtor = (RadioButton)findViewById(R.id.radioButtonDebtor);
-        radioButtonCreditor = (RadioButton)findViewById(R.id.radioButtonCreditor);
-
         //buttonBluetooth.setVisibility(View.GONE);
         //buttonNfc.setVisibility(View.GONE);
         //buttonOther.setVisibility(View.GONE);
@@ -84,16 +79,6 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         //NFC
         if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
         MainActivity.nfcAdapter.setNdefPushMessageCallback(this, this);
-
-        getDebtOrCredit();
-        setButtons();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onPostResume();
-        getDebtOrCredit();
-        setButtons();
     }
 
     public void onButtonPressed(View source) {
@@ -117,11 +102,10 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
                 break;
             case R.id.buttonGenerateQrCode:
-                Intent qrgenint=new Intent(this,QrGeneratorActivity.class);
+                Intent qrgenint=new Intent(this,QrScannerActivity.class);
                 qrgenint.setAction(Intent.ACTION_SEND);
                 String data = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 qrgenint.putExtra("qr", data);
-                startActivity(qrgenint);
                 break;
             case R.id.buttonOther:
 
@@ -166,38 +150,15 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 setButtons();
                 break;
 
-            case R.id.radioButtonCreditor:
+            case R.id.radioButtonPayer:
                 isDebt = false;
                 setButtons();
                 break;
         }
     }
 
-    public void getDebtOrCredit(){
-        if (radioButtonDebtor.isSelected()){
-            isDebt = true;
-        }
-        else if (radioButtonCreditor.isSelected()){
-            isDebt = false;
-        }
-    }
     public void setButtons(){
-        if (isDebt){
-            buttonManualInput.setVisibility(View.VISIBLE);
-            buttonBluetooth.setVisibility(View.VISIBLE);
-            buttonNfc.setVisibility(View.VISIBLE);
-            buttonGenerateQrCode.setVisibility(View.VISIBLE);
-            buttonOther.setVisibility(View.VISIBLE);
-            buttonPayDebt.setVisibility(View.VISIBLE);
-        }
-        else {
-            buttonManualInput.setVisibility(View.GONE);
-            buttonBluetooth.setVisibility(View.GONE);
-            buttonNfc.setVisibility(View.GONE);
-            buttonGenerateQrCode.setVisibility(View.GONE);
-            buttonOther.setVisibility(View.GONE);
-            buttonPayDebt.setVisibility(View.GONE);
-        }
+
     }
 
     @Override
