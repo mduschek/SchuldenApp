@@ -106,6 +106,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 qrgenint.setAction(Intent.ACTION_SEND);
                 String data = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 qrgenint.putExtra("qr", data);
+
                 break;
             case R.id.buttonOther:
 

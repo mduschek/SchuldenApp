@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(false);
                 integrator.initiateScan();
-                return true;
+                break;
 
             case R.id.option_menu_preferences:
                 intent = new Intent(this, SettingsActivity.class);
