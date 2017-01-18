@@ -41,7 +41,7 @@ public class DebtsContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        dbHelper=new DeptsDbHelper(getContext()).getReadableDatabase();
+        dbHelper=new DebtsDbHelper(getContext()).getReadableDatabase();
         return true;
     }
 

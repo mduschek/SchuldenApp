@@ -21,8 +21,8 @@ public class DeptListFragment extends Fragment
 {
     private View view;
     private ListView listView;
-    private ArrayList<Dept> listItems = new ArrayList<>();
-    private ArrayAdapter<Dept> adapter;
+    private ArrayList<Debt> listItems = new ArrayList<>();
+    private ArrayAdapter<Debt> adapter;
     private boolean showMyDepts;
     private int clickedIndex;
     @Override
@@ -38,7 +38,7 @@ public class DeptListFragment extends Fragment
         showMyDepts = args.getBoolean("showMyDepts");
 
         //Database is going to be queried
-        //Struktur  public Dept(int deptType, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value)
+        //Struktur  public Debt(int deptType, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value)
         if (args.getBoolean("showMyDepts")==true)
         {
             Cursor c = MainActivity.db.rawQuery("SELECT * FROM myDepts;",null);
@@ -50,7 +50,7 @@ public class DeptListFragment extends Fragment
                 String usuage = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_USUAGE));
                 String iban = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_IBAN));
                 String status = c.getString(c.getColumnIndex(TblMyDebts.STATUS));
-                listItems.add(new Dept(Dept.OWN_DEPT,firstname,lastname,usuage,iban,status,value));
+                listItems.add(new Debt(Debt.OWN_DEPT,firstname,lastname,usuage,iban,status,value));
             }
         }
         else
@@ -64,12 +64,12 @@ public class DeptListFragment extends Fragment
                 String usuage = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE));
                 String iban = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN));
                 String status = c.getString(c.getColumnIndex(TblWhoOwesMe.STATUS));
-                listItems.add(new Dept(Dept.SBDY_OWES_ME_DEPT,firstname,lastname,usuage,iban,status,value));
+                listItems.add(new Debt(Debt.SBDY_OWES_ME_DEPT,firstname,lastname,usuage,iban,status,value));
 
             }
         }
 
-        adapter = new ArrayAdapter<Dept>(getActivity(),android.R.layout.simple_list_item_1,listItems);
+        adapter = new ArrayAdapter<Debt>(getActivity(),android.R.layout.simple_list_item_1,listItems);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -33,7 +33,7 @@ import java.net.URLDecoder;
 
 public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdefPushCompleteCallback {
 
-    private final DeptsDbHelper dbHelper = new DeptsDbHelper(this);
+    private final DebtsDbHelper dbHelper = new DebtsDbHelper(this);
     public static SQLiteDatabase db;
     private String TAG = "*=";
     private ViewPager viewPager;
