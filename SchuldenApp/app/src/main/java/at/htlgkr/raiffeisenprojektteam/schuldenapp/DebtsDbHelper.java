@@ -9,13 +9,13 @@ import android.util.Log;
  * Created by yg on 15/11/16.
  */
 
-public class DeptsDbHelper extends SQLiteOpenHelper
+public class DebtsDbHelper extends SQLiteOpenHelper
 {
     private java.lang.String TAG = "*=";
     public static final String DATABASE_NAME="Depts.db";
     public static final int DATABASE_VERSION=1;
 
-    public DeptsDbHelper(Context context) {
+    public DebtsDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         Log.d(TAG, "dbHelperConstructor");
     }

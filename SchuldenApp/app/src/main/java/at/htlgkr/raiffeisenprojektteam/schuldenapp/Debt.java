@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Alexander on 16.11.16.
  */
 
-public class Dept implements Serializable
+public class Debt implements Serializable
 {
     public static int OWN_DEPT = 0, SBDY_OWES_ME_DEPT = 1;
 
@@ -14,7 +14,7 @@ public class Dept implements Serializable
     private String deptorFirstName, deptorLastName, usuage, iBan, status;
     private double value;
 
-    public Dept(int deptType, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value) {
+    public Debt(int deptType, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value) {
         this.deptType = deptType;
         this.deptorFirstName = deptorFirstName;
         this.deptorLastName = deptorLastName;

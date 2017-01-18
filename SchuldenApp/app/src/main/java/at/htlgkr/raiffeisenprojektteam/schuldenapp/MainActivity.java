@@ -33,7 +33,7 @@ import java.net.URLDecoder;
 
 public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdefPushCompleteCallback {
 
-    private final DeptsDbHelper dbHelper = new DeptsDbHelper(this);
+    private final DebtsDbHelper dbHelper = new DebtsDbHelper(this);
     public static SQLiteDatabase db;
     private String TAG = "*=";
     private ViewPager viewPager;
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                 return true;
             //case R.id.option_menu_userdata:
             //    return true;
-            case R.id.activity_qr_scanner:
+            case R.id.option_menu_qr_scanner:
                 IntentIntegrator integrator=new IntentIntegrator(this);
                 integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                 integrator.setPrompt("Scan");
@@ -127,7 +127,13 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(false);
                 integrator.initiateScan();
+<<<<<<< HEAD
                 break;
+=======
+
+
+                return true;
+>>>>>>> 6aacf43440c4356496dde3aae12df1b17602d020
 
             case R.id.option_menu_preferences:
                 intent = new Intent(this, SettingsActivity.class);
@@ -252,8 +258,14 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         else{
             if (result.getContents()==null){
                 Toast.makeText(this,"Cancelled",Toast.LENGTH_LONG).show();
+
+
+
             }else{
-                Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, DetailActivity.class);
+                intent.putExtra("qr_code", result.getContents().toString());
+                startActivity(intent);
             }
         }
     }
