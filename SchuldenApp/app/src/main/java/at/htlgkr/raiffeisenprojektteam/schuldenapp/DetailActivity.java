@@ -37,6 +37,7 @@ import java.util.Set;
 
 public class DetailActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
 
+    private static final String IS_DEBTOR_KEY = "isDebtorKey";
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     private TextView textViewCreateLoanDescription;
     private RadioButton radioButtonDebtor, radioButtonCreditor;
@@ -52,12 +53,17 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     public int dialogWich = -1;
 
-    public boolean isDebt;
+    public boolean isDebt = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_detail_create);
+
+        //recover data on recreation
+        if (savedInstanceState != null) {
+            isDebt = savedInstanceState.getBoolean(IS_DEBTOR_KEY);
+        }
 
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
 
@@ -85,14 +91,13 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
         MainActivity.nfcAdapter.setNdefPushMessageCallback(this, this);
 
-        getDebtOrCredit();
-        setButtons();
+        //getDebtOrCredit();
     }
 
     @Override
     protected void onResume() {
         super.onPostResume();
-        getDebtOrCredit();
+        //getDebtOrCredit();
         setButtons();
     }
 
@@ -107,7 +112,8 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 break;
             case R.id.buttonNfc:
 
-                if (MainActivity.nfcAdapter.isEnabled() == false) {
+                if (MainActivity.nfcAdapter.isEnabled() == false
+) {
                     Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
                 } else {
@@ -173,15 +179,19 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         }
     }
 
+    @Deprecated
     public void getDebtOrCredit(){
-        if (radioButtonDebtor.isSelected()){
-            isDebt = true;
-        }
-        else if (radioButtonCreditor.isSelected()){
-            isDebt = false;
-        }
+        isDebt = radioButtonDebtor.isSelected();
+        setButtons();
     }
+
     public void setButtons(){
+        /*
+            buttonManualInput, Nfc, GenerateQrCode, Other: wenn betrag, verwendung, iban, vorname, nachname, datum != null
+            buttonBluetooth: wenn betrag, verwendung, datum != null (fremder iban, vorname, nachname soll übertragen werden, funktioniert noch nicht?)
+
+
+        */
         if (isDebt){
             buttonManualInput.setVisibility(View.VISIBLE);
             buttonBluetooth.setVisibility(View.VISIBLE);
@@ -302,6 +312,11 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         return builder.create();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(IS_DEBTOR_KEY, isDebt);
+        super.onSaveInstanceState(outState);
+    }
 }
     //endregion
 
