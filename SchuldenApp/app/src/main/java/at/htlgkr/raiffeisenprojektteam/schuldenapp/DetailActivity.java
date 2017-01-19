@@ -270,6 +270,8 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                     socket.connect();
                     MainActivity.bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                     MainActivity.bw.write(firstname+";"+lastname+";"+usuage+";"+iban+";"+value+";"+date);
+                    MainActivity.bw.flush();
+                    
                     //SENDER VERBINDET SICH IMMER MIR DEM EMPFÄNGER
                 }
 
