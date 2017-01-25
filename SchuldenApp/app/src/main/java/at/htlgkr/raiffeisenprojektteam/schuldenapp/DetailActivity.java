@@ -131,7 +131,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 //Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+                //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
                 String dataString = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 dataString = URLEncoder.encode(dataString);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, LINK + dataString);
@@ -232,7 +232,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
-        //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+        //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
         initTexts();
         final String stringOut = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
         runOnUiThread(new Runnable() {
@@ -291,7 +291,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         try {
             if (blueAdapter.isEnabled()) {
                 Set<BluetoothDevice> bondedDevices = blueAdapter.getBondedDevices();
-                //Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+                //depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
                 if (bondedDevices.size() > 0) {
                     BluetoothDevice[] devices = (BluetoothDevice[]) bondedDevices.toArray();
 
