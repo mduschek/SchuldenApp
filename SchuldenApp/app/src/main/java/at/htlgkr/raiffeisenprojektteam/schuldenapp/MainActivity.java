@@ -258,8 +258,10 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             }else{
                 //Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, DetailActivity.class);
-                intent.putExtra("qr_code", result.getContents().toString());
-                startActivity(intent);
+                String string = URLDecoder.decode(result.getContents().toString());
+                intent.putExtra("qr_code", data);
+                Toast.makeText(this,string, Toast.LENGTH_LONG).show();
+                //startActivity(intent);
             }
         }
     }

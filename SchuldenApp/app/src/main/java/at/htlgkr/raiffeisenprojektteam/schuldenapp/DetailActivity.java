@@ -121,7 +121,8 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             case R.id.buttonGenerateQrCode:
                 Intent qrgenint=new Intent(this,QrGeneratorActivity.class);
                 qrgenint.setAction(Intent.ACTION_SEND);
-                String data = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                String data = isDebt +";"+ firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                data = URLEncoder.encode(data);
                 qrgenint.putExtra("qr", data);
                 startActivity(qrgenint);
                 break;
@@ -131,7 +132,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 //Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+                //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
                 String dataString = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 dataString = URLEncoder.encode(dataString);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, LINK + dataString);
@@ -232,7 +233,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
-        //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+        //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
         initTexts();
         final String stringOut = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
         runOnUiThread(new Runnable() {
@@ -259,8 +260,16 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     private void insert(String status) {
         initTexts();
 
-        if(isDebt){
-
+        if(!isDebt){//isDebt==true == wir sind Schuldner== wir schulden geld
+            ContentValues cv = new ContentValues();
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, sdf.format(date));
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, firstname);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, iban);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, usuage);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, lastname);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, value);
+            cv.put(TblWhoOwesMe.STATUS, status);
+            MainActivity.db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
         }
         else{
             ContentValues cv = new ContentValues();
@@ -271,7 +280,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, lastname);
             cv.put(TblMyDebts.PERS_I_OWE_VALUE, value);
             cv.put(TblMyDebts.STATUS, status);
-            MainActivity.db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
+            MainActivity.db.insert(TblMyDebts.TABLE_NAME, null, cv);
         }
     }
 
@@ -283,7 +292,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         try {
             if (blueAdapter.isEnabled()) {
                 Set<BluetoothDevice> bondedDevices = blueAdapter.getBondedDevices();
-                //Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+                //depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
                 if (bondedDevices.size() > 0) {
                     BluetoothDevice[] devices = (BluetoothDevice[]) bondedDevices.toArray();
 
