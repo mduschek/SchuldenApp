@@ -288,7 +288,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                     BluetoothDevice[] devices = (BluetoothDevice[]) bondedDevices.toArray();
 
                     //ListDialog
-                    bluetootDevicesDialog(devices);
+                    bluetoothDevicesDialog(devices);
 
                     BluetoothDevice device = (BluetoothDevice) devices[dialogWich];
                     ParcelUuid[] uuids = device.getUuids();
@@ -297,7 +297,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                     MainActivity.bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                     MainActivity.bw.write(firstname+";"+lastname+";"+usuage+";"+iban+";"+value+";"+date);
                     MainActivity.bw.flush();
-                    
+
                     //SENDER VERBINDET SICH IMMER MIR DEM EMPFÄNGER
                 }
 
@@ -313,7 +313,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         }
     }
 
-    private AlertDialog bluetootDevicesDialog (BluetoothDevice[] devices) {
+    private AlertDialog bluetoothDevicesDialog(BluetoothDevice[] devices) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Bluetooth Gerät auswählen");
 
@@ -347,4 +347,3 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     }
 }
     //endregion
-
