@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
     private static boolean isInLandscape;
     public static boolean nfcIsAvailable = false;
     public static NfcAdapter nfcAdapter;
-    public static BufferedReader br;
+    public static BufferedReader br;    //Kommentar
     public static BufferedWriter bw;
 
     @Override
