@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class DeptListFragment extends Fragment
         if (args.getBoolean("showMyDepts")==true)
         {
             Cursor c = MainActivity.db.rawQuery("SELECT * FROM myDepts;",null);
+            Log.e("*===", "onCreateView: " +c.hashCode() );
             while (c.moveToNext())
             {
                 String firstname = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_FIRSTNAME));
@@ -50,6 +52,7 @@ public class DeptListFragment extends Fragment
                 String usuage = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_USUAGE));
                 String iban = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_IBAN));
                 String status = c.getString(c.getColumnIndex(TblMyDebts.STATUS));
+                Log.d("*==", firstname);
                 listItems.add(new Debt(Debt.OWN_DEPT,firstname,lastname,usuage,iban,status,value));
             }
         }
@@ -64,6 +67,7 @@ public class DeptListFragment extends Fragment
                 String usuage = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE));
                 String iban = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN));
                 String status = c.getString(c.getColumnIndex(TblWhoOwesMe.STATUS));
+                Log.d("*==", firstname);
                 listItems.add(new Debt(Debt.SBDY_OWES_ME_DEPT,firstname,lastname,usuage,iban,status,value));
 
             }
