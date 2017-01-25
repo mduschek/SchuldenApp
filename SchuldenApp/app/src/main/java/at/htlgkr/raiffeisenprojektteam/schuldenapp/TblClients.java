@@ -24,5 +24,4 @@ public class TblClients {
             CLIENT_BANK_BALANCE+" DOUBLE);";
 
     public static final String SQL_DROP_TABLE="DROP TABLE "+TABLE_NAME+";";
-
 }
