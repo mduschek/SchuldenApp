@@ -259,8 +259,16 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     private void insert(String status) {
         initTexts();
 
-        if(isDebt){
-
+        if(!isDebt){//isDebt==true == wir sind Schuldner== wir schulden geld
+            ContentValues cv = new ContentValues();
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, sdf.format(date));
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, firstname);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, iban);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, usuage);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, lastname);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, value);
+            cv.put(TblWhoOwesMe.STATUS, status);
+            MainActivity.db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
         }
         else{
             ContentValues cv = new ContentValues();
@@ -271,7 +279,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, lastname);
             cv.put(TblMyDebts.PERS_I_OWE_VALUE, value);
             cv.put(TblMyDebts.STATUS, status);
-            MainActivity.db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
+            MainActivity.db.insert(TblMyDebts.TABLE_NAME, null, cv);
         }
     }
 
