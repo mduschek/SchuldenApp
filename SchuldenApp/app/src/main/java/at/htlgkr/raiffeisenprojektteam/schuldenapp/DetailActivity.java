@@ -90,14 +90,11 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         //NFC
         if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
         MainActivity.nfcAdapter.setNdefPushMessageCallback(this, this);
-
-        //getDebtOrCredit();
     }
 
     @Override
     protected void onResume() {
         super.onPostResume();
-        //getDebtOrCredit();
         setButtons();
     }
 
@@ -112,8 +109,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 break;
             case R.id.buttonNfc:
 
-                if (MainActivity.nfcAdapter.isEnabled() == false
-) {
+                if (MainActivity.nfcAdapter.isEnabled() == false) {
                     Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
                 } else {
@@ -186,12 +182,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     }
 
     public void setButtons(){
-        /*
-            buttonManualInput, Nfc, GenerateQrCode, Other: wenn betrag, verwendung, iban, vorname, nachname, datum != null
-            buttonBluetooth: wenn betrag, verwendung, datum != null (fremder iban, vorname, nachname soll übertragen werden, funktioniert noch nicht?)
 
-
-        */
         if (isDebt){
             buttonManualInput.setVisibility(View.VISIBLE);
             buttonBluetooth.setVisibility(View.VISIBLE);
@@ -208,6 +199,35 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             buttonOther.setVisibility(View.GONE);
             buttonPayDebt.setVisibility(View.GONE);
         }
+        /*
+            buttonManualInput, Nfc, GenerateQrCode, Other: wenn betrag, verwendung, iban, vorname, nachname, datum != null
+            buttonBluetooth: wenn betrag, verwendung, datum != null (fremder iban, vorname, nachname soll übertragen werden, funktioniert noch nicht?)
+
+        */
+//        if (isDebt){
+//            if (edVal != null && edUsuage != null && date != null){
+//                buttonBluetooth.setVisibility(View.VISIBLE);
+//            }
+//            if (edVal != null && edUsuage != null && edIBAN != null && edFirstname != null && edLastname != null && date != null){
+//                buttonManualInput.setVisibility(View.VISIBLE);
+//                buttonNfc.setVisibility(View.VISIBLE);
+//                buttonGenerateQrCode.setVisibility(View.VISIBLE);
+//                buttonOther.setVisibility(View.VISIBLE);
+//                buttonPayDebt.setVisibility(View.VISIBLE);
+//            }
+//        }
+//        else {
+//            if (edVal == null && edUsuage == null && date == null){
+//                buttonBluetooth.setVisibility(View.GONE);
+//            }
+//            if (edVal == null && edUsuage == null && edIBAN == null && edFirstname == null && edLastname == null && date == null){
+//                buttonManualInput.setVisibility(View.GONE);
+//                buttonNfc.setVisibility(View.GONE);
+//                buttonGenerateQrCode.setVisibility(View.GONE);
+//                buttonOther.setVisibility(View.GONE);
+//                buttonPayDebt.setVisibility(View.GONE);
+//            }
+//        }
     }
 
     @Override
@@ -238,15 +258,21 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     private void insert(String status) {
         initTexts();
-        ContentValues cv = new ContentValues();
-        cv.put(TblMyDebts.PERS_I_OWE_DATE, sdf.format(date));
-        cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, firstname);
-        cv.put(TblMyDebts.PERS_I_OWE_IBAN, iban);
-        cv.put(TblMyDebts.PERS_I_OWE_USUAGE, usuage);
-        cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, lastname);
-        cv.put(TblMyDebts.PERS_I_OWE_VALUE, value);
-        cv.put(TblMyDebts.STATUS, status);
-        MainActivity.db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
+
+        if(isDebt){
+
+        }
+        else{
+            ContentValues cv = new ContentValues();
+            cv.put(TblMyDebts.PERS_I_OWE_DATE, sdf.format(date));
+            cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, firstname);
+            cv.put(TblMyDebts.PERS_I_OWE_IBAN, iban);
+            cv.put(TblMyDebts.PERS_I_OWE_USUAGE, usuage);
+            cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, lastname);
+            cv.put(TblMyDebts.PERS_I_OWE_VALUE, value);
+            cv.put(TblMyDebts.STATUS, status);
+            MainActivity.db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
+        }
     }
 
     //region Bluetooth
