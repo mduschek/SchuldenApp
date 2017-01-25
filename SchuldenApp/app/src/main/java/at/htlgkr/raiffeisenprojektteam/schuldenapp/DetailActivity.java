@@ -121,7 +121,8 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             case R.id.buttonGenerateQrCode:
                 Intent qrgenint=new Intent(this,QrGeneratorActivity.class);
                 qrgenint.setAction(Intent.ACTION_SEND);
-                String data = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                String data = isDebt +";"+ firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                data = URLEncoder.encode(data);
                 qrgenint.putExtra("qr", data);
                 startActivity(qrgenint);
                 break;
