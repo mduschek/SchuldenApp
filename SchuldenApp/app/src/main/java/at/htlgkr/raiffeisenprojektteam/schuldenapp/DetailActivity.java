@@ -121,8 +121,9 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             case R.id.buttonGenerateQrCode:
                 Intent qrgenint=new Intent(this,QrGeneratorActivity.class);
                 qrgenint.setAction(Intent.ACTION_SEND);
+                initTexts();
                 String data = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
-                qrgenint.putExtra("qr", data);
+                qrgenint.putExtra("qr", URLEncoder.encode(data));
                 startActivity(qrgenint);
                 break;
             case R.id.buttonOther:
@@ -144,7 +145,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 startActivity(Intent.createChooser(sendIntent, "Titel"));*/
                 break;
             case R.id.buttonPayDebt:
-                Intent bezahlIntent=new Intent();
+                Intent bezahlIntent=new Intent(this,BezahlApp.class);
                 bezahlIntent.setAction(Intent.ACTION_SEND);
                 bezahlIntent.putExtra("BezahlApp","Alexander;Perndorfer;Essen;AT34442566756567;30.65");
                 startActivity(bezahlIntent);
