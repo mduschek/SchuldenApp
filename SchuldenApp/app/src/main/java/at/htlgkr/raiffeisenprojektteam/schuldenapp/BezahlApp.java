@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class BezahlApp extends AppCompatActivity {
-
+    //Auf Button Bezahlen
     private ListView lv;
     private ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1);
     private ArrayList<String> list=new ArrayList<>();

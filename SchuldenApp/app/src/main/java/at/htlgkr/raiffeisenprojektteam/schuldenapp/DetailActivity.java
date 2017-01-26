@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     public int dialogWich = -1;
 
-    public boolean isDebt = true;
+    public boolean iAmDebtor = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
         //recover data on recreation
         if (savedInstanceState != null) {
-            isDebt = savedInstanceState.getBoolean(IS_DEBTOR_KEY);
+            iAmDebtor = savedInstanceState.getBoolean(IS_DEBTOR_KEY);
         }
 
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
@@ -99,6 +99,11 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     }
 
     public void onButtonPressed(View source) {
+
+        if (!checkInputValues()){
+            Toast t = Toast.makeText(this, "Bitte alle Felder ausfüllen", Toast.LENGTH_LONG);
+            t.show();
+        }
         switch (source.getId()) {
             case R.id.buttonManualInput:
                 insert("open");
@@ -124,6 +129,11 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 initTexts();
                 String data = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 qrgenint.putExtra("qr", URLEncoder.encode(data));
+
+                String data = iAmDebtor +";"+ firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                data = URLEncoder.encode(data);
+                qrgenint.putExtra("qr", data);
+
                 startActivity(qrgenint);
                 break;
             case R.id.buttonOther:
@@ -165,12 +175,12 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 break;
 
             case R.id.radioButtonDebtor:
-                isDebt = true;
+                iAmDebtor = true;
                 setButtons();
                 break;
 
             case R.id.radioButtonCreditor:
-                isDebt = false;
+                iAmDebtor = false;
                 setButtons();
                 break;
         }
@@ -178,13 +188,13 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     @Deprecated
     public void getDebtOrCredit(){
-        isDebt = radioButtonDebtor.isSelected();
+        iAmDebtor = radioButtonDebtor.isSelected();
         setButtons();
     }
 
     public void setButtons(){
 
-        if (isDebt){
+        if (iAmDebtor){
             buttonManualInput.setVisibility(View.VISIBLE);
             buttonBluetooth.setVisibility(View.VISIBLE);
             buttonNfc.setVisibility(View.VISIBLE);
@@ -205,7 +215,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             buttonBluetooth: wenn betrag, verwendung, datum != null (fremder iban, vorname, nachname soll übertragen werden, funktioniert noch nicht?)
 
         */
-//        if (isDebt){
+//        if (iAmDebtor){
 //            if (edVal != null && edUsuage != null && date != null){
 //                buttonBluetooth.setVisibility(View.VISIBLE);
 //            }
@@ -260,7 +270,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     private void insert(String status) {
         initTexts();
 
-        if(!isDebt){//isDebt==true == wir sind Schuldner== wir schulden geld
+        if(!iAmDebtor){//iAmDebtor==true == wir sind Schuldner== wir schulden geld
             ContentValues cv = new ContentValues();
             cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, sdf.format(date));
             cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, firstname);
@@ -297,7 +307,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                     BluetoothDevice[] devices = (BluetoothDevice[]) bondedDevices.toArray();
 
                     //ListDialog
-                    bluetootDevicesDialog(devices);
+                    bluetoothDevicesDialog(devices);
 
                     BluetoothDevice device = (BluetoothDevice) devices[dialogWich];
                     ParcelUuid[] uuids = device.getUuids();
@@ -306,7 +316,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                     MainActivity.bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                     MainActivity.bw.write(firstname+";"+lastname+";"+usuage+";"+iban+";"+value+";"+date);
                     MainActivity.bw.flush();
-                    
+
                     //SENDER VERBINDET SICH IMMER MIR DEM EMPFÄNGER
                 }
 
@@ -322,7 +332,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         }
     }
 
-    private AlertDialog bluetootDevicesDialog (BluetoothDevice[] devices) {
+    private AlertDialog bluetoothDevicesDialog(BluetoothDevice[] devices) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Bluetooth Gerät auswählen");
 
@@ -349,11 +359,23 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         return builder.create();
     }
 
+    private boolean checkInputValues(){
+        if (edVal.getText().toString() != ""
+                && edUsuage.getText().toString() != ""
+                && edIBAN.getText().toString() != ""
+                && edFirstname.getText().toString() != ""
+                && edLastname.getText().toString() != ""
+            //&& date != null
+            ){
+            return true;
+        }
+        return false;
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean(IS_DEBTOR_KEY, isDebt);
+        outState.putBoolean(IS_DEBTOR_KEY, iAmDebtor);
         super.onSaveInstanceState(outState);
     }
 }
     //endregion
-
