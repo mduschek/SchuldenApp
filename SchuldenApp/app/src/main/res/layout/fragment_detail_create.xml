@@ -16,22 +16,22 @@
             android:id="@+id/textViewIamThe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ich bin der" />
+            android:text="Ich bin " />
 
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <RadioButton android:id="@+id/radioButtonCreditor"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kreditor"
+                android:onClick="onRadioButtonClicked" />
             <RadioButton android:id="@+id/radioButtonDebtor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Schuldner"
-                android:onClick="onRadioButtonClicked" />
-            <RadioButton android:id="@+id/radioButtonCreditor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Zahler"
+                android:text="Debitor"
                 android:onClick="onRadioButtonClicked" />
         </RadioGroup>
 
