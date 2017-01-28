@@ -10,12 +10,12 @@ public class Debt implements Serializable
 {
     public static int OWN_DEPT = 0, SBDY_OWES_ME_DEPT = 1;
 
-    private int deptType;
+    private boolean iAmCreditor;
     private String deptorFirstName, deptorLastName, usuage, iBan, status;
     private double value;
 
-    public Debt(int deptType, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value) {
-        this.deptType = deptType;
+    public Debt(boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value) {
+        this.iAmCreditor = iAmCreditor;
         this.deptorFirstName = deptorFirstName;
         this.deptorLastName = deptorLastName;
         this.usuage = usuage;

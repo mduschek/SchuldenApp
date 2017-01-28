@@ -49,9 +49,8 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "*=DetailActivity";
     private String nfcString = "";
-    private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-    private String firstname = "", lastname = "", usuage = "", value = "", iban = "", partnerIsCreditor="";
+    private String firstname = "", lastname = "", usuage = "", value = "", iban = "", partnerIsCreditor = "";
     private Date date = new Date();
 
     public int dialogWich = -1;
@@ -66,7 +65,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         //recover data on recreation
         if (savedInstanceState != null) {
             iAmCreditor = savedInstanceState.getBoolean(IS_DEBTOR_KEY);
-            Log.w(TAG, "savedInstanceState" +iAmCreditor );
+            Log.w(TAG, "savedInstanceState" + iAmCreditor);
         }
 
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
@@ -78,8 +77,8 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         buttonOther = (Button) findViewById(R.id.buttonOther);      //Activity Chooser mit anderen Apps
         buttonPayDebt = (Button) findViewById(R.id.buttonPayDebt);  //Button setzt den Status auf Bezahlt
 
-        radioButtonDebtor = (RadioButton)findViewById(R.id.radioButtonDebtor);
-        radioButtonCreditor = (RadioButton)findViewById(R.id.radioButtonCreditor);
+        radioButtonDebtor = (RadioButton) findViewById(R.id.radioButtonDebtor);
+        radioButtonCreditor = (RadioButton) findViewById(R.id.radioButtonCreditor);
 
         //buttonBluetooth.setVisibility(View.GONE);
         //buttonNfc.setVisibility(View.GONE);
@@ -92,13 +91,10 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         edLastname = (EditText) findViewById(R.id.editTextLastName);
 
         //NFC
-        if (!MainActivity.nfcIsAvailable)
-        {
+        if (!MainActivity.nfcIsAvailable) {
 
             buttonNfc.setVisibility(View.GONE);
-        }
-        else
-        {
+        } else {
             MainActivity.nfcAdapter.setNdefPushMessageCallback(this, this);
         }
     }
@@ -111,7 +107,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     public void onButtonPressed(View source) {
 
-        if (!checkInputValues()){
+        if (!checkInputValues()) {
             Toast t = Toast.makeText(this, "Bitte alle Felder ausfüllen", Toast.LENGTH_LONG);
             t.show();
         }
@@ -135,10 +131,11 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
                 break;
             case R.id.buttonGenerateQrCode:
-                Intent qrgenint=new Intent(this,QrGeneratorActivity.class);
+                Intent qrgenint = new Intent(this, QrGeneratorActivity.class);
                 qrgenint.setAction(Intent.ACTION_SEND);
                 initTexts();
-                String data = partnerIsCreditor+";"+firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                Log.d(TAG+"GenQR", partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date));
+                String data = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 qrgenint.putExtra("qr", URLEncoder.encode(data));
                 startActivity(qrgenint);
                 break;
@@ -149,7 +146,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
-                String dataString = partnerIsCreditor+";"+firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                String dataString = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 dataString = URLEncoder.encode(dataString);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, LINK + dataString);
                 //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
@@ -161,9 +158,9 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 startActivity(Intent.createChooser(sendIntent, "Titel"));*/
                 break;
             case R.id.buttonPayDebt:
-                Intent bezahlIntent=new Intent(this,BezahlApp.class);
+                Intent bezahlIntent = new Intent(this, BezahlApp.class);
                 bezahlIntent.setAction(Intent.ACTION_SEND);
-                bezahlIntent.putExtra("BezahlApp","Alexander;Perndorfer;Essen;AT34442566756567;30.65");
+                bezahlIntent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
                 startActivity(bezahlIntent);
                 break;
         }
@@ -193,12 +190,12 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     }
 
     @Deprecated
-    public void getDebtOrCredit(){
+    public void getDebtOrCredit() {
         iAmCreditor = radioButtonDebtor.isSelected();
         setButtons();
     }
 
-    public void setButtons(){
+    public void setButtons() {
 
         /*if (iAmCreditor){
             buttonManualInput.setVisibility(View.VISIBLE);
@@ -251,7 +248,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
         //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
         initTexts();
-        final String stringOut = partnerIsCreditor+";"+firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+        final String stringOut = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -266,42 +263,42 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     private void initTexts()//speichert die werte der textfelder in die variablen
     {
-        if(iAmCreditor)
-        {
-            firstname=UserData.firstname;
-            lastname=UserData.lastname;
-            iban=UserData.iban;
-        }
-        firstname = edFirstname.getText().toString();
-        lastname = edLastname.getText().toString();
-        usuage = edUsuage.getText().toString();
-        iban = edIBAN.getText().toString();
-        value = edVal.getText().toString();
-        partnerIsCreditor = !iAmCreditor+"";
+        DBData.firstname = edFirstname.getText().toString();
+        DBData.lastname = edLastname.getText().toString();
+        DBData.usuage = edUsuage.getText().toString();
+        DBData.iban = edIBAN.getText().toString();
+        DBData.value = edVal.getText().toString();
+        partnerIsCreditor = !iAmCreditor + "";
+
+        firstname = UserData.firstname;
+        lastname = UserData.lastname;
+        iban = UserData.iban;
+        value = DBData.value;
+        usuage = DBData.usuage;
+        Log.w(TAG+"senddat", firstname+lastname+iban+value+usuage);
     }
 
     private void insert(String status) {
         initTexts();
 
-        if(iAmCreditor){//iAmCreditor==true == wir sind Gläubiger== wir leihen geld
+        if (iAmCreditor) {//iAmCreditor==true == wir sind Gläubiger== wir leihen geld
             ContentValues cv = new ContentValues();
             cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, sdf.format(date));
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, firstname);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, iban);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, usuage);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, lastname);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, value);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, DBData.firstname);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, DBData.iban);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, DBData.usuage);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, DBData.lastname);
+            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, DBData.value);
             cv.put(TblWhoOwesMe.STATUS, status);
             MainActivity.db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
-        }
-        else{
+        } else {
             ContentValues cv = new ContentValues();
             cv.put(TblMyDebts.PERS_I_OWE_DATE, sdf.format(date));
-            cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, firstname);
-            cv.put(TblMyDebts.PERS_I_OWE_IBAN, iban);
-            cv.put(TblMyDebts.PERS_I_OWE_USUAGE, usuage);
-            cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, lastname);
-            cv.put(TblMyDebts.PERS_I_OWE_VALUE, value);
+            cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, DBData.firstname);
+            cv.put(TblMyDebts.PERS_I_OWE_IBAN, DBData.iban);
+            cv.put(TblMyDebts.PERS_I_OWE_USUAGE, DBData.usuage);
+            cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, DBData.lastname);
+            cv.put(TblMyDebts.PERS_I_OWE_VALUE, DBData.value);
             cv.put(TblMyDebts.STATUS, status);
             MainActivity.db.insert(TblMyDebts.TABLE_NAME, null, cv);
         }
@@ -328,20 +325,17 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                     BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuids[dialogWich].getUuid());
                     socket.connect();
                     MainActivity.bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                    MainActivity.bw.write(firstname+";"+lastname+";"+usuage+";"+iban+";"+value+";"+date);
+                    MainActivity.bw.write(firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + date);
                     MainActivity.bw.flush();
 
                     //SENDER VERBINDET SICH IMMER MIR DEM EMPFÄNGER
                 }
 
                 Log.e("error", "No appropriate paired devices.");
-            } else
-            {
+            } else {
                 Log.e("error", "Bluetooth is disabled.");
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Log.e(TAG, "Bluetooth: ", ex);
         }
     }
@@ -352,7 +346,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         builder.setTitle("Bluetooth Gerät auswählen");
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
-        for (BluetoothDevice device : devices){
+        for (BluetoothDevice device : devices) {
             arrayAdapter.add(device.getName());
         }
 
@@ -374,14 +368,14 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         return builder.create();
     }
 
-    private boolean checkInputValues(){
+    private boolean checkInputValues() {
         if (edVal.getText().toString() != ""
                 && edUsuage.getText().toString() != ""
                 && edIBAN.getText().toString() != ""
                 && edFirstname.getText().toString() != ""
                 && edLastname.getText().toString() != ""
             //&& date != null
-            ){
+                ) {
             return true;
         }
         return false;

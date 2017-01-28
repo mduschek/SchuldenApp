@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         UserData.lastname=sharedPreferences.getString("pref_userdata_lastname",null);
         UserData.iban=sharedPreferences.getString("pref_userdata_iban",null);
         UserData.email=sharedPreferences.getString("pref_userdata_email",null);
+
+        Log.d(TAG, UserData.getString());
+        
         //region incoming intent from deeplinking
         Intent intent = getIntent();
         Log.e(TAG, "onCreate:");
@@ -234,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     ContentValues cv = new ContentValues();
+                    Toast.makeText(getApplicationContext(),"inputAccepted", Toast.LENGTH_LONG).show();
                     cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, split[6]);
                     cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME,split[1]);
                     cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN,split[4]);
@@ -241,7 +246,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                     cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME,split[2]);
                     cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, split[5]);
                     cv.put(TblWhoOwesMe.STATUS,"not_paid");
-                    db.insert(TblMyDebts.TABLE_NAME,null,cv);
+                    db.insert(TblWhoOwesMe.TABLE_NAME,null,cv);
+
                 }
             });
             builder.setNegativeButton("Nein",null);
