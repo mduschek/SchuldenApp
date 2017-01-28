@@ -88,8 +88,15 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         edLastname = (EditText) findViewById(R.id.editTextLastName);
 
         //NFC
-        if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
-        MainActivity.nfcAdapter.setNdefPushMessageCallback(this, this);
+        if (!MainActivity.nfcIsAvailable)
+        {
+
+            buttonNfc.setVisibility(View.GONE);
+        }
+        else
+        {
+            MainActivity.nfcAdapter.setNdefPushMessageCallback(this, this);
+        }
     }
 
     @Override
@@ -130,9 +137,9 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 String data = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 qrgenint.putExtra("qr", URLEncoder.encode(data));
 
-                String data = iAmDebtor +";"+ firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
-                data = URLEncoder.encode(data);
-                qrgenint.putExtra("qr", data);
+                String mydata = iAmDebtor +";"+ firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                mydata = URLEncoder.encode(mydata);
+                qrgenint.putExtra("qr", mydata);
 
                 startActivity(qrgenint);
                 break;
