@@ -6,12 +6,14 @@ import android.bluetooth.BluetoothSocket;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.ParcelUuid;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +49,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "*=DetailActivity";
     private String nfcString = "";
+    private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
     private String firstname = "", lastname = "", usuage = "", value = "", iban = "", partnerIsCreditor="";
     private Date date = new Date();
@@ -135,13 +138,8 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 Intent qrgenint=new Intent(this,QrGeneratorActivity.class);
                 qrgenint.setAction(Intent.ACTION_SEND);
                 initTexts();
-                String data = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                String data = partnerIsCreditor+";"+firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 qrgenint.putExtra("qr", URLEncoder.encode(data));
-
-                String mydata = iAmCreditor +";"+ firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
-                mydata = URLEncoder.encode(mydata);
-                qrgenint.putExtra("qr", mydata);
-
                 startActivity(qrgenint);
                 break;
             case R.id.buttonOther:
@@ -151,7 +149,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
-                String dataString = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                String dataString = partnerIsCreditor+";"+firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 dataString = URLEncoder.encode(dataString);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, LINK + dataString);
                 //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
@@ -253,7 +251,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
         //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
         initTexts();
-        final String stringOut = firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+        final String stringOut = partnerIsCreditor+";"+firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -268,6 +266,12 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     private void initTexts()//speichert die werte der textfelder in die variablen
     {
+        if(iAmCreditor)
+        {
+            firstname=UserData.firstname;
+            lastname=UserData.lastname;
+            iban=UserData.iban;
+        }
         firstname = edFirstname.getText().toString();
         lastname = edLastname.getText().toString();
         usuage = edUsuage.getText().toString();
@@ -304,6 +308,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     }
 
     //region Bluetooth
+
     private void Bluetooth() {
         initTexts();
         BluetoothAdapter blueAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -340,6 +345,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             Log.e(TAG, "Bluetooth: ", ex);
         }
     }
+    //endregion
 
     private AlertDialog bluetoothDevicesDialog(BluetoothDevice[] devices) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -387,4 +393,3 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         super.onSaveInstanceState(outState);
     }
 }
-    //endregion

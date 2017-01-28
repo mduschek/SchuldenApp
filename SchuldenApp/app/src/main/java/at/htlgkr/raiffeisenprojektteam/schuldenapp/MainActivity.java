@@ -57,12 +57,16 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
             nfcAdapter.setOnNdefPushCompleteCallback(this, this);
         }
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        UserData.firstname=sharedPreferences.getString("pref_userdata_firstname",null);
+        UserData.lastname=sharedPreferences.getString("pref_userdata_lastname",null);
+        UserData.iban=sharedPreferences.getString("pref_userdata_iban",null);
+        UserData.email=sharedPreferences.getString("pref_userdata_email",null);
         //region incoming intent from deeplinking
         Intent intent = getIntent();
         Log.e(TAG, "onCreate:");
         if (intent.getData() != null)
         {
-            //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;24.12.2016
+            //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;24.12.2016
             String params = intent.getData().getQueryParameter("content");
             params = URLDecoder.decode(params);
             Log.e(TAG, params);
@@ -220,26 +224,52 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
     //endregion
 
     private void insertIntoDb(final String [] split)
-    {
-        AlertDialog.Builder builder= new AlertDialog.Builder(this);
-        builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\nIch schulde "+split[0]+ " "+split[1]+ " "+split[4]+"€ für "+split[2]);
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                ContentValues cv = new ContentValues();
-                cv.put(TblMyDebts.PERS_I_OWE_DATE, split[5]);
-                cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME,split[0]);
-                cv.put(TblMyDebts.PERS_I_OWE_IBAN,split[3]);
-                cv.put(TblMyDebts.PERS_I_OWE_USUAGE,split[2]);
-                cv.put(TblMyDebts.PERS_I_OWE_LASTNAME,split[1]);
-                cv.put(TblMyDebts.PERS_I_OWE_VALUE, split[4]);
-                cv.put(TblMyDebts.STATUS,"not_paid");
-                db.insert(TblMyDebts.TABLE_NAME,null,cv);
-            }
-        });
-        builder.setNegativeButton("Nein",null);
-        builder.create().show();
+    {//STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+        if(split[0].equals("true"))
+        {
+            AlertDialog.Builder builder= new AlertDialog.Builder(this);
+            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\nMir schuldet "+split[1]+ " "+split[2]+ " "+split[5]+"€ für "+split[3]+", am "+split[6]);
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    ContentValues cv = new ContentValues();
+                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, split[6]);
+                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME,split[1]);
+                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN,split[4]);
+                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE,split[3]);
+                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME,split[2]);
+                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, split[5]);
+                    cv.put(TblWhoOwesMe.STATUS,"not_paid");
+                    db.insert(TblMyDebts.TABLE_NAME,null,cv);
+                }
+            });
+            builder.setNegativeButton("Nein",null);
+            builder.create().show();
+        }
+        else
+        {
+            AlertDialog.Builder builder= new AlertDialog.Builder(this);
+            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\nIch schulde "+split[1]+ " "+split[2]+ " "+split[5]+"€ für "+split[3]+", am "+split[6]);
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    ContentValues cv = new ContentValues();
+                    cv.put(TblMyDebts.PERS_I_OWE_DATE, split[6]);
+                    cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME,split[1]);
+                    cv.put(TblMyDebts.PERS_I_OWE_IBAN,split[4]);
+                    cv.put(TblMyDebts.PERS_I_OWE_USUAGE,split[3]);
+                    cv.put(TblMyDebts.PERS_I_OWE_LASTNAME,split[2]);
+                    cv.put(TblMyDebts.PERS_I_OWE_VALUE, split[5]);
+                    cv.put(TblMyDebts.STATUS,"not_paid");
+                    db.insert(TblMyDebts.TABLE_NAME,null,cv);
+                }
+            });
+            builder.setNegativeButton("Nein",null);
+            builder.create().show();
+        }
+
     }
 
     @Override
