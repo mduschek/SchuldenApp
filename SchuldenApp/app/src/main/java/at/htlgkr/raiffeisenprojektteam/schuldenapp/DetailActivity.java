@@ -45,10 +45,10 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp?content=";
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;12.12.16
-    private static final String TAG = "DetailActivity";
+    private static final String TAG = "*=DetailActivity";
     private String nfcString = "";
 
-    private String firstname = "", lastname = "", usuage = "", value = "", iban = "";
+    private String firstname = "", lastname = "", usuage = "", value = "", iban = "", partnerIsCreditor="";
     private Date date = new Date();
 
     public int dialogWich = -1;
@@ -63,6 +63,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         //recover data on recreation
         if (savedInstanceState != null) {
             iAmCreditor = savedInstanceState.getBoolean(IS_DEBTOR_KEY);
+            Log.w(TAG, "savedInstanceState" +iAmCreditor );
         }
 
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
@@ -182,12 +183,12 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 break;
 
             case R.id.radioButtonDebtor:
-                iAmCreditor = true;
+                iAmCreditor = false;
                 setButtons();
                 break;
 
             case R.id.radioButtonCreditor:
-                iAmCreditor = false;
+                iAmCreditor = true;
                 setButtons();
                 break;
         }
@@ -201,7 +202,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     public void setButtons(){
 
-        if (iAmCreditor){
+        /*if (iAmCreditor){
             buttonManualInput.setVisibility(View.VISIBLE);
             buttonBluetooth.setVisibility(View.VISIBLE);
             buttonNfc.setVisibility(View.VISIBLE);
@@ -272,12 +273,13 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         usuage = edUsuage.getText().toString();
         iban = edIBAN.getText().toString();
         value = edVal.getText().toString();
+        partnerIsCreditor = !iAmCreditor+"";
     }
 
     private void insert(String status) {
         initTexts();
 
-        if(!iAmCreditor){//iAmCreditor==true == wir sind Schuldner== wir schulden geld
+        if(iAmCreditor){//iAmCreditor==true == wir sind Gläubiger== wir leihen geld
             ContentValues cv = new ContentValues();
             cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, sdf.format(date));
             cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, firstname);
