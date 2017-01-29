@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         Intent intent;
         switch (id) {
             case R.id.option_menu_new_entry:
-                intent = new Intent(this, DetailActivity.class);
+                intent = new Intent(this, CreateActivity.class);
                 //intent.putExtra("object", -1);
                 startActivity(intent);
                 return true;
@@ -250,6 +249,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
 
                 }
             });
+            builder.setCancelable(false);
             builder.setNegativeButton("Nein",null);
             builder.create().show();
         }
@@ -272,6 +272,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                     db.insert(TblMyDebts.TABLE_NAME,null,cv);
                 }
             });
+            builder.setCancelable(false);
             builder.setNegativeButton("Nein",null);
             builder.create().show();
         }
@@ -293,9 +294,10 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
 
             }else{
                 //Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this, DetailActivity.class);
+                Intent intent = new Intent(this, CreateActivity.class);
                 String string = URLDecoder.decode(result.getContents().toString());
                 intent.putExtra("qr_code", data);
+                insertIntoDb(string.split(";"));
                 Toast.makeText(this,string, Toast.LENGTH_LONG).show();
                 //startActivity(intent);
             }

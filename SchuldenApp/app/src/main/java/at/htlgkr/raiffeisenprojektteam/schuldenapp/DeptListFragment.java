@@ -79,7 +79,7 @@ public class DeptListFragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 clickedIndex = i;
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                Intent intent = new Intent(getActivity(), CreateActivity.class);
                 intent.putExtra("object", adapter.getItem(i));
                 startActivity(intent);
             }

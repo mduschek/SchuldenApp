@@ -6,14 +6,12 @@ import android.bluetooth.BluetoothSocket;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.ParcelUuid;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +35,7 @@ import java.util.Set;
  * Created by michael on 24.11.16.
  */
 
-public class DetailActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
+public class CreateActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
 
     private static final String IS_DEBTOR_KEY = "isDebtorKey";
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -47,7 +45,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp?content=";
     //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;12.12.16
-    private static final String TAG = "*=DetailActivity";
+    private static final String TAG = "*=CreateActivity";
     private String nfcString = "";
 
     private String firstname = "", lastname = "", usuage = "", value = "", iban = "", partnerIsCreditor = "";
@@ -60,7 +58,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_detail_create);
+        setContentView(R.layout.fragment_create);
 
         //recover data on recreation
         if (savedInstanceState != null) {
@@ -138,6 +136,8 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 String data = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 qrgenint.putExtra("qr", URLEncoder.encode(data));
                 startActivity(qrgenint);
+                insert("not_paid");
+                finish();
                 break;
             case R.id.buttonOther:
 
@@ -152,7 +152,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
-
+                finish();
                 /*Intent sendIntent = new Intent();
                 sendIntent.setData (Uri.parse("schuldenapp://createloan"));
                 startActivity(Intent.createChooser(sendIntent, "Titel"));*/

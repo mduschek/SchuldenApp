@@ -31,7 +31,7 @@ public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_detail_create);
+        setContentView(R.layout.fragment_create);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
@@ -50,7 +50,7 @@ public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.
         switch (source.getId()){
             case R.id.buttonManualInput:
 
-                intent = new Intent(this,DetailActivity.class);
+                intent = new Intent(this,CreateActivity.class);
 
                 //intent.putExtra("object", -1);
                 startActivity(intent);
@@ -74,13 +74,13 @@ public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.
                 break;
             case R.id.buttonNfc:
                 //an dieser Stelle NFC aktivieren
-                //intent = new Intent(this,DetailActivity.class);
+                //intent = new Intent(this,CreateActivity.class);
                 //intent.putExtra("object", -1);
                 //startActivity(intent);
 
                 break;
             case R.id.buttonSms:
-                //intent = new Intent(this,DetailActivity.class);
+                //intent = new Intent(this,CreateActivity.class);
                 //intent.putExtra("object", -1);
                 //startActivity(intent);
                 break;
