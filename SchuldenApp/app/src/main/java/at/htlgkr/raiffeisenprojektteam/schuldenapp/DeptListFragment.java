@@ -69,7 +69,6 @@ public class DeptListFragment extends Fragment
                 String status = c.getString(c.getColumnIndex(TblWhoOwesMe.STATUS));
                 Log.d("*==", firstname);
                 listItems.add(new Debt(true,firstname,lastname,usuage,iban,status,value));
-
             }
         }
 
