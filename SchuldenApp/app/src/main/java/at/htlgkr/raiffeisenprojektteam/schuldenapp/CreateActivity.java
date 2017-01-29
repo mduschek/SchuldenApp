@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Set;
 
 /**
@@ -44,9 +46,10 @@ public class CreateActivity extends AppCompatActivity implements NfcAdapter.Crea
     private Button buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt;
     private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp?content=";
-    //STRUKTUR: ?content=Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+    //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "*=CreateActivity";
     private String nfcString = "";
+    private CalendarView calendarView;
 
     private String firstname = "", lastname = "", usuage = "", value = "", iban = "", partnerIsCreditor = "";
     private Date date = new Date();
@@ -74,6 +77,15 @@ public class CreateActivity extends AppCompatActivity implements NfcAdapter.Crea
         buttonGenerateQrCode = (Button) findViewById(R.id.buttonGenerateQrCode);
         buttonOther = (Button) findViewById(R.id.buttonOther);      //Activity Chooser mit anderen Apps
         buttonPayDebt = (Button) findViewById(R.id.buttonPayDebt);  //Button setzt den Status auf Bezahlt
+
+        calendarView = (CalendarView) findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
+                date = gregorianCalendar.getTime();
+            }
+        });
 
         radioButtonDebtor = (RadioButton) findViewById(R.id.radioButtonDebtor);
         radioButtonCreditor = (RadioButton) findViewById(R.id.radioButtonCreditor);
@@ -141,7 +153,6 @@ public class CreateActivity extends AppCompatActivity implements NfcAdapter.Crea
                 break;
             case R.id.buttonOther:
 
-                insert("not_paid");
                 //Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
@@ -152,6 +163,7 @@ public class CreateActivity extends AppCompatActivity implements NfcAdapter.Crea
                 //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
+                insert("not_paid");
                 finish();
                 /*Intent sendIntent = new Intent();
                 sendIntent.setData (Uri.parse("schuldenapp://createloan"));
@@ -168,15 +180,6 @@ public class CreateActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     public void onRadioButtonClicked(View source) {
         switch (source.getId()) {
-            case R.id.radioButtonDateNow:
-                date = new Date();
-                break;
-
-            case R.id.radioButtonManualDate:
-                //DATEPICKERDIALOG
-                Toast.makeText(getApplicationContext(), date.toString(), Toast.LENGTH_LONG).show();
-                break;
-
             case R.id.radioButtonDebtor:
                 iAmCreditor = false;
                 setButtons();

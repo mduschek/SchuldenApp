@@ -2,15 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:padding="5dp"
     tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.CreateActivity">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="11dp">
 
         <TextView
             android:id="@+id/textViewIamThe"
@@ -115,23 +114,11 @@
             android:layout_weight="1"
             android:hint="E-Mail Adresse Schuldner" />-->
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <CalendarView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton android:id="@+id/radioButtonDateNow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Heute als Datum"
-                android:onClick="onRadioButtonClicked" />
-            <RadioButton android:id="@+id/radioButtonManualDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Datum auswählen"
-                android:onClick="onRadioButtonClicked" />
-        </RadioGroup>
-
+            android:id="@+id/calendarView"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
