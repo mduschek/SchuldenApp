@@ -37,7 +37,7 @@ import java.util.Set;
  * Created by michael on 24.11.16.
  */
 
-public class CreateActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
+public class DetailActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
 
     private static final String IS_DEBTOR_KEY = "isDebtorKey";
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -47,7 +47,7 @@ public class CreateActivity extends AppCompatActivity implements NfcAdapter.Crea
     private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp?content=";
     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
-    private static final String TAG = "*=CreateActivity";
+    private static final String TAG = "*=DetailActivity";
     private String nfcString = "";
     private CalendarView calendarView;
 
@@ -56,12 +56,14 @@ public class CreateActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     public int dialogWich = -1;
 
+
+    public boolean isNew = true;
     public boolean iAmCreditor = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_create);
+        setContentView(R.layout.fragment_create_detail);
 
         //recover data on recreation
         if (savedInstanceState != null) {
@@ -200,7 +202,7 @@ public class CreateActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     public void setButtons() {
 
-        /*if (iAmCreditor){
+        if (iAmCreditor){
             buttonManualInput.setVisibility(View.VISIBLE);
             buttonBluetooth.setVisibility(View.VISIBLE);
             buttonNfc.setVisibility(View.VISIBLE);
@@ -216,11 +218,11 @@ public class CreateActivity extends AppCompatActivity implements NfcAdapter.Crea
             buttonOther.setVisibility(View.GONE);
             buttonPayDebt.setVisibility(View.GONE);
         }
-        /*
-            buttonManualInput, Nfc, GenerateQrCode, Other: wenn betrag, verwendung, iban, vorname, nachname, datum != null
-            buttonBluetooth: wenn betrag, verwendung, datum != null (fremder iban, vorname, nachname soll übertragen werden, funktioniert noch nicht?)
-
-        */
+//
+//        buttonManualInput, Nfc, GenerateQrCode, Other: wenn betrag, verwendung, iban, vorname, nachname, datum != null
+//        buttonBluetooth: wenn betrag, verwendung, datum != null (fremder iban, vorname, nachname soll übertragen werden, funktioniert noch nicht?)
+//
+//
 //        if (iAmCreditor){
 //            if (edVal != null && edUsuage != null && date != null){
 //                buttonBluetooth.setVisibility(View.VISIBLE);

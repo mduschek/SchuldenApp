@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by Alexander on 09.11.16.
  */
 
-public class DeptListFragment extends Fragment
+public class DebtListFragment extends Fragment
 {
     private View view;
     private ListView listView;
@@ -78,7 +78,7 @@ public class DeptListFragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 clickedIndex = i;
-                Intent intent = new Intent(getActivity(), CreateActivity.class);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("object", adapter.getItem(i));
                 startActivity(intent);
             }

@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Created by Alexander on 09.11.16.
@@ -25,7 +24,7 @@ class CustomPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         Fragment fragment;
         if (i<=1) {
-            fragment = new DeptListFragment();
+            fragment = new DebtListFragment();
             Log.e("*=", "getItem: "+i );
         }else
         {

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.CreateActivity">
+    tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.DetailActivity">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -116,12 +116,13 @@
 
         <CalendarView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/calendarView"
             />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingTop="16dp"
             android:orientation="vertical"
             android:layout_weight="1">
