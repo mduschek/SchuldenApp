@@ -111,7 +111,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         }
 
         if (getIntent().getExtras() != null) {
-            Debt d = (Debt)getIntent().getExtras().getSerializable("object");
+            debt = (Debt)getIntent().getExtras().getSerializable("object");
         }
     }
 
