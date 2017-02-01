@@ -116,8 +116,9 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Date"
+            android:text="Datum auswälen"
             android:id="@+id/btnSlctDate"
+            android:onClick="onButtonPressed"
             style="@style/Widget.AppCompat.Button.Colored"
             />
 

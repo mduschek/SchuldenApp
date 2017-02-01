@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -189,17 +190,20 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 startActivity(bezahlIntent);
                 break;
             case R.id.btnSlctDate:
-                Dialog dateDialog=new Dialog(getBaseContext());
+                Dialog dateDialog=new Dialog(this);
                 dateDialog.setContentView(R.layout.dialog_date_layout);
-                CalendarView cal= (CalendarView) findViewById(R.id.calendarView);
+                CalendarView cal= (CalendarView) dateDialog.findViewById(R.id.calendarView);
 
                 cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                     @Override
                     public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
                         GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
                         date = gregorianCalendar.getTime();
+                        Toast.makeText(getApplicationContext(), sdf.format(date),Toast.LENGTH_LONG).show();
+                        Log.d(TAG, sdf.format(date));
                     }
                 });
+                dateDialog.show();
                 break;
         }
     }
