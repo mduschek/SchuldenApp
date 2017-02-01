@@ -57,7 +57,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     public int dialogWich = -1;
 
 
-    public boolean isNew = true;
+    public Debt debt;
     public boolean iAmCreditor = true;
 
     @Override
@@ -109,12 +109,17 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         } else {
             MainActivity.nfcAdapter.setNdefPushMessageCallback(this, this);
         }
+
+        if (getIntent().getExtras() != null) {
+            Debt d = (Debt)getIntent().getExtras().getSerializable("object");
+        }
     }
 
     @Override
     protected void onResume() {
         super.onPostResume();
         setButtons();
+        setInputs();
     }
 
     public void onButtonPressed(View source) {
@@ -195,12 +200,12 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     }
 
     @Deprecated
-    public void getDebtOrCredit() {
+    private void getDebtOrCredit() {
         iAmCreditor = radioButtonDebtor.isSelected();
         setButtons();
     }
 
-    public void setButtons() {
+    private void setButtons() {
 
         if (iAmCreditor){
             buttonManualInput.setVisibility(View.VISIBLE);
@@ -248,6 +253,44 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 //            }
 //        }
     }
+    private void setInputs(){
+        if (debt != null){
+
+            if (debt.isiAmCreditor()){
+                radioButtonCreditor.isSelected();
+            }
+            else {
+                radioButtonDebtor.isSelected();
+            }
+
+            edVal.setText(debt.getValue() + "");
+            edUsuage.setText(debt.getUsuage() + "");
+            edIBAN.setText(debt.getiBan() + "");
+            edFirstname.setText(debt.getDeptorFirstName() + "");
+            edLastname.setText(debt.getDeptorLastName() + "");
+            //date = debt.getDate();
+
+            if (debt.getStatus() != "open"){
+                radioButtonCreditor.setClickable(false);
+                radioButtonDebtor.setClickable(false);
+                edVal.setEnabled(false);
+                edUsuage.setEnabled(false);
+                edIBAN.setEnabled(false);
+                edFirstname.setEnabled(false);
+                edLastname.setEnabled(false);
+            }
+        }
+        else{
+            radioButtonCreditor.setClickable(true);
+            radioButtonDebtor.setClickable(true);
+            edVal.setEnabled(true);
+            edUsuage.setEnabled(true);
+            edIBAN.setEnabled(true);
+            edFirstname.setEnabled(true);
+            edLastname.setEnabled(true);
+        }
+    }
+
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {

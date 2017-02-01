@@ -53,7 +53,7 @@ public class DebtListFragment extends Fragment
                 String iban = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_IBAN));
                 String status = c.getString(c.getColumnIndex(TblMyDebts.STATUS));
                 Log.d("*==", firstname);
-                listItems.add(new Debt(false,firstname,lastname,usuage,iban,status,value));
+                listItems.add(new Debt(false,firstname,lastname,usuage,iban,status,value, null));
             }
         }
         else
@@ -68,7 +68,7 @@ public class DebtListFragment extends Fragment
                 String iban = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN));
                 String status = c.getString(c.getColumnIndex(TblWhoOwesMe.STATUS));
                 Log.d("*==", firstname);
-                listItems.add(new Debt(true,firstname,lastname,usuage,iban,status,value));
+                listItems.add(new Debt(true,firstname,lastname,usuage,iban,status,value, null));
             }
         }
 
