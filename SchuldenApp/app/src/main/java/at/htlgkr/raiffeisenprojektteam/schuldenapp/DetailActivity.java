@@ -1,5 +1,6 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -49,7 +50,9 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "*=DetailActivity";
     private String nfcString = "";
-    private CalendarView calendarView;
+    //private CalendarView calendarView;
+
+
 
     private String firstname = "", lastname = "", usuage = "", value = "", iban = "", partnerIsCreditor = "";
     private Date date = new Date();
@@ -80,14 +83,15 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         buttonOther = (Button) findViewById(R.id.buttonOther);      //Activity Chooser mit anderen Apps
         buttonPayDebt = (Button) findViewById(R.id.buttonPayDebt);  //Button setzt den Status auf Bezahlt
 
-        calendarView = (CalendarView) findViewById(R.id.calendarView);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
-                date = gregorianCalendar.getTime();
-            }
-        });
+
+        //calendarView = (CalendarView) findViewById(R.id.calendarView);
+        //calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+         //   @Override
+         //   public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+          //      GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
+         //       date = gregorianCalendar.getTime();
+          //  }
+       // });
 
         radioButtonDebtor = (RadioButton) findViewById(R.id.radioButtonDebtor);
         radioButtonCreditor = (RadioButton) findViewById(R.id.radioButtonCreditor);
@@ -176,6 +180,19 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 bezahlIntent.setAction(Intent.ACTION_SEND);
                 bezahlIntent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
                 startActivity(bezahlIntent);
+                break;
+            case R.id.btnSlctDate:
+                Dialog dateDialog=new Dialog(getBaseContext());
+                dateDialog.setContentView(R.layout.dialog_date_layout);
+                CalendarView cal= (CalendarView) findViewById(R.id.calendarView);
+
+                cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
+                        GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
+                        date = gregorianCalendar.getTime();
+                    }
+                });
                 break;
         }
     }

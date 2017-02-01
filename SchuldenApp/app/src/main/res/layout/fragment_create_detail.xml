@@ -112,12 +112,19 @@
             android:ems="10"
             android:id="@+id/editTextEmailAdress"
             android:layout_weight="1"
-            android:hint="E-Mail Adresse Schuldner" />-->
+            android:hint="E-Mail Adresse Schuldner" />
 
         <CalendarView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/calendarView"
+            />-->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Date"
+            android:id="@+id/btnSlctDate"
+            style="@style/Widget.AppCompat.Button.Colored"
             />
 
         <LinearLayout
