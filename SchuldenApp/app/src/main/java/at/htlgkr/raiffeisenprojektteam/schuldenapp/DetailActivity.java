@@ -198,6 +198,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                         date = gregorianCalendar.getTime();
                     }
                 });
+
                 break;
         }
     }
