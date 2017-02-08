@@ -78,13 +78,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <!-- <TextView
-                 android:text="Vorname"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:id="@+id/tvFirstname"
-                 android:layout_weight="1"/>
-            -->
 
             <EditText
                 android:id="@+id/editTextFirstName"
@@ -123,10 +116,30 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Date"
+            android:text="Datum auswälen"
             android:id="@+id/btnSlctDate"
+            android:onClick="onButtonPressed"
             style="@style/Widget.AppCompat.Button.Colored"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:text="Status: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewStatus"/>
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -193,7 +206,6 @@
                 android:onClick="onButtonPressed"
                 android:visibility="visible"
                 style="@style/Widget.AppCompat.Button.Colored" />
-
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
