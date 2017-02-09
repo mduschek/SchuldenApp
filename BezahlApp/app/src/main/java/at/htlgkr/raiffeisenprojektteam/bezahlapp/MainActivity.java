@@ -1,33 +1,28 @@
 package at.htlgkr.raiffeisenprojektteam.bezahlapp;
 
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.net.URLDecoder;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
-    Button buttonTransaction, buttonScanQr;
+    Button buttonTransaction;
     TextView textViewCredit, textViewValue, textViewUsage, textViewIban, textViewFirstname, textViewLastname, textViewDate;
     SharedPreferences sharedPreferences;
-    //ArrayAdapter adap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +41,6 @@ public class MainActivity extends AppCompatActivity {
         textViewDate= (TextView) findViewById(R.id.textViewDate);
 
         buttonTransaction= (Button) findViewById(R.id.buttonTransaction);
-        buttonScanQr= (Button) findViewById(R.id.buttonScanQr);
-
-
-
-        //adap=new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1);
-        //listView.setAdapter(adap);
 
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -77,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch (id) {
             case R.id.option_menu_qr_scanner:
-//                IntentIntegrator integrator=new IntentIntegrator(this);
-//                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-//                integrator.setPrompt("Scan");
-//                integrator.setCameraId(0);
-//                integrator.setBeepEnabled(false);
-//                integrator.setBarcodeImageEnabled(false);
-//                integrator.initiateScan();
-//                return true;
+                IntentIntegrator integrator=new IntentIntegrator(this);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                integrator.setPrompt("Scan");
+                integrator.setCameraId(0);
+                integrator.setBeepEnabled(false);
+                integrator.setBarcodeImageEnabled(false);
+                integrator.initiateScan();
+            return true;
 
             case R.id.option_menu_preferences:
                 intent = new Intent(this, SettingsActivity.class);
@@ -94,20 +83,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public void buttonTransactionClicked(){
-
-    }
-
-    public void buttonScanQrClicked(){
-        IntentIntegrator integrator=new IntentIntegrator(this);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        integrator.setPrompt("Scan");
-        integrator.setCameraId(0);
-        integrator.setBeepEnabled(false);
-        integrator.setBarcodeImageEnabled(false);
-        integrator.initiateScan();
     }
 
     @Override
@@ -122,7 +97,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Cancelled",Toast.LENGTH_LONG).show();
             }else{
                 Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
+                Transaction transaction = StringToTransactionConverter(result.getContents());
             }
         }
+    }
+
+    public Transaction StringToTransactionConverter(String transactionString) {
+
+        final String splitArr[] = transactionString.split(";");
+
+        Transaction transaction = new Transaction(splitArr[0], splitArr[1], splitArr[2], splitArr[3], splitArr[4], Double.parseDouble(splitArr[5]));
+        return transaction;
+    }
+
+    public void buttonTransactionClicked(){
+
     }
 }

@@ -139,26 +139,11 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:orientation="horizontal">
-
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ausführen"
-            android:id="@+id/buttonTransaction"
-            android:layout_weight="1"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="QR code scannen"
-            android:id="@+id/buttonScanQr"
-            android:layout_weight="1"/>
-    </LinearLayout>
+        android:text="Transaktion ausführen"
+        android:id="@+id/buttonTransaction"
+        android:onClick="buttonTransactionClicked"
+        style="@style/Widget.AppCompat.Button.Colored" />
 </LinearLayout>
