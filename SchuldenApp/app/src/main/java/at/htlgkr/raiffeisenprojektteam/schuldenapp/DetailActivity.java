@@ -22,9 +22,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -42,7 +45,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     private static final String IS_DEBTOR_KEY = "isDebtorKey";
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    private TextView textViewCreateLoanDescription;
+    private TextView textViewCreateLoanDescription, textViewStatus;
     private RadioButton radioButtonDebtor, radioButtonCreditor;
     private Button buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt;
     private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
@@ -75,7 +78,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         }
 
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
-
+        textViewStatus = (TextView) findViewById(R.id.textViewStatus);
         buttonManualInput = (Button) findViewById(R.id.buttonManualInput);
         buttonBluetooth = (Button) findViewById(R.id.buttonBluetooth);
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
@@ -122,7 +125,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     @Override
     protected void onResume() {
         super.onPostResume();
-        setButtons();
+        //setButtons();
         setInputs();
     }
 
@@ -187,17 +190,20 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 startActivity(bezahlIntent);
                 break;
             case R.id.btnSlctDate:
-                Dialog dateDialog=new Dialog(getBaseContext());
+                Dialog dateDialog=new Dialog(this);
                 dateDialog.setContentView(R.layout.dialog_date_layout);
-                CalendarView cal= (CalendarView) findViewById(R.id.calendarView);
+                CalendarView cal= (CalendarView) dateDialog.findViewById(R.id.calendarView);
 
                 cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                     @Override
                     public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
                         GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
                         date = gregorianCalendar.getTime();
+                        Toast.makeText(getApplicationContext(), sdf.format(date),Toast.LENGTH_LONG).show();
+                        Log.d(TAG, sdf.format(date));
                     }
                 });
+                dateDialog.show();
                 break;
         }
     }
@@ -221,24 +227,14 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         iAmCreditor = radioButtonDebtor.isSelected();
         setButtons();
     }
-
+    @Deprecated
     private void setButtons() {
 
         if (iAmCreditor){
-            buttonManualInput.setVisibility(View.VISIBLE);
-            buttonBluetooth.setVisibility(View.VISIBLE);
-            buttonNfc.setVisibility(View.VISIBLE);
-            buttonGenerateQrCode.setVisibility(View.VISIBLE);
-            buttonOther.setVisibility(View.VISIBLE);
-            buttonPayDebt.setVisibility(View.VISIBLE);
+
         }
         else {
-            buttonManualInput.setVisibility(View.GONE);
-            buttonBluetooth.setVisibility(View.GONE);
-            buttonNfc.setVisibility(View.GONE);
-            buttonGenerateQrCode.setVisibility(View.GONE);
-            buttonOther.setVisibility(View.GONE);
-            buttonPayDebt.setVisibility(View.GONE);
+
         }
 //
 //        buttonManualInput, Nfc, GenerateQrCode, Other: wenn betrag, verwendung, iban, vorname, nachname, datum != null
@@ -270,22 +266,17 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 //            }
 //        }
     }
+
     private void setInputs(){
         if (debt != null){
-
-            if (debt.isiAmCreditor()){
-                radioButtonCreditor.isSelected();
-            }
-            else {
-                radioButtonDebtor.isSelected();
-            }
-
+            if (debt.isiAmCreditor()) radioButtonCreditor.setChecked(true);   else radioButtonDebtor.setChecked(true);
             edVal.setText(debt.getValue() + "");
             edUsuage.setText(debt.getUsuage() + "");
             edIBAN.setText(debt.getiBan() + "");
             edFirstname.setText(debt.getDeptorFirstName() + "");
             edLastname.setText(debt.getDeptorLastName() + "");
-            //date = debt.getDate();
+            //date = debt.getDate();    DATE SETZEN
+            textViewStatus.setText(debt.getStatus() + "");
 
             if (debt.getStatus() != "open"){
                 radioButtonCreditor.setClickable(false);
@@ -295,6 +286,14 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 edIBAN.setEnabled(false);
                 edFirstname.setEnabled(false);
                 edLastname.setEnabled(false);
+
+                //Buttons
+                buttonManualInput.setVisibility(View.GONE);
+                buttonBluetooth.setVisibility(View.GONE);
+                buttonNfc.setVisibility(View.GONE);
+                buttonGenerateQrCode.setVisibility(View.GONE);
+                buttonOther.setVisibility(View.GONE);
+                buttonPayDebt.setVisibility(View.GONE);
             }
         }
         else{
@@ -305,7 +304,17 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             edIBAN.setEnabled(true);
             edFirstname.setEnabled(true);
             edLastname.setEnabled(true);
+
+            //Buttons
+            buttonManualInput.setVisibility(View.VISIBLE);
+            buttonBluetooth.setVisibility(View.VISIBLE);
+            buttonNfc.setVisibility(View.VISIBLE);
+            buttonGenerateQrCode.setVisibility(View.VISIBLE);
+            buttonOther.setVisibility(View.VISIBLE);
+            //buttonPayDebt.setVisibility(View.VISIBLE);
         }
+
+        buttonPayDebt.setVisibility(View.GONE);
     }
 
 
