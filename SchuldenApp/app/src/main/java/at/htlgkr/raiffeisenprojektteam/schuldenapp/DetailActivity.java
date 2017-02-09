@@ -7,25 +7,34 @@ import android.bluetooth.BluetoothSocket;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.ParcelUuid;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.w3c.dom.Text;
 
@@ -56,7 +65,6 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     //private CalendarView calendarView;
 
 
-
     private String firstname = "", lastname = "", usuage = "", value = "", iban = "", partnerIsCreditor = "";
     private Date date = new Date();
 
@@ -65,6 +73,11 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
     public Debt debt;
     public boolean iAmCreditor = true;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,12 +102,12 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
         //calendarView = (CalendarView) findViewById(R.id.calendarView);
         //calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-         //   @Override
-         //   public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-          //      GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
-         //       date = gregorianCalendar.getTime();
-          //  }
-       // });
+        //   @Override
+        //   public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+        //      GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
+        //       date = gregorianCalendar.getTime();
+        //  }
+        // });
 
         radioButtonDebtor = (RadioButton) findViewById(R.id.radioButtonDebtor);
         radioButtonCreditor = (RadioButton) findViewById(R.id.radioButtonCreditor);
@@ -118,8 +131,11 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         }
 
         if (getIntent().getExtras() != null) {
-            debt = (Debt)getIntent().getExtras().getSerializable("object");
+            debt = (Debt) getIntent().getExtras().getSerializable("object");
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -147,7 +163,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
                 if (MainActivity.nfcAdapter.isEnabled() == false) {
                     Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                    startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
                 } else {
                     Toast.makeText(getApplicationContext(), "NFC ist bereits aktiviert. Halten Sie jetzt Ihre Handys zusammen.", Toast.LENGTH_LONG).show();
                 }
@@ -158,7 +174,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 Intent qrgenint = new Intent(this, QrGeneratorActivity.class);
                 qrgenint.setAction(Intent.ACTION_SEND);
                 initTexts();
-                Log.d(TAG+"GenQR", partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date));
+                Log.d(TAG + "GenQR", partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date));
                 String data = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 qrgenint.putExtra("qr", URLEncoder.encode(data));
                 startActivity(qrgenint);
@@ -190,19 +206,33 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 startActivity(bezahlIntent);
                 break;
             case R.id.btnSlctDate:
-                Dialog dateDialog=new Dialog(this);
+                Dialog dateDialog = new Dialog(this);
                 dateDialog.setContentView(R.layout.dialog_date_layout);
-                CalendarView cal= (CalendarView) dateDialog.findViewById(R.id.calendarView);
+                //CalendarView cal= (CalendarView) dateDialog.findViewById(R.id.calendarView);
 
-                cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                //cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                //    @Override
+                //    public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
+                //        GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
+                //        date = gregorianCalendar.getTime();
+                //        Toast.makeText(getApplicationContext(), sdf.format(date),Toast.LENGTH_LONG).show();
+                //        Log.d(TAG, sdf.format(date));
+                //   }
+                //});
+
+
+                final DatePicker dp = (DatePicker) dateDialog.findViewById(R.id.datepicker);
+                dp.init(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
                     @Override
-                    public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
-                        GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
+                    public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+                        GregorianCalendar gregorianCalendar = new GregorianCalendar(dp.getYear(),dp.getMonth(),dp.getDayOfMonth());
                         date = gregorianCalendar.getTime();
                         Toast.makeText(getApplicationContext(), sdf.format(date),Toast.LENGTH_LONG).show();
-                        Log.d(TAG, sdf.format(date));
+                        Log.d(TAG,"+"+sdf.format(date));
                     }
                 });
+
+
                 dateDialog.show();
                 break;
         }
@@ -227,13 +257,13 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         iAmCreditor = radioButtonDebtor.isSelected();
         setButtons();
     }
+
     @Deprecated
     private void setButtons() {
 
-        if (iAmCreditor){
+        if (iAmCreditor) {
 
-        }
-        else {
+        } else {
 
         }
 //
@@ -267,9 +297,10 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 //        }
     }
 
-    private void setInputs(){
-        if (debt != null){
-            if (debt.isiAmCreditor()) radioButtonCreditor.setChecked(true);   else radioButtonDebtor.setChecked(true);
+    private void setInputs() {
+        if (debt != null) {
+            if (debt.isiAmCreditor()) radioButtonCreditor.setChecked(true);
+            else radioButtonDebtor.setChecked(true);
             edVal.setText(debt.getValue() + "");
             edUsuage.setText(debt.getUsuage() + "");
             edIBAN.setText(debt.getiBan() + "");
@@ -278,7 +309,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
             //date = debt.getDate();    DATE SETZEN
             textViewStatus.setText(debt.getStatus() + "");
 
-            if (debt.getStatus() != "open"){
+            if (debt.getStatus() != "open") {
                 radioButtonCreditor.setClickable(false);
                 radioButtonDebtor.setClickable(false);
                 edVal.setEnabled(false);
@@ -295,8 +326,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 buttonOther.setVisibility(View.GONE);
                 buttonPayDebt.setVisibility(View.GONE);
             }
-        }
-        else{
+        } else {
             radioButtonCreditor.setClickable(true);
             radioButtonDebtor.setClickable(true);
             edVal.setEnabled(true);
@@ -349,7 +379,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         iban = UserData.iban;
         value = DBData.value;
         usuage = DBData.usuage;
-        Log.w(TAG+"senddat", firstname+lastname+iban+value+usuage);
+        Log.w(TAG + "senddat", firstname + lastname + iban + value + usuage);
     }
 
     private void insert(String status) {
@@ -459,5 +489,41 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     protected void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(IS_DEBTOR_KEY, iAmCreditor);
         super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Detail Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

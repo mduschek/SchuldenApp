@@ -14,7 +14,12 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import java.net.URLDecoder;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -96,6 +101,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonScanQrClicked(){
+        IntentIntegrator integrator=new IntentIntegrator(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setPrompt("Scan");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(false);
+        integrator.setBarcodeImageEnabled(false);
+        integrator.initiateScan();
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result=IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+
+        if(result==null) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+        else{
+            if (result.getContents()==null){
+                Toast.makeText(this,"Cancelled",Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
