@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">BezahlApp</string>
+    <string name="filter_title_viewgizmos"></string>
+
+    <string name="userdata">Ihre Daten</string>
+    <string name="firstname">Vorname</string>
+    <string name="lastname">Nachname</string>
+    <string name="iban">IBAN von Partner</string>
+    <string name="email">E-Mail</string>
+    <string name="credit">Geldbetrag</string>
+
+    <string name="settings">Einstellungen</string>
+    <string name="qrCodeScanner">QR-Code Scanner</string>
 </resources>

@@ -140,6 +140,12 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
+
+            case R.id.option_menu_archive:
+                intent = new Intent(this, ArchiveActivity.class);
+                startActivity(intent);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

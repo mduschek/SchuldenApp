@@ -1,16 +1,14 @@
 <resources>
     <string name="app_name">SchuldenApp</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="value">Betrag</string>
     <string name="iOwe">Ich schulde</string>
     <string name="owesMe">Mir schuldet</string>
     <string name="details">Details</string>
     <string name="using">Verwendung</string>
     <string name="ok">OK</string>
-    <string name="userdata">Ihre Daten</string>
 
+    <string name="userdata">Ihre Daten</string>
     <string name="firstname">Vorname</string>
     <string name="lastname">Nachname</string>
     <string name="iban">IBAN von Partner</string>
@@ -18,5 +16,6 @@
     <string name="view">View</string>
     <string name="newDept">Neue Schuld</string>
     <string name="settings">Einstellungen</string>
+    <string name="archive">Archiv</string>
     <string name="qrCodeScanner">QR-Code Scanner</string>
 </resources>
