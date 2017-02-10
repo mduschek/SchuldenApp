@@ -7,16 +7,16 @@ package at.htlgkr.raiffeisenprojektteam.bezahlapp;
 public class Transaction {
 
     private String iban;
-    private String debtorFirstname;
-    private String debtorLastname;
+    private String partnerFirstname;
+    private String partnerLastname;
     private String usage;
     private String date;
     private double value;
 
-    public Transaction(String iban, String debtorFirstname, String debtorLastname, String usage, String date, double value) {
+    public Transaction(String iban, String partnerFirstname, String partnerLastname, String usage, String date, double value) {
         this.iban = iban;
-        this.debtorFirstname = debtorFirstname;
-        this.debtorLastname = debtorLastname;
+        this.partnerFirstname = partnerFirstname;
+        this.partnerLastname = partnerLastname;
         this.usage = usage;
         this.date = date;
         this.value = value;
@@ -30,20 +30,20 @@ public class Transaction {
         this.iban = iban;
     }
 
-    public String getDebtorFirstname() {
-        return debtorFirstname;
+    public String getPartnerFirstname() {
+        return partnerFirstname;
     }
 
-    public void setDebtorFirstname(String debtorFirstname) {
-        this.debtorFirstname = debtorFirstname;
+    public void setPartnerFirstname(String partnerFirstname) {
+        this.partnerFirstname = partnerFirstname;
     }
 
-    public String getDebtorLastname() {
-        return debtorLastname;
+    public String getPartnerLastname() {
+        return partnerLastname;
     }
 
-    public void setDebtorLastname(String debtorLastname) {
-        this.debtorLastname = debtorLastname;
+    public void setPartnerLastname(String partnerLastname) {
+        this.partnerLastname = partnerLastname;
     }
 
     public String getUsage() {

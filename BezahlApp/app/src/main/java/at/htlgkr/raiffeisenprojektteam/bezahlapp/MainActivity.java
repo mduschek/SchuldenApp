@@ -1,16 +1,14 @@
 package at.htlgkr.raiffeisenprojektteam.bezahlapp;
 
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     Button buttonTransaction;
     TextView textViewCredit, textViewValue, textViewUsage, textViewIban, textViewFirstname, textViewLastname, textViewDate;
     SharedPreferences sharedPreferences;
+
+    Transaction transaction = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        textViewCredit.setText(sharedPreferences.getString("pref_userdata_credit", null));
+        updateViews();
     }
 
     @Override
@@ -96,21 +96,50 @@ public class MainActivity extends AppCompatActivity {
             if (result.getContents()==null){
                 Toast.makeText(this,"Cancelled",Toast.LENGTH_LONG).show();
             }else{
-                Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
-                Transaction transaction = StringToTransactionConverter(result.getContents());
+                //Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
+                stringToTransactionConverter(result.getContents());
+                updateViews();
             }
         }
     }
 
-    public Transaction StringToTransactionConverter(String transactionString) {
+    public void stringToTransactionConverter(String transactionString) {
+
+        // String example = iban;Philip;Frauscher;Drogen;9.2.2017;500
 
         final String splitArr[] = transactionString.split(";");
-
-        Transaction transaction = new Transaction(splitArr[0], splitArr[1], splitArr[2], splitArr[3], splitArr[4], Double.parseDouble(splitArr[5]));
-        return transaction;
+        transaction = new Transaction(splitArr[0], splitArr[1], splitArr[2], splitArr[3], splitArr[4], Double.parseDouble(splitArr[5]));
     }
 
-    public void buttonTransactionClicked(){
+    public void updateViews(){
+        textViewCredit.setText(sharedPreferences.getString("pref_userdata_credit", null));
 
+        if (transaction != null){
+            textViewIban.setText(transaction.getIban());
+            textViewFirstname.setText(transaction.getPartnerFirstname());
+            textViewLastname.setText(transaction.getPartnerLastname());
+            textViewUsage.setText(transaction.getUsage());
+            textViewDate.setText(transaction.getDate());
+            textViewValue.setText(transaction.getValue() + "");
+        }
+
+        else{
+            textViewIban.setText("");
+            textViewFirstname.setText("");
+            textViewLastname.setText("");
+            textViewUsage.setText("");
+            textViewDate.setText("");
+            textViewValue.setText("");
+        }
+    }
+
+    public void buttonTransactionClicked(View view){
+        if (transaction == null) return;
+
+        double newVal = (Double.parseDouble(sharedPreferences.getString("pref_userdata_credit", null)) - transaction.getValue());
+        //Toast.makeText(this,"Value " + newVal,Toast.LENGTH_LONG).show();
+        sharedPreferences.edit().putString("pref_userdata_credit", newVal+"").apply();
+        transaction = null;
+        updateViews();
     }
 }
