@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TRANSACTION_KEY = "transactionKey";
+
     Button buttonTransaction;
     TextView textViewCredit, textViewValue, textViewUsage, textViewIban, textViewFirstname, textViewLastname, textViewDate;
     SharedPreferences sharedPreferences;
@@ -28,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) {
+            if(savedInstanceState.getString(TRANSACTION_KEY) != null){
+                stringToTransactionConverter(savedInstanceState.getString(TRANSACTION_KEY));
+            }
+        }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -105,10 +114,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void stringToTransactionConverter(String transactionString) {
 
-        // String example = iban;Philip;Frauscher;Drogen;9.2.2017;500
+        // String example = iban;Philip;Frauscher;Tschick;9.2.2017;500
 
         final String splitArr[] = transactionString.split(";");
         transaction = new Transaction(splitArr[0], splitArr[1], splitArr[2], splitArr[3], splitArr[4], Double.parseDouble(splitArr[5]));
+    }
+
+    public String transactionToStringConverter (){
+        return transaction.getIban() + ";" +
+                transaction.getPartnerFirstname() + ";" +
+                transaction.getPartnerLastname() + ";" +
+                transaction.getUsage() + ";" +
+                transaction.getDate() + ";" +
+                transaction.getValue();
     }
 
     public void updateViews(){
@@ -133,13 +151,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void buttonTransactionClicked(View view){
-        if (transaction == null) return;
-
-        double newVal = (Double.parseDouble(sharedPreferences.getString("pref_userdata_credit", null)) + transaction.getValue());
-        //Toast.makeText(this,"Value " + newVal,Toast.LENGTH_LONG).show();
-        sharedPreferences.edit().putString("pref_userdata_credit", newVal+"").apply();
+    public void buttonDeleteTransactionClicked(View view){
         transaction = null;
         updateViews();
+    }
+    public void buttonTransactionClicked(View view){
+        if (transaction == null || transaction.getValue() <= 0){
+            Toast.makeText(this,"Ungültige Transaktion",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        double newVal = (Double.parseDouble(sharedPreferences.getString("pref_userdata_credit", null)) - transaction.getValue());
+
+        if(newVal < 0){
+            Toast.makeText(this,"Zu wenig Guthaben vorhanden!",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        sharedPreferences.edit().putString("pref_userdata_credit", newVal+"").apply();
+        transaction = null;
+        Toast.makeText(this,"Transaktion erfolgreich!",Toast.LENGTH_LONG).show();
+        updateViews();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (transaction != null){
+            outState.putString(TRANSACTION_KEY, transactionToStringConverter());
+        } else {
+            outState.putString(TRANSACTION_KEY, null);
+        }
+        super.onSaveInstanceState(outState);
     }
 }
