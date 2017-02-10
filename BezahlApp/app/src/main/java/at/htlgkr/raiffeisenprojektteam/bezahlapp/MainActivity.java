@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     public void buttonTransactionClicked(View view){
         if (transaction == null) return;
 
-        double newVal = (Double.parseDouble(sharedPreferences.getString("pref_userdata_credit", null)) - transaction.getValue());
+        double newVal = (Double.parseDouble(sharedPreferences.getString("pref_userdata_credit", null)) + transaction.getValue());
         //Toast.makeText(this,"Value " + newVal,Toast.LENGTH_LONG).show();
         sharedPreferences.edit().putString("pref_userdata_credit", newVal+"").apply();
         transaction = null;
