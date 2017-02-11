@@ -117,10 +117,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Datum auswälen"
-            android:id="@+id/btnSlctDate"
+            android:id="@+id/buttonSelectDate"
             android:onClick="onButtonPressed"
             style="@style/Widget.AppCompat.Button.Colored"
             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewDate"
+            android:visibility="visible"/>
 
         <LinearLayout
             android:layout_width="match_parent"
