@@ -235,7 +235,7 @@ public class DetailActivity extends AppCompatActivity {
             initTexts();
             Intent i = new Intent(this, NFCSender.class);
             Log.w(TAG, "iAmCreditor "+iAmCreditor + "partnerIsCreditor "+partnerIsCreditor );
-            i.putExtra("partneriscreditor", partnerIsCreditor);
+            i.putExtra("partneriscreditor", partnerIsCreditor+"");
             i.putExtra("firstname", firstname);
             i.putExtra("lastname", lastname);
             i.putExtra("usage", usage);

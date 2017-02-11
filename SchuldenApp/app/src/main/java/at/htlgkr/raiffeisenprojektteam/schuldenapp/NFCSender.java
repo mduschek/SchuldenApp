@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
 
-    String date, firstname, lastname, iban, usuage, value;
+    String date, firstname, lastname, iban, usage, value;
     boolean partnerIsCreditor;
     private static final String TAG = "*=NFCSender";
     private ProgressBar progressBar;
@@ -44,12 +44,15 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
         date = i.getStringExtra("date");
         firstname = i.getStringExtra("firstname");
         lastname = i.getStringExtra("lastname");
-        usuage = i.getStringExtra("usuage");
+        usage = i.getStringExtra("usage");
         iban = i.getStringExtra("iban");
         value = i.getStringExtra("value");
-        partnerIsCreditor = i.getBooleanExtra("partneriscreditor", false);
+        String picstr = i.getStringExtra("partneriscreditor");
+        Log.e(TAG, "usage "+usage);
+        if(picstr.equals("true")) partnerIsCreditor=true;
+        else partnerIsCreditor = false;
 
-        Log.w(TAG, firstname + lastname + usuage + iban + value + partnerIsCreditor);
+        Log.w(TAG, firstname + lastname + usage + iban + value + partnerIsCreditor);
 
         adapter.setNdefPushMessageCallback(this, this);
 
@@ -57,7 +60,7 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
-        String stringOut = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + date;
+        String stringOut = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + date;
         Log.d(TAG, "createNdefMessage: ");
         NdefRecord ndefRecord = NdefRecord.createMime("text/plain", stringOut.getBytes());
         NdefMessage ndefMessage = new NdefMessage(ndefRecord);
