@@ -163,14 +163,14 @@
                 android:visibility="visible"
                 style="@style/Widget.AppCompat.Button.Colored" />
 
-            <Button
+            <!--<Button
                 android:text="Bluetooth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonBluetooth"
                 android:onClick="onButtonPressed"
                 android:visibility="visible"
-                style="@style/Widget.AppCompat.Button.Colored" />
+                style="@style/Widget.AppCompat.Button.Colored" />-->
 
             <Button
                 android:text="NFC"
