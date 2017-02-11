@@ -119,6 +119,7 @@ public class DetailActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             debt = (Debt) getIntent().getExtras().getSerializable("object");
+            iAmCreditor = debt.isiAmCreditor();
         }
     }
 
@@ -142,7 +143,7 @@ public class DetailActivity extends AppCompatActivity {
         switch (source.getId()) {
             case R.id.buttonManualInput:
                 insert("open");
-                Toast.makeText(this,"Inserted",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
                 finish();
                 break;
             /*case R.id.buttonBluetooth:
@@ -162,11 +163,11 @@ public class DetailActivity extends AppCompatActivity {
                 if (debt == null) {
                     insert("not_paid");
                 } else {
-                    Toast.makeText(this,"UPDATED",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + "SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + "SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 finish();
                 break;
@@ -185,13 +186,13 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
                 if (debt == null) {
                     insert("not_paid");
-                    Toast.makeText(this,"Inserted",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(this,"UPDATED",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 finish();
                 /*Intent sendIntent = new Intent();
@@ -235,21 +236,20 @@ public class DetailActivity extends AppCompatActivity {
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         } else {
 
-            if (debt!=null)
-            {
-                if (debt.isiAmCreditor())
-                {
-                    MainActivity.db.execSQL("DELETE FROM "+TblWhoOwesMe.TABLE_NAME+ " WHERE "+TblWhoOwesMe.ID +" = "+ debt.getId());
-                    Toast.makeText(this,"DELETED TblWhoOwesMe",Toast.LENGTH_LONG).show();
+            if (debt != null) {
+
+                if (debt.isiAmCreditor()) {
+                    MainActivity.db.execSQL("DELETE FROM " + TblWhoOwesMe.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
+                    Toast.makeText(this, "DELETED TblWhoOwesMe", Toast.LENGTH_LONG).show();
+                } else {
+                    MainActivity.db.execSQL("DELETE FROM " + TblMyDebts.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
+                    Toast.makeText(this, "DELETED TblMyDebts", Toast.LENGTH_LONG).show();
                 }
-                else
-                {
-                    MainActivity.db.execSQL("DELETE FROM "+TblMyDebts.TABLE_NAME+ " WHERE "+TblWhoOwesMe.ID +" = "+ debt.getId());
-                    Toast.makeText(this,"DELETED TblMyDebts",Toast.LENGTH_LONG).show();
-                }
+
             }
             initTexts();
             Intent i = new Intent(this, NFCSender.class);
+            Log.w(TAG, "iAmCreditor "+iAmCreditor + "partnerIsCreditor "+partnerIsCreditor );
             i.putExtra("partneriscreditor", partnerIsCreditor);
             i.putExtra("firstname", firstname);
             i.putExtra("lastname", lastname);
@@ -285,11 +285,7 @@ public class DetailActivity extends AppCompatActivity {
     @Deprecated
     private void setButtons() {
 
-        if (iAmCreditor) {
 
-        } else {
-
-        }
 //
 //        buttonManualInput, Nfc, GenerateQrCode, Other: wenn betrag, verwendung, iban, vorname, nachname, datum != null
 //        buttonBluetooth: wenn betrag, verwendung, datum != null (fremder iban, vorname, nachname soll übertragen werden, funktioniert noch nicht?)
@@ -377,6 +373,7 @@ public class DetailActivity extends AppCompatActivity {
         DBData.usuage = edUsuage.getText().toString();
         DBData.iban = edIBAN.getText().toString();
         DBData.value = edVal.getText().toString();
+        Log.w(TAG, "iamcreditor "+iAmCreditor);
         partnerIsCreditor = !iAmCreditor + "";
 
         firstname = UserData.firstname;
