@@ -32,14 +32,14 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String IS_DEBTOR_KEY = "isDebtorKey";
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    private TextView textViewCreateLoanDescription, textViewStatus;
+    private TextView textViewDate, textViewCreateLoanDescription, textViewStatus;
     private RadioButton radioButtonDebtor, radioButtonCreditor;
-    private Button buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt;
+    private Button buttonSelectDate, buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt;
     private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp?content=";
     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "*=DetailActivity";
-    private String nfcString = "";
+    //private String nfcString = "";
     private boolean nfcIsEnabled = false;
     private BluetoothDevice selectedDevice;
     //private CalendarView calendarView;
@@ -65,23 +65,19 @@ public class DetailActivity extends AppCompatActivity {
             Log.w(TAG, "savedInstanceState" + iAmCreditor);
         }
 
+        textViewDate = (TextView) findViewById(R.id.textViewDate);
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
         textViewStatus = (TextView) findViewById(R.id.textViewStatus);
+        buttonSelectDate =  (Button) findViewById(R.id.buttonSelectDate);
         buttonManualInput = (Button) findViewById(R.id.buttonManualInput);
         buttonBluetooth = (Button) findViewById(R.id.buttonBluetooth);
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
         buttonGenerateQrCode = (Button) findViewById(R.id.buttonGenerateQrCode);
         buttonOther = (Button) findViewById(R.id.buttonOther);      //Activity Chooser mit anderen Apps
         buttonPayDebt = (Button) findViewById(R.id.buttonPayDebt);  //Button setzt den Status auf Bezahlt
-        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
 
         radioButtonDebtor = (RadioButton) findViewById(R.id.radioButtonDebtor);
         radioButtonCreditor = (RadioButton) findViewById(R.id.radioButtonCreditor);
-
-        //buttonBluetooth.setVisibility(View.GONE);
-        //buttonNfc.setVisibility(View.GONE);
-        //buttonOther.setVisibility(View.GONE);
 
         edVal = (EditText) findViewById(R.id.editTextValue);
         edUsuage = (EditText) findViewById(R.id.editTextUsuage);
@@ -89,7 +85,13 @@ public class DetailActivity extends AppCompatActivity {
         edFirstname = (EditText) findViewById(R.id.editTextFirstName);
         edLastname = (EditText) findViewById(R.id.editTextLastName);
 
+        //buttonBluetooth.setVisibility(View.GONE);
+        //buttonNfc.setVisibility(View.GONE);
+        //buttonOther.setVisibility(View.GONE);
+
         //NFC
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
         if (nfcAdapter == null) {
 
             buttonNfc.setVisibility(View.GONE);
@@ -101,7 +103,6 @@ public class DetailActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             debt = (Debt) getIntent().getExtras().getSerializable("object");
-            iAmCreditor = debt.isiAmCreditor();
         }
     }
 
@@ -125,7 +126,7 @@ public class DetailActivity extends AppCompatActivity {
         switch (source.getId()) {
             case R.id.buttonManualInput:
                 insert("open");
-                Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Inserted",Toast.LENGTH_LONG).show();
                 finish();
                 break;
             /*case R.id.buttonBluetooth:
@@ -145,16 +146,15 @@ public class DetailActivity extends AppCompatActivity {
                 if (debt == null) {
                     insert("not_paid");
                 } else {
-                    Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"UPDATED",Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + "SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + "SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
                 }
                 finish();
                 break;
             case R.id.buttonOther:
-
                 initTexts();
                 //Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();
@@ -168,13 +168,13 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
                 if (debt == null) {
                     insert("not_paid");
-                    Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"Inserted",Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"UPDATED",Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
                 }
                 finish();
                 /*Intent sendIntent = new Intent();
@@ -194,7 +194,7 @@ public class DetailActivity extends AppCompatActivity {
                 baintent.putExtra("BezahlApp", transactionToStringConverter());
                 startActivity(baintent);
                 break;
-            case R.id.btnSlctDate:
+            case R.id.buttonSelectDate:
                 Dialog dateDialog = new Dialog(this);
                 dateDialog.setContentView(R.layout.dialog_date_layout);
 
@@ -209,8 +209,8 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 });
 
-
                 dateDialog.show();
+                textViewDate.setText(sdf.format(date).toString());
                 break;
         }
     }
@@ -221,16 +221,18 @@ public class DetailActivity extends AppCompatActivity {
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         } else {
 
-            if (debt != null) {
-
-                if (debt.isiAmCreditor()) {
-                    MainActivity.db.execSQL("DELETE FROM " + TblWhoOwesMe.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
-                    Toast.makeText(this, "DELETED TblWhoOwesMe", Toast.LENGTH_LONG).show();
-                } else {
-                    MainActivity.db.execSQL("DELETE FROM " + TblMyDebts.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
-                    Toast.makeText(this, "DELETED TblMyDebts", Toast.LENGTH_LONG).show();
+            if (debt!=null)
+            {
+                if (debt.isiAmCreditor())
+                {
+                    MainActivity.db.execSQL("DELETE FROM "+TblWhoOwesMe.TABLE_NAME+ " WHERE "+TblWhoOwesMe.ID +" = "+ debt.getId());
+                    Toast.makeText(this,"DELETED TblWhoOwesMe",Toast.LENGTH_LONG).show();
                 }
-
+                else
+                {
+                    MainActivity.db.execSQL("DELETE FROM "+TblMyDebts.TABLE_NAME+ " WHERE "+TblWhoOwesMe.ID +" = "+ debt.getId());
+                    Toast.makeText(this,"DELETED TblMyDebts",Toast.LENGTH_LONG).show();
+                }
             }
             initTexts();
             Intent i = new Intent(this, NFCSender.class);
@@ -251,12 +253,12 @@ public class DetailActivity extends AppCompatActivity {
         switch (source.getId()) {
             case R.id.radioButtonDebtor:
                 iAmCreditor = false;
-                setButtons();
+                //setButtons();
                 break;
 
             case R.id.radioButtonCreditor:
                 iAmCreditor = true;
-                setButtons();
+                //setButtons();
                 break;
         }
     }
@@ -264,13 +266,17 @@ public class DetailActivity extends AppCompatActivity {
     @Deprecated
     private void getDebtOrCredit() {
         iAmCreditor = radioButtonDebtor.isSelected();
-        setButtons();
+        //setButtons();
     }
 
     @Deprecated
     private void setButtons() {
 
+        if (iAmCreditor) {
 
+        } else {
+
+        }
 //
 //        buttonManualInput, Nfc, GenerateQrCode, Other: wenn betrag, verwendung, iban, vorname, nachname, datum != null
 //        buttonBluetooth: wenn betrag, verwendung, datum != null (fremder iban, vorname, nachname soll übertragen werden, funktioniert noch nicht?)
@@ -304,16 +310,17 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setInputs() throws ParseException {
         if (debt != null) {
-            if (debt.isiAmCreditor()) radioButtonCreditor.setChecked(true);
-            else radioButtonDebtor.setChecked(true);
-            edVal.setText(debt.getValue() + "");
-            edUsuage.setText(debt.getUsuage() + "");
-            edIBAN.setText(debt.getiBan() + "");
-            edFirstname.setText(debt.getDeptorFirstName() + "");
-            edLastname.setText(debt.getDeptorLastName() + "");
-            //date = debt.getDate();    DATE SETZEN
-            textViewStatus.setText(debt.getStatus() + "");
-            date = sdf.parse(debt.getDate());
+            if (debt.isiAmCreditor()) { radioButtonCreditor.setChecked(true); }
+            else { radioButtonDebtor.setChecked(true); }
+
+                edVal.setText(debt.getValue() + "");
+                edUsuage.setText(debt.getUsuage() + "");
+                edIBAN.setText(debt.getiBan() + "");
+                edFirstname.setText(debt.getDeptorFirstName() + "");
+                edLastname.setText(debt.getDeptorLastName() + "");
+                textViewDate.setText(sdf.parse(debt.getDate()).toString());
+                textViewStatus.setText(debt.getStatus() + "");
+                date = sdf.parse(debt.getDate());
 
             if (debt.getStatus() != "open") {
                 radioButtonCreditor.setClickable(false);
@@ -324,7 +331,10 @@ public class DetailActivity extends AppCompatActivity {
                 edFirstname.setEnabled(false);
                 edLastname.setEnabled(false);
 
+                textViewDate.setVisibility(View.VISIBLE);
+
                 //Buttons
+                buttonSelectDate.setVisibility(View.GONE);
                 buttonManualInput.setVisibility(View.GONE);
                 buttonNfc.setVisibility(View.VISIBLE);
                 buttonGenerateQrCode.setVisibility(View.VISIBLE);
@@ -341,6 +351,7 @@ public class DetailActivity extends AppCompatActivity {
             edLastname.setEnabled(true);
 
             //Buttons
+            buttonSelectDate.setVisibility(View.VISIBLE);
             buttonManualInput.setVisibility(View.VISIBLE);
             buttonNfc.setVisibility(View.VISIBLE);
             buttonGenerateQrCode.setVisibility(View.VISIBLE);
@@ -358,7 +369,6 @@ public class DetailActivity extends AppCompatActivity {
         DBData.usuage = edUsuage.getText().toString();
         DBData.iban = edIBAN.getText().toString();
         DBData.value = edVal.getText().toString();
-        Log.w(TAG, "iamcreditor "+iAmCreditor);
         partnerIsCreditor = !iAmCreditor + "";
 
         firstname = UserData.firstname;
@@ -395,7 +405,6 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-
     private boolean checkInputValues() {
         if (edVal.getText().toString() != ""
                 && edUsuage.getText().toString() != ""
@@ -415,7 +424,7 @@ public class DetailActivity extends AppCompatActivity {
                 firstname + ";" +
                 lastname + ";" +
                 usage + ";" +
-                date + ";" +
+                sdf.format(date) + ";" +
                 value;
     }
 
