@@ -69,19 +69,15 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
                 tv.setText("Fertig");
             }
         });
-        new Thread(){
-            @Override
-            public void run() {
-                if (inserted==false) {
-                    insert("not_paid");
-                }
-            }
-        }.start();
+        if (inserted == false) {
+            insert("not_paid");
+        }
         return ndefMessage;
     }
 
     private void insert(String status) {
-
+        inserted = true;
+        Log.d(TAG, inserted+"");
         if (!partnerIsCreditor) {
             ContentValues cv = new ContentValues();
             cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, date);
