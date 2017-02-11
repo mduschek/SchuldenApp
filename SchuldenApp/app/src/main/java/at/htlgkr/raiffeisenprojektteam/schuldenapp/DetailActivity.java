@@ -39,7 +39,7 @@ public class DetailActivity extends AppCompatActivity {
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp?content=";
     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "*=DetailActivity";
-    private String nfcString = "";
+    //private String nfcString = "";
     private boolean nfcIsEnabled = false;
     private BluetoothDevice selectedDevice;
     //private CalendarView calendarView;
