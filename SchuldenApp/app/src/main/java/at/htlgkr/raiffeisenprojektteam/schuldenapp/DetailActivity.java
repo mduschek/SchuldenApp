@@ -170,7 +170,11 @@ public class DetailActivity extends AppCompatActivity
                 //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
-                insert("not_paid");
+                if(debt==null) {insert("not_paid");}
+                else {
+                    if (debt.isiAmCreditor())MainActivity.db.execSQL("UPDATE "+TblWhoOwesMe.TABLE_NAME+"SET status = 'not_paid' WHERE id = "+debt.getId()+";");
+                    else  MainActivity.db.execSQL("UPDATE "+TblMyDebts.TABLE_NAME+"SET status = 'not_paid' WHERE id = "+debt.getId()+";");
+                }
                 finish();
                 /*Intent sendIntent = new Intent();
                 sendIntent.setData (Uri.parse("schuldenapp://createloan"));
@@ -309,10 +313,10 @@ public class DetailActivity extends AppCompatActivity
 
                 //Buttons
                 buttonManualInput.setVisibility(View.GONE);
-                buttonNfc.setVisibility(View.GONE);
-                buttonGenerateQrCode.setVisibility(View.GONE);
-                buttonOther.setVisibility(View.GONE);
-                buttonPayDebt.setVisibility(View.GONE);
+                buttonNfc.setVisibility(View.VISIBLE);
+                buttonGenerateQrCode.setVisibility(View.VISIBLE);
+                buttonOther.setVisibility(View.VISIBLE);
+                buttonPayDebt.setVisibility(View.VISIBLE);
             }
         } else {
             radioButtonCreditor.setClickable(true);

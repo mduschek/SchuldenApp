@@ -46,6 +46,7 @@ public class DebtListFragment extends Fragment
             Log.e("*===", "onCreateView: " +c.hashCode() );
             while (c.moveToNext())
             {
+                int id = c.getInt(c.getColumnIndex(TblMyDebts.ID));
                 String firstname = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_FIRSTNAME));
                 String lastname = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_LASTNAME));
                 double value = c.getDouble(c.getColumnIndex(TblMyDebts.PERS_I_OWE_VALUE));
@@ -53,7 +54,7 @@ public class DebtListFragment extends Fragment
                 String iban = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_IBAN));
                 String status = c.getString(c.getColumnIndex(TblMyDebts.STATUS));
                 Log.d("*==", firstname);
-                listItems.add(new Debt(false,firstname,lastname,usuage,iban,status,value, null));
+                listItems.add(new Debt(id,false,firstname,lastname,usuage,iban,status,value, null));
             }
         }
         else
@@ -61,6 +62,7 @@ public class DebtListFragment extends Fragment
             Cursor c = MainActivity.db.rawQuery("SELECT * FROM WhoOwesMe;",null);
             while (c.moveToNext())
             {
+                int id = c.getInt(c.getColumnIndex(TblWhoOwesMe.ID));
                 String firstname = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME));
                 String lastname = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME));
                 double value = c.getDouble(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE));
@@ -68,7 +70,7 @@ public class DebtListFragment extends Fragment
                 String iban = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN));
                 String status = c.getString(c.getColumnIndex(TblWhoOwesMe.STATUS));
                 Log.d("*==", firstname);
-                listItems.add(new Debt(true,firstname,lastname,usuage,iban,status,value, null));
+                listItems.add(new Debt(id,true,firstname,lastname,usuage,iban,status,value, null));
             }
         }
 
