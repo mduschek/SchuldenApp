@@ -383,6 +383,14 @@ public class DetailActivity extends AppCompatActivity
     private void bluetooth() {
         initTexts();
         Intent i = new Intent(this, BTSender.class);
+        i.putExtra("partneriscreditor",partnerIsCreditor);
+        i.putExtra("firstname",firstname);
+        i.putExtra("lastname",lastname);
+        i.putExtra("usuage",usuage);
+        i.putExtra("iban",iban);
+        i.putExtra("value",value);
+        i.putExtra("date",sdf.format(date));
+        Log.w(TAG, firstname+lastname+usuage+iban+value+partnerIsCreditor);
         startActivity(i);
     }
     //endregion
