@@ -309,7 +309,6 @@ public class DetailActivity extends AppCompatActivity
 
                 //Buttons
                 buttonManualInput.setVisibility(View.GONE);
-                buttonBluetooth.setVisibility(View.GONE);
                 buttonNfc.setVisibility(View.GONE);
                 buttonGenerateQrCode.setVisibility(View.GONE);
                 buttonOther.setVisibility(View.GONE);
@@ -326,7 +325,6 @@ public class DetailActivity extends AppCompatActivity
 
             //Buttons
             buttonManualInput.setVisibility(View.VISIBLE);
-            buttonBluetooth.setVisibility(View.VISIBLE);
             buttonNfc.setVisibility(View.VISIBLE);
             buttonGenerateQrCode.setVisibility(View.VISIBLE);
             buttonOther.setVisibility(View.VISIBLE);
