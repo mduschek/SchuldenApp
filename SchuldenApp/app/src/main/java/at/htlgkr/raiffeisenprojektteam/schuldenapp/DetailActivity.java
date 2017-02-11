@@ -215,6 +215,39 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    private void nfc() {
+        if (!nfcIsEnabled) {
+            Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+        } else {
+
+            if (debt!=null)
+            {
+                if (debt.isiAmCreditor())
+                {
+                    MainActivity.db.execSQL("DELETE FROM "+TblWhoOwesMe.TABLE_NAME+ " WHERE "+TblWhoOwesMe.ID +" = "+ debt.getId());
+                    Toast.makeText(this,"DELETED TblWhoOwesMe",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    MainActivity.db.execSQL("DELETE FROM "+TblMyDebts.TABLE_NAME+ " WHERE "+TblWhoOwesMe.ID +" = "+ debt.getId());
+                    Toast.makeText(this,"DELETED TblMyDebts",Toast.LENGTH_LONG).show();
+                }
+            }
+            initTexts();
+            Intent i = new Intent(this, NFCSender.class);
+            i.putExtra("partneriscreditor", partnerIsCreditor);
+            i.putExtra("firstname", firstname);
+            i.putExtra("lastname", lastname);
+            i.putExtra("usage", usage);
+            i.putExtra("iban", iban);
+            i.putExtra("value", value);
+            i.putExtra("date", sdf.format(date));
+            Log.w(TAG, firstname + lastname + usage + iban + value + partnerIsCreditor);
+            startActivity(i);
+        }
+    }
+
     public void onRadioButtonClicked(View source) {
         switch (source.getId()) {
             case R.id.radioButtonDebtor:
@@ -343,39 +376,6 @@ public class DetailActivity extends AppCompatActivity {
         value = DBData.value;
         usage = DBData.usuage;
         Log.w(TAG + "senddat", firstname + lastname + iban + value + usage);
-    }
-
-    private void nfc() {
-        if (!nfcIsEnabled) {
-            Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
-        } else {
-
-            if (debt!=null)
-            {
-                if (debt.isiAmCreditor())
-                {
-                    MainActivity.db.execSQL("DELETE FROM "+TblWhoOwesMe.TABLE_NAME+ " WHERE "+TblWhoOwesMe.ID +" = "+ debt.getId());
-                    Toast.makeText(this,"DELETED TblWhoOwesMe",Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    MainActivity.db.execSQL("DELETE FROM "+TblMyDebts.TABLE_NAME+ " WHERE "+TblWhoOwesMe.ID +" = "+ debt.getId());
-                    Toast.makeText(this,"DELETED TblMyDebts",Toast.LENGTH_LONG).show();
-                }
-            }
-            initTexts();
-            Intent i = new Intent(this, NFCSender.class);
-            i.putExtra("partneriscreditor", partnerIsCreditor);
-            i.putExtra("firstname", firstname);
-            i.putExtra("lastname", lastname);
-            i.putExtra("usage", usage);
-            i.putExtra("iban", iban);
-            i.putExtra("value", value);
-            i.putExtra("date", sdf.format(date));
-            Log.w(TAG, firstname + lastname + usage + iban + value + partnerIsCreditor);
-            startActivity(i);
-        }
     }
 
     private void insert(String status) {
