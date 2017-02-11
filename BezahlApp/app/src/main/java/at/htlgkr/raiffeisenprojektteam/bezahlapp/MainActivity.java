@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             Bundle extras = getIntent().getExtras();
-            String data="";
+            String data1="";
 
             if (extras != null) {
-                data = extras.getString("BezahlApp");
-                Toast.makeText(this,data,Toast.LENGTH_LONG).show();
+                data1 = extras.getString("BezahlApp");
+                Toast.makeText(this,data1,Toast.LENGTH_LONG).show();
             }
         }
 
