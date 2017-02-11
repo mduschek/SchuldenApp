@@ -59,6 +59,7 @@ public class DetailActivity extends AppCompatActivity
     private static final String TAG = "*=DetailActivity";
     private String nfcString = "";
     private boolean nfcIsEnabled = false;
+    private BluetoothDevice selectedDevice;
     //private CalendarView calendarView;
 
 
@@ -140,27 +141,10 @@ public class DetailActivity extends AppCompatActivity
                 finish();
                 break;
             case R.id.buttonBluetooth:
-
+                bluetooth();
                 break;
             case R.id.buttonNfc:
-
-                if (!nfcIsEnabled) {
-                    Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
-                } else {
-
-                    initTexts();
-                    Intent i = new Intent(this,NFCSender.class);
-                    i.putExtra("partneriscreditor",partnerIsCreditor);
-                    i.putExtra("firstname",firstname);
-                    i.putExtra("lastname",lastname);
-                    i.putExtra("usuage",usuage);
-                    i.putExtra("iban",iban);
-                    i.putExtra("value",value);
-                    i.putExtra("date",sdf.format(date));
-                    Log.w(TAG, firstname+lastname+usuage+iban+value+partnerIsCreditor);
-                    startActivity(i);
-                }
+                nfc();
                 break;
             case R.id.buttonGenerateQrCode:
                 Intent qrgenint = new Intent(this, QrGeneratorActivity.class);
@@ -216,6 +200,26 @@ public class DetailActivity extends AppCompatActivity
 
                 dateDialog.show();
                 break;
+        }
+    }
+
+    private void nfc() {
+        if (!nfcIsEnabled) {
+            Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+        } else {
+
+            initTexts();
+            Intent i = new Intent(this,NFCSender.class);
+            i.putExtra("partneriscreditor",partnerIsCreditor);
+            i.putExtra("firstname",firstname);
+            i.putExtra("lastname",lastname);
+            i.putExtra("usuage",usuage);
+            i.putExtra("iban",iban);
+            i.putExtra("value",value);
+            i.putExtra("date",sdf.format(date));
+            Log.w(TAG, firstname+lastname+usuage+iban+value+partnerIsCreditor);
+            startActivity(i);
         }
     }
 
@@ -376,67 +380,13 @@ public class DetailActivity extends AppCompatActivity
 
     //region Bluetooth
 
-    private void Bluetooth() {
+    private void bluetooth() {
         initTexts();
-        BluetoothAdapter blueAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        try {
-            if (blueAdapter.isEnabled()) {
-                Set<BluetoothDevice> bondedDevices = blueAdapter.getBondedDevices();
-                //depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
-                if (bondedDevices.size() > 0) {
-                    BluetoothDevice[] devices = (BluetoothDevice[]) bondedDevices.toArray();
-
-                    //ListDialog
-                    bluetoothDevicesDialog(devices);
-
-                    BluetoothDevice device = (BluetoothDevice) devices[dialogWich];
-                    ParcelUuid[] uuids = device.getUuids();
-                    BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuids[dialogWich].getUuid());
-                    socket.connect();
-                    MainActivity.bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                    MainActivity.bw.write(firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + date);
-                    MainActivity.bw.flush();
-
-                    //SENDER VERBINDET SICH IMMER MIR DEM EMPFÄNGER
-                }
-
-                Log.e("error", "No appropriate paired devices.");
-            } else {
-                Log.e("error", "Bluetooth is disabled.");
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "Bluetooth: ", ex);
-        }
+        Intent i = new Intent(this, BTSender.class);
+        startActivity(i);
     }
     //endregion
 
-    private AlertDialog bluetoothDevicesDialog(BluetoothDevice[] devices) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Bluetooth Gerät auswählen");
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
-        for (BluetoothDevice device : devices) {
-            arrayAdapter.add(device.getName());
-        }
-
-        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialogWich = which;
-                // The 'which' argument contains the index position
-                // of the selected item
-            }
-        });
-        return builder.create();
-    }
 
     private boolean checkInputValues() {
         if (edVal.getText().toString() != ""
