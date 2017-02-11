@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by Perndorfer on 29.01.2017.
  */
 
+@Deprecated
 public class EditDetailAcitivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

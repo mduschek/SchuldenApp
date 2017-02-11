@@ -205,7 +205,8 @@ public class DetailActivity extends AppCompatActivity {
                 //startActivity(bezahlIntent);
 
                 Intent baintent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
-                baintent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
+                //baintent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
+                baintent.putExtra("BezahlApp", "AT34442566756567;Alexander;Perndorfer;Essen;9.2.2017;30.65");
                 startActivity(baintent);
                 break;
             case R.id.btnSlctDate:
