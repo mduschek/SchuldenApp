@@ -45,7 +45,8 @@ import java.util.Set;
  * Created by michael on 24.11.16.
  */
 
-public class DetailActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
+public class DetailActivity extends AppCompatActivity
+{
 
     private static final String IS_DEBTOR_KEY = "isDebtorKey";
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -92,15 +93,6 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
 
-        //calendarView = (CalendarView) findViewById(R.id.calendarView);
-        //calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-        //   @Override
-        //   public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-        //      GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
-        //       date = gregorianCalendar.getTime();
-        //  }
-        // });
-
         radioButtonDebtor = (RadioButton) findViewById(R.id.radioButtonDebtor);
         radioButtonCreditor = (RadioButton) findViewById(R.id.radioButtonCreditor);
 
@@ -119,11 +111,9 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
 
             buttonNfc.setVisibility(View.GONE);
         } else {
-            Log.d(TAG, "NDEF CALLBACK SET");
             if (nfcAdapter.isEnabled()) {
                 nfcIsEnabled = true;
             }
-            nfcAdapter.setNdefPushMessageCallback(this, this);
         }
 
         if (getIntent().getExtras() != null) {
@@ -158,9 +148,19 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                     Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
                 } else {
-                    Toast.makeText(getApplicationContext(), "NFC ist bereits aktiviert. Halten Sie jetzt Ihre Handys zusammen.", Toast.LENGTH_LONG).show();
+
+                    initTexts();
+                    Intent i = new Intent(this,NFCSender.class);
+                    i.putExtra("partneriscreditor",partnerIsCreditor);
+                    i.putExtra("firstname",firstname);
+                    i.putExtra("lastname",lastname);
+                    i.putExtra("usuage",usuage);
+                    i.putExtra("iban",iban);
+                    i.putExtra("value",value);
+                    i.putExtra("date",sdf.format(date));
+                    Log.w(TAG, firstname+lastname+usuage+iban+value+partnerIsCreditor);
+                    startActivity(i);
                 }
-                initTexts();
                 insert("not_paid");
 
                 break;
@@ -177,6 +177,7 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
                 break;
             case R.id.buttonOther:
 
+                initTexts();
                 //Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
@@ -468,15 +469,5 @@ public class DetailActivity extends AppCompatActivity implements NfcAdapter.Crea
     protected void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(IS_DEBTOR_KEY, iAmCreditor);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
-
-        String stringOut = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
-        Log.d(TAG, "createNdefMessage: ");
-        NdefRecord ndefRecord = NdefRecord.createMime("text/plain", stringOut.getBytes());
-        NdefMessage ndefMessage = new NdefMessage(ndefRecord);
-        return ndefMessage;
     }
 }

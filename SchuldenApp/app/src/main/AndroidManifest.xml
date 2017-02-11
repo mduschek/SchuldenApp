@@ -49,7 +49,8 @@
         <activity android:name=".CreateLoanActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".DetailActivity" />
-        <activity android:name=".QrGeneratorActivity"></activity>
+        <activity android:name=".QrGeneratorActivity"/>
+        <activity android:name=".NFCSender"/>
     </application>
 
 </manifest>
