@@ -161,8 +161,6 @@ public class DetailActivity extends AppCompatActivity
                     Log.w(TAG, firstname+lastname+usuage+iban+value+partnerIsCreditor);
                     startActivity(i);
                 }
-                insert("not_paid");
-
                 break;
             case R.id.buttonGenerateQrCode:
                 Intent qrgenint = new Intent(this, QrGeneratorActivity.class);
@@ -203,18 +201,6 @@ public class DetailActivity extends AppCompatActivity
             case R.id.btnSlctDate:
                 Dialog dateDialog = new Dialog(this);
                 dateDialog.setContentView(R.layout.dialog_date_layout);
-                //CalendarView cal= (CalendarView) dateDialog.findViewById(R.id.calendarView);
-
-                //cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-                //    @Override
-                //    public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
-                //        GregorianCalendar gregorianCalendar = new GregorianCalendar(year,month,dayOfMonth);
-                //        date = gregorianCalendar.getTime();
-                //        Toast.makeText(getApplicationContext(), sdf.format(date),Toast.LENGTH_LONG).show();
-                //        Log.d(TAG, sdf.format(date));
-                //   }
-                //});
-
 
                 final DatePicker dp = (DatePicker) dateDialog.findViewById(R.id.datepicker);
                 dp.init(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), new DatePicker.OnDateChangedListener() {

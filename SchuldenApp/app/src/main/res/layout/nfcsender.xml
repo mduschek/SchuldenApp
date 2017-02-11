@@ -9,11 +9,19 @@
         android:layout_height="match_parent"
         android:id="@+id/progressbar"
         android:layout_weight="1"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@mipmap/tick"
+        android:id="@+id/ivNFC"
+        android:visibility="gone"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:textAlignment="center"
         android:text="Halten Sie jetzt Ihre Handys zusammen"
-        android:textSize="40sp"/>
+        android:textSize="40sp"
+        android:id="@+id/statusNfc"/>
 </LinearLayout>
