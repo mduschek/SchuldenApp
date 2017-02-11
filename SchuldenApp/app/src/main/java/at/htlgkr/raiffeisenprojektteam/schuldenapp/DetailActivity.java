@@ -177,10 +177,14 @@ public class DetailActivity extends AppCompatActivity
                 startActivity(Intent.createChooser(sendIntent, "Titel"));*/
                 break;
             case R.id.buttonPayDebt:
-                Intent bezahlIntent = new Intent(this, BezahlApp.class);
-                bezahlIntent.setAction(Intent.ACTION_SEND);
-                bezahlIntent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
-                startActivity(bezahlIntent);
+                //Intent bezahlIntent = new Intent(this, BezahlApp.class);
+                //bezahlIntent.setAction(Intent.ACTION_SEND);
+                //bezahlIntent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
+                //startActivity(bezahlIntent);
+
+                Intent baintent=this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
+                baintent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
+                startActivity(baintent);
                 break;
             case R.id.btnSlctDate:
                 Dialog dateDialog = new Dialog(this);

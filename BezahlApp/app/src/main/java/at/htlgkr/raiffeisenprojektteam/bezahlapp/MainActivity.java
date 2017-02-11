@@ -36,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
             if(savedInstanceState.getString(TRANSACTION_KEY) != null){
                 stringToTransactionConverter(savedInstanceState.getString(TRANSACTION_KEY));
             }
+
+            Bundle extras = getIntent().getExtras();
+            String data1="";
+
+            if (extras != null) {
+                data1 = extras.getString("BezahlApp");
+                Toast.makeText(this,data1,Toast.LENGTH_LONG).show();
+            }
         }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
