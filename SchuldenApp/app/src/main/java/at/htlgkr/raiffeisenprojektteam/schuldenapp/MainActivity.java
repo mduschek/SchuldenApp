@@ -31,7 +31,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.net.URLDecoder;
 
-public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdefPushCompleteCallback {
+public class MainActivity extends AppCompatActivity{
 
     private final DebtsDbHelper dbHelper = new DebtsDbHelper(this);
     public static SQLiteDatabase db;
@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
     private CustomPagerAdapter customPagerAdapter;
     private ActionBar actionBar;
     private static boolean isInLandscape;
-    public static boolean nfcIsAvailable = false;
-    public static NfcAdapter nfcAdapter;
+    public NfcAdapter nfcAdapter;
     public static BufferedReader br;
     public static BufferedWriter bw;
 
@@ -52,10 +51,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
         setContentView(R.layout.activity_main);
         db = dbHelper.getWritableDatabase();
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if (nfcAdapter != null) {
-            nfcIsAvailable = true;
-            nfcAdapter.setOnNdefPushCompleteCallback(this, this);
-        }
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         UserData.firstname=sharedPreferences.getString("pref_userdata_firstname",null);
         UserData.lastname=sharedPreferences.getString("pref_userdata_lastname",null);
@@ -196,20 +192,6 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.OnNdef
 
 
     //region NFC implementation
-    @Override
-    public void onNdefPushComplete(NfcEvent nfcEvent) {
-        final String eventString = "onNdefPushComplete\n" + nfcEvent.toString();
-        runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(),
-                        eventString,
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
 
 
     @Override

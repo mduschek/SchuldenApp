@@ -41,8 +41,6 @@ public class CreateLoanActivity extends AppCompatActivity implements NfcAdapter.
         buttonOther= (Button) findViewById(R.id.buttonOther);
 
         //NFC
-        if (!MainActivity.nfcIsAvailable) buttonNfc.setVisibility(View.GONE);
-        MainActivity.nfcAdapter.setNdefPushMessageCallback(this,this);
     }
 
     public void onButtonPressed (View source){
