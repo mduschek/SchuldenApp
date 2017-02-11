@@ -53,8 +53,9 @@ public class DebtListFragment extends Fragment
                 String usuage = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_USUAGE));
                 String iban = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_IBAN));
                 String status = c.getString(c.getColumnIndex(TblMyDebts.STATUS));
+                String date = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_DATE));
                 Log.d("*==", firstname);
-                listItems.add(new Debt(id,false,firstname,lastname,usuage,iban,status,value, null));
+                listItems.add(new Debt(id,false,firstname,lastname,usuage,iban,status,value, date));
             }
         }
         else
@@ -69,8 +70,9 @@ public class DebtListFragment extends Fragment
                 String usuage = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE));
                 String iban = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN));
                 String status = c.getString(c.getColumnIndex(TblWhoOwesMe.STATUS));
+                String date = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE));
                 Log.d("*==", firstname);
-                listItems.add(new Debt(id,true,firstname,lastname,usuage,iban,status,value, null));
+                listItems.add(new Debt(id,true,firstname,lastname,usuage,iban,status,value, date));
             }
         }
 

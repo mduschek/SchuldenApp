@@ -36,6 +36,7 @@ import org.w3c.dom.Text;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -45,8 +46,7 @@ import java.util.Set;
  * Created by michael on 24.11.16.
  */
 
-public class DetailActivity extends AppCompatActivity
-{
+public class DetailActivity extends AppCompatActivity {
 
     private static final String IS_DEBTOR_KEY = "isDebtorKey";
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -126,7 +126,11 @@ public class DetailActivity extends AppCompatActivity
     protected void onResume() {
         super.onPostResume();
         //setButtons();
-        setInputs();
+        try {
+            setInputs();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onButtonPressed(View source) {
@@ -138,6 +142,7 @@ public class DetailActivity extends AppCompatActivity
         switch (source.getId()) {
             case R.id.buttonManualInput:
                 insert("open");
+                Toast.makeText(this,"Inserted",Toast.LENGTH_LONG).show();
                 finish();
                 break;
             /*case R.id.buttonBluetooth:
@@ -154,7 +159,15 @@ public class DetailActivity extends AppCompatActivity
                 String data = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 qrgenint.putExtra("qr", URLEncoder.encode(data));
                 startActivity(qrgenint);
-                insert("not_paid");
+                if (debt == null) {
+                    insert("not_paid");
+                } else {
+                    Toast.makeText(this,"UPDATED",Toast.LENGTH_LONG).show();
+                    if (debt.isiAmCreditor())
+                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + "SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                    else
+                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + "SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                }
                 finish();
                 break;
             case R.id.buttonOther:
@@ -170,10 +183,15 @@ public class DetailActivity extends AppCompatActivity
                 //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
-                if(debt==null) {insert("not_paid");}
-                else {
-                    if (debt.isiAmCreditor())MainActivity.db.execSQL("UPDATE "+TblWhoOwesMe.TABLE_NAME+"SET status = 'not_paid' WHERE id = "+debt.getId()+";");
-                    else  MainActivity.db.execSQL("UPDATE "+TblMyDebts.TABLE_NAME+"SET status = 'not_paid' WHERE id = "+debt.getId()+";");
+                if (debt == null) {
+                    insert("not_paid");
+                    Toast.makeText(this,"Inserted",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this,"UPDATED",Toast.LENGTH_LONG).show();
+                    if (debt.isiAmCreditor())
+                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                    else
+                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
                 }
                 finish();
                 /*Intent sendIntent = new Intent();
@@ -186,7 +204,7 @@ public class DetailActivity extends AppCompatActivity
                 //bezahlIntent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
                 //startActivity(bezahlIntent);
 
-                Intent baintent=this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
+                Intent baintent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
                 baintent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
                 startActivity(baintent);
                 break;
@@ -217,16 +235,29 @@ public class DetailActivity extends AppCompatActivity
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         } else {
 
+            if (debt!=null)
+            {
+                if (debt.isiAmCreditor())
+                {
+                    MainActivity.db.execSQL("DELETE FROM "+TblWhoOwesMe.TABLE_NAME+ " WHERE "+TblWhoOwesMe.ID +" = "+ debt.getId());
+                    Toast.makeText(this,"DELETED TblWhoOwesMe",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    MainActivity.db.execSQL("DELETE FROM "+TblMyDebts.TABLE_NAME+ " WHERE "+TblWhoOwesMe.ID +" = "+ debt.getId());
+                    Toast.makeText(this,"DELETED TblMyDebts",Toast.LENGTH_LONG).show();
+                }
+            }
             initTexts();
-            Intent i = new Intent(this,NFCSender.class);
-            i.putExtra("partneriscreditor",partnerIsCreditor);
-            i.putExtra("firstname",firstname);
-            i.putExtra("lastname",lastname);
-            i.putExtra("usuage",usuage);
-            i.putExtra("iban",iban);
-            i.putExtra("value",value);
-            i.putExtra("date",sdf.format(date));
-            Log.w(TAG, firstname+lastname+usuage+iban+value+partnerIsCreditor);
+            Intent i = new Intent(this, NFCSender.class);
+            i.putExtra("partneriscreditor", partnerIsCreditor);
+            i.putExtra("firstname", firstname);
+            i.putExtra("lastname", lastname);
+            i.putExtra("usuage", usuage);
+            i.putExtra("iban", iban);
+            i.putExtra("value", value);
+            i.putExtra("date", sdf.format(date));
+            Log.w(TAG, firstname + lastname + usuage + iban + value + partnerIsCreditor);
             startActivity(i);
         }
     }
@@ -290,7 +321,7 @@ public class DetailActivity extends AppCompatActivity
 //        }
     }
 
-    private void setInputs() {
+    private void setInputs() throws ParseException {
         if (debt != null) {
             if (debt.isiAmCreditor()) radioButtonCreditor.setChecked(true);
             else radioButtonDebtor.setChecked(true);
@@ -301,6 +332,7 @@ public class DetailActivity extends AppCompatActivity
             edLastname.setText(debt.getDeptorLastName() + "");
             //date = debt.getDate();    DATE SETZEN
             textViewStatus.setText(debt.getStatus() + "");
+            date = sdf.parse(debt.getDate());
 
             if (debt.getStatus() != "open") {
                 radioButtonCreditor.setClickable(false);
@@ -332,13 +364,10 @@ public class DetailActivity extends AppCompatActivity
             buttonNfc.setVisibility(View.VISIBLE);
             buttonGenerateQrCode.setVisibility(View.VISIBLE);
             buttonOther.setVisibility(View.VISIBLE);
-            //buttonPayDebt.setVisibility(View.VISIBLE);
+            buttonPayDebt.setVisibility(View.GONE);
         }
 
-        buttonPayDebt.setVisibility(View.GONE);
     }
-
-
 
 
     private void initTexts()//speichert die werte der textfelder in die variablen
@@ -383,8 +412,6 @@ public class DetailActivity extends AppCompatActivity
             MainActivity.db.insert(TblMyDebts.TABLE_NAME, null, cv);
         }
     }
-
-
 
 
     private boolean checkInputValues() {
