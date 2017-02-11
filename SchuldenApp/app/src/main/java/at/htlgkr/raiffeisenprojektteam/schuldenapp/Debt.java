@@ -14,8 +14,10 @@ public class Debt implements Serializable
     private String deptorFirstName, deptorLastName, usuage, iBan, status;
     private double value;
     private String date;
+    private int id;
 
-    public Debt(boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date) {
+    public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date) {
+        this.id=id;
         this.iAmCreditor = iAmCreditor;
         this.deptorFirstName = deptorFirstName;
         this.deptorLastName = deptorLastName;
@@ -24,6 +26,10 @@ public class Debt implements Serializable
         this.status = status;   //open, not_paid, paid
         this.value = value;
         this.date = date;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public static int getOwnDept() {
