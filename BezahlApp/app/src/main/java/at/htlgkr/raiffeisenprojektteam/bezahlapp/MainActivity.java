@@ -36,14 +36,6 @@ public class MainActivity extends AppCompatActivity {
             if(savedInstanceState.getString(TRANSACTION_KEY) != null){
                 stringToTransactionConverter(savedInstanceState.getString(TRANSACTION_KEY));
             }
-
-            Bundle extras = getIntent().getExtras();
-            String data1="";
-
-            if (extras != null) {
-                data1 = extras.getString("BezahlApp");
-                Toast.makeText(this,data1,Toast.LENGTH_LONG).show();
-            }
         }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -59,9 +51,16 @@ public class MainActivity extends AppCompatActivity {
 
         buttonTransaction= (Button) findViewById(R.id.buttonTransaction);
 
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        Uri data = intent.getData();
+        //Intent intent = getIntent();
+        //String action = intent.getAction();
+        //Uri data = intent.getData();
+
+        if (getIntent().getExtras() != null) {
+            String data1 = getIntent().getExtras().getString("BezahlApp");
+            stringToTransactionConverter(data1);
+            updateViews();
+            //Toast.makeText(this,"Data: " + data1,Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -121,11 +120,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stringToTransactionConverter(String transactionString) {
-
         // String example = iban;Philip;Frauscher;Tschick;9.2.2017;500
-
-        final String splitArr[] = transactionString.split(";");
-        transaction = new Transaction(splitArr[0], splitArr[1], splitArr[2], splitArr[3], splitArr[4], Double.parseDouble(splitArr[5]));
+        try{
+            final String splitArr[] = transactionString.split(";");
+            transaction = new Transaction(splitArr[0], splitArr[1], splitArr[2], splitArr[3], splitArr[4], Double.parseDouble(splitArr[5]));
+        } catch (Exception e){
+            Toast.makeText(this,"Fehler stringToTransactionConverter", Toast.LENGTH_LONG).show();
+        }
     }
 
     public String transactionToStringConverter (){
@@ -163,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
         transaction = null;
         updateViews();
     }
+
     public void buttonTransactionClicked(View view){
         if (transaction == null || transaction.getValue() <= 0){
             Toast.makeText(this,"Ungültige Transaktion",Toast.LENGTH_LONG).show();

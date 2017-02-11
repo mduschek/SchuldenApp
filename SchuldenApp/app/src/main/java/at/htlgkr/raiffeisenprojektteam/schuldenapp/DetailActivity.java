@@ -1,46 +1,28 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
 import android.app.Dialog;
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.nfc.NfcEvent;
 import android.os.Bundle;
-import android.os.ParcelUuid;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Set;
 
 /**
  * Created by michael on 24.11.16.
@@ -63,7 +45,7 @@ public class DetailActivity extends AppCompatActivity {
     //private CalendarView calendarView;
 
 
-    private String firstname = "", lastname = "", usuage = "", value = "", iban = "", partnerIsCreditor = "";
+    private String firstname = "", lastname = "", usage = "", value = "", iban = "", partnerIsCreditor = "";
     private Date date = new Date();
 
     public int dialogWich = -1;
@@ -156,8 +138,8 @@ public class DetailActivity extends AppCompatActivity {
                 Intent qrgenint = new Intent(this, QrGeneratorActivity.class);
                 qrgenint.setAction(Intent.ACTION_SEND);
                 initTexts();
-                Log.d(TAG + "GenQR", partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date));
-                String data = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                Log.d(TAG + "GenQR", partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date));
+                String data = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 qrgenint.putExtra("qr", URLEncoder.encode(data));
                 startActivity(qrgenint);
                 if (debt == null) {
@@ -178,7 +160,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
-                String dataString = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usuage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                String dataString = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 dataString = URLEncoder.encode(dataString);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, LINK + dataString);
                 //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
@@ -206,7 +188,10 @@ public class DetailActivity extends AppCompatActivity {
                 //startActivity(bezahlIntent);
 
                 Intent baintent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
-                baintent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
+
+                //baintent.putExtra("BezahlApp", "AT34442566756567;Alexander;Perndorfer;Essen;9.2.2017;30.65");
+                //Toast.makeText(this,"Data: " + transactionToStringConverter(),Toast.LENGTH_LONG).show();
+                baintent.putExtra("BezahlApp", transactionToStringConverter());
                 startActivity(baintent);
                 break;
             case R.id.btnSlctDate:
@@ -253,11 +238,11 @@ public class DetailActivity extends AppCompatActivity {
             i.putExtra("partneriscreditor", partnerIsCreditor);
             i.putExtra("firstname", firstname);
             i.putExtra("lastname", lastname);
-            i.putExtra("usuage", usuage);
+            i.putExtra("usage", usage);
             i.putExtra("iban", iban);
             i.putExtra("value", value);
             i.putExtra("date", sdf.format(date));
-            Log.w(TAG, firstname + lastname + usuage + iban + value + partnerIsCreditor);
+            Log.w(TAG, firstname + lastname + usage + iban + value + partnerIsCreditor);
             startActivity(i);
         }
     }
@@ -380,8 +365,8 @@ public class DetailActivity extends AppCompatActivity {
         lastname = UserData.lastname;
         iban = UserData.iban;
         value = DBData.value;
-        usuage = DBData.usuage;
-        Log.w(TAG + "senddat", firstname + lastname + iban + value + usuage);
+        usage = DBData.usuage;
+        Log.w(TAG + "senddat", firstname + lastname + iban + value + usage);
     }
 
     private void insert(String status) {
@@ -422,6 +407,16 @@ public class DetailActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private String transactionToStringConverter (){
+        initTexts();
+        return iban + ";" +
+                firstname + ";" +
+                lastname + ";" +
+                usage + ";" +
+                date + ";" +
+                value;
     }
 
     @Override
