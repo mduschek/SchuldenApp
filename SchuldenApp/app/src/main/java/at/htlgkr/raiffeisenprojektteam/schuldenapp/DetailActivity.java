@@ -40,7 +40,6 @@ public class DetailActivity extends AppCompatActivity {
     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "*=DetailActivity";
     //private String nfcString = "";
-    private boolean nfcIsEnabled = false;
     private BluetoothDevice selectedDevice;
     //private CalendarView calendarView;
 
@@ -95,10 +94,6 @@ public class DetailActivity extends AppCompatActivity {
         if (nfcAdapter == null) {
 
             buttonNfc.setVisibility(View.GONE);
-        } else {
-            if (nfcAdapter.isEnabled()) {
-                nfcIsEnabled = true;
-            }
         }
 
         if (getIntent().getExtras() != null) {
@@ -216,7 +211,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void nfc() {
-        if (!nfcIsEnabled) {
+        if (!NfcAdapter.getDefaultAdapter(this).isEnabled()) {
             Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         } else {
