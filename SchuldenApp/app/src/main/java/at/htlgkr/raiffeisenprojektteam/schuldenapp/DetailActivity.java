@@ -40,7 +40,7 @@ public class DetailActivity extends AppCompatActivity {
     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "*=DetailActivity";
     //private String nfcString = "";
-    private BluetoothDevice selectedDevice;
+    private NfcAdapter nfcAdapter;
     //private CalendarView calendarView;
 
 
@@ -89,10 +89,10 @@ public class DetailActivity extends AppCompatActivity {
         //buttonOther.setVisibility(View.GONE);
 
         //NFC
-        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        if (nfcAdapter == null) {
-
+        if (nfcAdapter == null)
+        {
             buttonNfc.setVisibility(View.GONE);
         }
 
@@ -143,9 +143,9 @@ public class DetailActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this,"UPDATED",Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 finish();
                 break;
@@ -352,6 +352,10 @@ public class DetailActivity extends AppCompatActivity {
             buttonGenerateQrCode.setVisibility(View.VISIBLE);
             buttonOther.setVisibility(View.VISIBLE);
             buttonPayDebt.setVisibility(View.GONE);
+        }
+        if (nfcAdapter == null)
+        {
+            buttonNfc.setVisibility(View.GONE);
         }
 
     }
