@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class DetailActivity extends AppCompatActivity {
     private RadioButton radioButtonDebtor, radioButtonCreditor;
     private Button buttonSelectDate, buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt;
     private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
+    private LinearLayout linearLayoutPartnerData;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp?content=";
     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "*=DetailActivity";
@@ -84,6 +86,7 @@ public class DetailActivity extends AppCompatActivity {
         edFirstname = (EditText) findViewById(R.id.editTextFirstName);
         edLastname = (EditText) findViewById(R.id.editTextLastName);
 
+        linearLayoutPartnerData = (LinearLayout) findViewById(R.id.linearLayoutPartnerData);
         //buttonBluetooth.setVisibility(View.GONE);
         //buttonNfc.setVisibility(View.GONE);
         //buttonOther.setVisibility(View.GONE);
@@ -105,11 +108,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onPostResume();
         //setButtons();
-        try {
-            setInputs();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        setInputs();
     }
 
     public void onButtonPressed(View source) {
@@ -248,12 +247,12 @@ public class DetailActivity extends AppCompatActivity {
         switch (source.getId()) {
             case R.id.radioButtonDebtor:
                 iAmCreditor = false;
-                //setButtons();
+                setInputs();
                 break;
 
             case R.id.radioButtonCreditor:
                 iAmCreditor = true;
-                //setButtons();
+                setInputs();
                 break;
         }
     }
@@ -303,19 +302,30 @@ public class DetailActivity extends AppCompatActivity {
 //        }
     }
 
-    private void setInputs() throws ParseException {
+    private void setInputs() {
         if (debt != null) {
-            if (debt.isiAmCreditor()) { radioButtonCreditor.setChecked(true); }
-            else { radioButtonDebtor.setChecked(true); }
+            if (debt.isiAmCreditor()) {
+                radioButtonCreditor.setChecked(true);
+            }
+            else {
+                radioButtonDebtor.setChecked(true);
+            }
 
                 edVal.setText(debt.getValue() + "");
                 edUsuage.setText(debt.getUsuage() + "");
                 edIBAN.setText(debt.getiBan() + "");
                 edFirstname.setText(debt.getDeptorFirstName() + "");
                 edLastname.setText(debt.getDeptorLastName() + "");
-                textViewDate.setText(sdf.parse(debt.getDate()).toString());
                 textViewStatus.setText(debt.getStatus() + "");
-                date = sdf.parse(debt.getDate());
+
+                try {
+                    textViewDate.setText(sdf.parse(debt.getDate()).toString());
+                    date = sdf.parse(debt.getDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
 
             if (debt.getStatus() != "open") {
                 radioButtonCreditor.setClickable(false);
@@ -358,6 +368,12 @@ public class DetailActivity extends AppCompatActivity {
             buttonNfc.setVisibility(View.GONE);
         }
 
+        if (radioButtonCreditor.isChecked()){
+            linearLayoutPartnerData.setVisibility(View.GONE);
+        }
+        else{
+            linearLayoutPartnerData.setVisibility(View.VISIBLE);
+        }
     }
 
 

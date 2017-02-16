@@ -51,7 +51,7 @@
         <activity android:name=".DetailActivity" />
         <activity android:name=".QrGeneratorActivity"/>
         <activity android:name=".NFCSender"/>
-        <activity android:name=".BTSender" />
+        <!--<activity android:name=".BTSender" />-->
     </application>
 
 </manifest>
