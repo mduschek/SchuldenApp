@@ -143,9 +143,9 @@ public class DetailActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this,"UPDATED",Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + "SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + "SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE id = " + debt.getId() + ";");
                 }
                 finish();
                 break;
