@@ -34,6 +34,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -143,6 +144,14 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.option_menu_archive:
                 intent = new Intent(this, ArchiveActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.option_menu_qr_code_bank_details:
+                intent = new Intent(this, QrGeneratorActivity.class);
+                intent.setAction(Intent.ACTION_SEND);
+                String data = "test";   //Stuzza code here Firstname;Lastname;IBAN
+                intent.putExtra("qr", URLEncoder.encode(data));
                 startActivity(intent);
                 return true;
 
