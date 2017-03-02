@@ -283,18 +283,18 @@ public class MainActivity extends AppCompatActivity {
     public static String createStuzzString(String firstname, String lastname, String iban, float value, String usage) {
         //partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date));
         //BCD1 \r\n 001 \r\n 1 \r\n SCT \r\n BIC \r\n Creditor \r\n IBAN \r\n Value \r\n Reas \r\n Reference \r\n Text \r\n Message \r\n
-        return "BCD1\r\n" +
-                "001\r\n" +
-                "1\r\n" +
-                "SCT\r\n" +
-                "\r\n" + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
-                firstname + " " + lastname + "\r\n" + //Creditor
-                iban + "\r\n" +   //iban
-                "EUR" + value + "\r\n" +  //value
-                "\r\n" +   //reason
-                "\r\n" +    //REFERENCE OR TEXT
-                usage + "\r\n" +     //text
-                "\r\n";   //message
+        return "BCD1" + System.lineSeparator() +
+                "001" +
+                "1" +
+                "SCT" +
+                "" +  System.lineSeparator() + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
+                firstname + " " + lastname + System.lineSeparator() + //Creditor
+                iban +  System.lineSeparator() +   //iban
+                "EUR" + value +  System.lineSeparator() +  //value
+                "\r\n" + System.lineSeparator() +   //reason
+                "\r\n" +  System.lineSeparator() +   //REFERENCE OR TEXT
+                usage +  System.lineSeparator() +     //text
+                "" + System.lineSeparator();   //message
     }
 
     @Override
