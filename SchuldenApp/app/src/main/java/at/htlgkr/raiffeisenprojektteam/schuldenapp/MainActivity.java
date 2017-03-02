@@ -223,6 +223,11 @@ public class MainActivity extends AppCompatActivity {
             final String split[] = inMsg.split(";");
             insertIntoDb(split);
         }
+        Toast.makeText(this,"onResume",Toast.LENGTH_LONG).show();
+        customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), this);
+        viewPager.setAdapter(customPagerAdapter);
+        viewPager.addOnPageChangeListener(getOnPageChangedListener());
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
     //endregion
 
