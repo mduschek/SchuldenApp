@@ -1,29 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_qr_scanner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.QrGeneratorActivity">
+    tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.QrGeneratorActivity"
+    android:orientation="vertical"
+    android:layout_weight="1" >
 
-    <LinearLayout>
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Teilen Sie Ihre Bezahlinformation als QR-Code. Folgende Informationen werden geteilt: Kontoinhaber, Betrag, Verwendung, IBAN, Datum"/>
-    </LinearLayout>
-        <ImageView
-            android:layout_weight="1"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wählen sie, ob sie einen QR-Code zum Teilen an eine andere Schuldenapp oder zum Bezahlen im STUZZA Standard erstellen wollen"/>
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButtonCreateShareQrCode"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/imgView"/>
-    <LinearLayout>
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scannen Sie mit einem anderen Handy diese Daten ab"/>
-    </LinearLayout>
-</TableLayout>
+            android:layout_weight="1"
+            android:checked="true"
+            android:onClick="onRadioButtonClicked"
+            android:text="Schuldenapp" />
+
+        <RadioButton
+            android:id="@+id/onRadioButtonCreateStuzzaQrCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onRadioButtonClicked"
+            android:text="Bezahlen" />
+    </RadioGroup>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50px" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Teilen Sie Ihre Bezahlinformation als QR-Code."/>
+    <!-- Folgende Informationen werden geteilt: Kontoinhaber, Betrag, Verwendung, IBAN, Datum-->
+    <ImageView
+        android:layout_weight="1"
+        android:id="@+id/imgView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scannen Sie mit einem anderen Handy diese Daten ab"/>
+
+
+</LinearLayout>

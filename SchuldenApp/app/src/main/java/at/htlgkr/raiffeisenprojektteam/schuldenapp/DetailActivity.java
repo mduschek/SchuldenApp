@@ -134,11 +134,14 @@ public class DetailActivity extends AppCompatActivity {
                 qrgenint.setAction(Intent.ACTION_SEND);
                 initTexts();
                 Log.d(TAG + "GenQR", partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date));
-                String data = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date);
+
+                String shareData = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date);
                         //createStuzziString(); //
 
+                String stuzzaData = MainActivity.createStuzzString(firstname, lastname, iban, Float.parseFloat(value), usage);
 
-                qrgenint.putExtra("qr", URLEncoder.encode(data));
+                qrgenint.putExtra("shareData", URLEncoder.encode(shareData));
+                qrgenint.putExtra("stuzzaData", URLEncoder.encode(stuzzaData));
                 startActivity(qrgenint);
                 if (debt == null) {
                     insert("not_paid");
