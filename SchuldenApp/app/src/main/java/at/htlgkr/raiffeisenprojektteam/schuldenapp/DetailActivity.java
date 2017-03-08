@@ -87,9 +87,6 @@ public class DetailActivity extends AppCompatActivity {
         edLastname = (EditText) findViewById(R.id.editTextLastName);
 
         linearLayoutPartnerData = (LinearLayout) findViewById(R.id.linearLayoutPartnerData);
-        //buttonBluetooth.setVisibility(View.GONE);
-        //buttonNfc.setVisibility(View.GONE);
-        //buttonOther.setVisibility(View.GONE);
 
         //NFC
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -123,9 +120,6 @@ public class DetailActivity extends AppCompatActivity {
                 Toast.makeText(this,"Inserted",Toast.LENGTH_LONG).show();
                 finish();
                 break;
-            /*case R.id.buttonBluetooth:
-                bluetooth();
-                break;*/
             case R.id.buttonNfc:
                 nfc();
                 break;
@@ -153,14 +147,12 @@ public class DetailActivity extends AppCompatActivity {
                 break;
             case R.id.buttonOther:
                 initTexts();
-                //Uri adress = Uri.parse("schuldenapp://createloan");  //URL parsen
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
                 String dataString = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date);
                 dataString = URLEncoder.encode(dataString);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, LINK + dataString);
-                //sendIntent.putExtra(Intent.EXTRA_ORIGINATING_URI, adress); //geändert
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
                 if (debt == null) {
@@ -179,15 +171,7 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(sendIntent, "Titel"));*/
                 break;
             case R.id.buttonPayDebt:
-                //Intent bezahlIntent = new Intent(this, BezahlApp.class);
-                //bezahlIntent.setAction(Intent.ACTION_SEND);
-                //bezahlIntent.putExtra("BezahlApp", "Alexander;Perndorfer;Essen;AT34442566756567;30.65");
-                //startActivity(bezahlIntent);
-
                 Intent baintent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
-
-                //baintent.putExtra("BezahlApp", "AT34442566756567;Alexander;Perndorfer;Essen;9.2.2017;30.65");
-                //Toast.makeText(this,"Data: " + transactionToStringConverter(),Toast.LENGTH_LONG).show();
                 baintent.putExtra("BezahlApp", transactionToStringConverter());
                 startActivity(baintent);
                 break;
