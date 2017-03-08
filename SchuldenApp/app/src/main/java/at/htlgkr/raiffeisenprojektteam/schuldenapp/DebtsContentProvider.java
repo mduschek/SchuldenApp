@@ -26,8 +26,6 @@ public class DebtsContentProvider extends ContentProvider {
     private static final int WHOOWESME_ID=8;
     private static final UriMatcher uriMatcher=new UriMatcher(UriMatcher.NO_MATCH);
     static{
-        uriMatcher.addURI(AUTH,TblClients.TABLE_NAME,CLIENTS_VERZ);
-        uriMatcher.addURI(AUTH,TblClients.TABLE_NAME+"/#",CLIENT_ID);
         uriMatcher.addURI(AUTH,TblStatus.TABLE_NAME,STATUSES_VERZ);
         uriMatcher.addURI(AUTH,TblStatus.TABLE_NAME+"/#",STATUS_ID);
         uriMatcher.addURI(AUTH, TblMyDebts.TABLE_NAME, MYDEBTS_VERZ);
@@ -51,16 +49,7 @@ public class DebtsContentProvider extends ContentProvider {
         Cursor cursor=null;
 
         switch (uriMatcher.match(uri)){
-            case CLIENTS_VERZ:
-                cursor=dbHelper.query(TblClients.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
-                break;
-            case CLIENT_ID:
-                if(selection != null) {
-                    throw new UnsupportedOperationException("No Arguments plz");
-                }
-                selection = "_id = " + uri.getPathSegments().get(1);
-                cursor = dbHelper.query(TblClients.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
-                break;
+
             case STATUSES_VERZ:
                 cursor=dbHelper.query(TblStatus.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
@@ -109,9 +98,6 @@ public class DebtsContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
         switch (uriMatcher.match(uri)){
-            case CLIENTS_VERZ:
-                dbHelper.insert(TblClients.TABLE_NAME,null,contentValues);
-                break;
             case STATUSES_VERZ:
                 dbHelper.insert(TblStatus.TABLE_NAME,null,contentValues);
                 break;
