@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         textViewReference= (TextView) findViewById(R.id.textViewReference);
         textViewText= (TextView) findViewById(R.id.textViewText);
         textViewMessage= (TextView) findViewById(R.id.textViewMessage);
-
         buttonTransaction= (Button) findViewById(R.id.buttonTransaction);
 
         //Intent intent = getIntent();

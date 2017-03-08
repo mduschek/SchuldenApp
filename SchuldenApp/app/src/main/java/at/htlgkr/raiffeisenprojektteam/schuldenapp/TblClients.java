@@ -3,7 +3,7 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 /**
  * Created by yg on 15/11/16.
  */
-
+@Deprecated
 public class TblClients {
     public static final String TABLE_NAME="Clients";
 
