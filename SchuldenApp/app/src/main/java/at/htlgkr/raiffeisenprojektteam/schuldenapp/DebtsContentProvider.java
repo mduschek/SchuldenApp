@@ -97,7 +97,8 @@ public class DebtsContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri))
+        {
             case STATUSES_VERZ:
                 dbHelper.insert(TblStatus.TABLE_NAME,null,contentValues);
                 break;
