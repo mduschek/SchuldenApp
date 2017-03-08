@@ -50,7 +50,7 @@ public class DetailActivity extends AppCompatActivity {
     private String firstname = "", lastname = "", usage = "", value = "", iban = "", partnerIsCreditor = "";
     private Date date = new Date();
 
-    public int dialogWich = -1;
+    //public int dialogWich = -1;
 
 
     public Debt debt;
