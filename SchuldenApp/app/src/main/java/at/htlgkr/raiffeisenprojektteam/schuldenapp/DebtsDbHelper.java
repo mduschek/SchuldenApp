@@ -28,12 +28,13 @@ public class DebtsDbHelper extends SQLiteOpenHelper
         db.execSQL(TblStatus.SQL_CREATE_TABEL);
         db.execSQL(TblMyDebts.SQL_CREATE_TABLE);
         db.execSQL(TblWhoOwesMe.SQL_CREATE_TABLE);
+        db.execSQL(TblData.SQL_CREATE_TABLE);
         seed(db);
     }
 
     private void seed(SQLiteDatabase db)
     {
-        db.execSQL("INSERT INTO statuses VALUES ('paid'); INSERT INTO statuses VALUES ('transmitted'); INSERT INTO statuses VALUES('not_paid');");
+        db.execSQL("INSERT INTO statuses VALUES ('paid'); INSERT INTO statuses VALUES ('open'); INSERT INTO statuses VALUES('not_paid');");
     }
 
     @Override
