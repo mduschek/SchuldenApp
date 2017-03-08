@@ -155,6 +155,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
+            case R.id.option_menu_open_payapp:
+                intent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
+                startActivity(intent);
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -291,8 +295,8 @@ public class MainActivity extends AppCompatActivity {
                 firstname + " " + lastname + System.lineSeparator() + //Creditor
                 iban +  System.lineSeparator() +   //iban
                 "EUR" + value +  System.lineSeparator() +  //value
-                "\r\n" + System.lineSeparator() +   //reason
-                "\r\n" +  System.lineSeparator() +   //REFERENCE OR TEXT
+                "" + System.lineSeparator() +   //reason
+                "" +  System.lineSeparator() +   //REFERENCE OR TEXT
                 usage +  System.lineSeparator() +     //text
                 "" + System.lineSeparator();   //message
     }

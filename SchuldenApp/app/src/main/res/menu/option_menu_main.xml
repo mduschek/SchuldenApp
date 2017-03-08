@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/option_menu_new_entry"
         android:icon="@android:drawable/ic_menu_add"
@@ -24,4 +25,8 @@
     <item
         android:id="@+id/option_menu_qr_code_bank_details"
         android:title="Bankdaten mit QR-Code übertragen"/>
+
+    <item
+        android:id="@+id/option_menu_open_payapp"
+        android:title="Schuldenapp aufrufen" />
 </menu>

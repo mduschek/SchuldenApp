@@ -33,11 +33,12 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String IS_DEBTOR_KEY = "isDebtorKey";
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    private TextView textViewDate, textViewCreateLoanDescription, textViewStatus;
+    private TextView textViewDate, textViewCreateLoanDescription, textViewStatus, textViewIban;
     private RadioButton radioButtonDebtor, radioButtonCreditor;
     private Button buttonSelectDate, buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt;
     private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
     private LinearLayout linearLayoutPartnerData;
+    private LinearLayout linearLayoutName;
     public static final String LINK = "http://at.htlgkr.schuldenapp.createloan/schuldenapp?content=";
     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
     private static final String TAG = "*=DetailActivity";
@@ -67,6 +68,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         textViewDate = (TextView) findViewById(R.id.textViewDate);
+        textViewIban = (TextView) findViewById(R.id.tvIban);
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
         textViewStatus = (TextView) findViewById(R.id.textViewStatus);
         buttonSelectDate =  (Button) findViewById(R.id.buttonSelectDate);
@@ -87,6 +89,7 @@ public class DetailActivity extends AppCompatActivity {
         edLastname = (EditText) findViewById(R.id.editTextLastName);
 
         linearLayoutPartnerData = (LinearLayout) findViewById(R.id.linearLayoutPartnerData);
+        linearLayoutName = (LinearLayout) findViewById(R.id.linearLayoutName);
         //buttonBluetooth.setVisibility(View.GONE);
         //buttonNfc.setVisibility(View.GONE);
         //buttonOther.setVisibility(View.GONE);
@@ -106,7 +109,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onPostResume();
+        super.onResume();
         //setButtons();
         setInputs();
     }
@@ -371,11 +374,17 @@ public class DetailActivity extends AppCompatActivity {
             buttonNfc.setVisibility(View.GONE);
         }
 
-        if (radioButtonCreditor.isChecked()){
-            linearLayoutPartnerData.setVisibility(View.GONE);
+        if (radioButtonCreditor.isChecked()){   //Wenn Kreditor Markiert ist Firstname und Lastname auf GONE setzen
+            //linearLayoutPartnerData.setVisibility(View.GONE);
+            //linearLayoutName.setVisibility(View.GONE);
+            edIBAN.setVisibility(View.GONE);
+            textViewIban.setVisibility(View.GONE);
         }
         else{
-            linearLayoutPartnerData.setVisibility(View.VISIBLE);
+            //linearLayoutPartnerData.setVisibility(View.VISIBLE);
+            //linearLayoutName.setVisibility(View.VISIBLE);
+            textViewIban.setVisibility(View.VISIBLE);
+            edIBAN.setVisibility(View.VISIBLE);
         }
     }
 
