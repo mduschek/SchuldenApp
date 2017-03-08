@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
     private void insertIntoDb(final String[] split) {//STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
         if (split[0].equals("true")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
+            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
             builder.setIcon(android.R.drawable.ic_dialog_alert);
             builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                 @Override
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
             builder.create().show();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\nIch schulde " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
+            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nIch schulde " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
             builder.setIcon(android.R.drawable.ic_dialog_alert);
             builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                 @Override
@@ -278,6 +278,23 @@ public class MainActivity extends AppCompatActivity {
             builder.create().show();
         }
 
+    }
+
+    public static String createStuzzString(String firstname, String lastname, String iban, float value, String usage) {
+        //partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date));
+        //BCD1 \r\n 001 \r\n 1 \r\n SCT \r\n BIC \r\n Creditor \r\n IBAN \r\n Value \r\n Reas \r\n Reference \r\n Text \r\n Message \r\n
+        return "BCD1" + System.lineSeparator() +
+                "001" +
+                "1" +
+                "SCT" +
+                "" +  System.lineSeparator() + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
+                firstname + " " + lastname + System.lineSeparator() + //Creditor
+                iban +  System.lineSeparator() +   //iban
+                "EUR" + value +  System.lineSeparator() +  //value
+                "\r\n" + System.lineSeparator() +   //reason
+                "\r\n" +  System.lineSeparator() +   //REFERENCE OR TEXT
+                usage +  System.lineSeparator() +     //text
+                "" + System.lineSeparator();   //message
     }
 
     @Override

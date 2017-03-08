@@ -135,6 +135,9 @@ public class DetailActivity extends AppCompatActivity {
                 initTexts();
                 Log.d(TAG + "GenQR", partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date));
                 String data = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                        //createStuzziString(); //
+
+
                 qrgenint.putExtra("qr", URLEncoder.encode(data));
                 startActivity(qrgenint);
                 if (debt == null) {

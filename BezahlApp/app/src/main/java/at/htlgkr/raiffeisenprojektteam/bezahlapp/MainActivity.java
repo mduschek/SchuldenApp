@@ -2,7 +2,6 @@ package at.htlgkr.raiffeisenprojektteam.bezahlapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,32 +21,34 @@ public class MainActivity extends AppCompatActivity {
     private static final String TRANSACTION_KEY = "transactionKey";
 
     Button buttonTransaction;
-    TextView textViewCredit, textViewValue, textViewUsage, textViewIban, textViewFirstname, textViewLastname, textViewDate;
+    TextView textViewCredit, textViewBic, textViewCreditor, textViewIban, textViewAmount, textViewReason, textViewReference, textViewText, textViewMessage;
     SharedPreferences sharedPreferences;
 
-    Transaction transaction = null;
+    Transaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        transaction = null;
         if (savedInstanceState != null) {
             if(savedInstanceState.getString(TRANSACTION_KEY) != null){
-                stringToTransactionConverter(savedInstanceState.getString(TRANSACTION_KEY));
+                stuzzaStringToTransactionConverter(savedInstanceState.getString(TRANSACTION_KEY));
             }
         }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         textViewCredit= (TextView) findViewById(R.id.textViewCredit);
-        textViewValue= (TextView) findViewById(R.id.textViewValue);
-        textViewUsage= (TextView) findViewById(R.id.textViewUsage);
-        textViewCredit= (TextView) findViewById(R.id.textViewCredit);
+        textViewBic= (TextView) findViewById(R.id.textViewBic);
+        textViewCreditor = (TextView) findViewById(R.id.textViewCreditor);
         textViewIban= (TextView) findViewById(R.id.textViewIban);
-        textViewFirstname= (TextView) findViewById(R.id.textViewFirstname);
-        textViewLastname= (TextView) findViewById(R.id.textViewLastname);
-        textViewDate= (TextView) findViewById(R.id.textViewDate);
+        textViewAmount = (TextView) findViewById(R.id.textViewAmount);
+        textViewReason= (TextView) findViewById(R.id.textViewReason);
+        textViewReference= (TextView) findViewById(R.id.textViewReference);
+        textViewText= (TextView) findViewById(R.id.textViewText);
+        textViewMessage= (TextView) findViewById(R.id.textViewMessage);
 
         buttonTransaction= (Button) findViewById(R.id.buttonTransaction);
 
@@ -57,11 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             String data1 = getIntent().getExtras().getString("BezahlApp");
-            stringToTransactionConverter(data1);
+            stuzzaStringToTransactionConverter(data1);
             updateViews();
             //Toast.makeText(this,"Data: " + data1,Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override
@@ -113,50 +113,62 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Cancelled",Toast.LENGTH_LONG).show();
             }else{
                 //Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
-                stringToTransactionConverter(result.getContents());
+                //stringToTransactionConverter(result.getContents());
+                stuzzaStringToTransactionConverter(result.getContents());
                 updateViews();
             }
         }
     }
 
-    public void stringToTransactionConverter(String transactionString) {
-        // String example = iban;Philip;Frauscher;Tschick;9.2.2017;500
+    public void stuzzaStringToTransactionConverter(String transactionString){
         try{
-            final String splitArr[] = transactionString.split(";");
-            transaction = new Transaction(splitArr[0], splitArr[1], splitArr[2], splitArr[3], splitArr[4], Double.parseDouble(splitArr[5]));
+            Log.i("Stuzza", transactionString);
+            final String splitArr[] = transactionString.split(System.lineSeparator());
+            transaction = new Transaction(splitArr[4], splitArr[5], splitArr[6], Float.parseFloat(splitArr[7].substring(3)), splitArr[8], splitArr[9], splitArr[10], splitArr[11]);
         } catch (Exception e){
-            Toast.makeText(this,"Fehler stringToTransactionConverter", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Fehler stuzzaStringToTransactionConverter", Toast.LENGTH_LONG).show();
         }
     }
 
-    public String transactionToStringConverter (){
-        return transaction.getIban() + ";" +
-                transaction.getPartnerFirstname() + ";" +
-                transaction.getPartnerLastname() + ";" +
-                transaction.getUsage() + ";" +
-                transaction.getDate() + ";" +
-                transaction.getValue();
+    public String transactionToStuzzaStringConverter(){
+        return "BCD1\r\n" +
+                "001\r\n" +
+                "1\r\n" +
+                "SCT\r\n" +
+                transaction.getBic() + "\r\n" +
+                transaction.getCreditor() + "\r\n" +
+                transaction.getIban() + "\r\n" +
+                transaction.getAmount() + "\r\n" +
+                transaction.getReason() + "\r\n" +
+                transaction.getReference() + "\r\n" +
+                transaction.getText() + "\r\n" +
+                transaction.getMessage();
     }
 
     public void updateViews(){
         textViewCredit.setText(sharedPreferences.getString("pref_userdata_credit", null));
 
         if (transaction != null){
+
+            textViewBic.setText(transaction.getBic());
+            textViewCreditor.setText(transaction.getCreditor());
             textViewIban.setText(transaction.getIban());
-            textViewFirstname.setText(transaction.getPartnerFirstname());
-            textViewLastname.setText(transaction.getPartnerLastname());
-            textViewUsage.setText(transaction.getUsage());
-            textViewDate.setText(transaction.getDate());
-            textViewValue.setText(transaction.getValue() + "");
+            textViewAmount.setText(transaction.getAmount() + "");
+            textViewReason.setText(transaction.getReason());
+            textViewReference.setText(transaction.getReference());
+            textViewText.setText(transaction.getText());
+            textViewMessage.setText(transaction.getMessage());
         }
 
         else{
+            textViewBic.setText("");
+            textViewCreditor.setText("");
             textViewIban.setText("");
-            textViewFirstname.setText("");
-            textViewLastname.setText("");
-            textViewUsage.setText("");
-            textViewDate.setText("");
-            textViewValue.setText("");
+            textViewAmount.setText("");
+            textViewReason.setText("");
+            textViewReference.setText("");
+            textViewText.setText("");
+            textViewMessage.setText("");
         }
     }
 
@@ -166,12 +178,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonTransactionClicked(View view){
-        if (transaction == null || transaction.getValue() <= 0){
+        if (transaction == null || transaction.getAmount() <= 0){
             Toast.makeText(this,"Ungültige Transaktion",Toast.LENGTH_LONG).show();
             return;
         }
 
-        double newVal = (Double.parseDouble(sharedPreferences.getString("pref_userdata_credit", null)) - transaction.getValue());
+        double newVal = (Double.parseDouble(sharedPreferences.getString("pref_userdata_credit", null)) - transaction.getAmount());
 
         if(newVal < 0){
             Toast.makeText(this,"Zu wenig Guthaben vorhanden!",Toast.LENGTH_LONG).show();
@@ -187,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (transaction != null){
-            outState.putString(TRANSACTION_KEY, transactionToStringConverter());
+            outState.putString(TRANSACTION_KEY, transactionToStuzzaStringConverter());
         } else {
             outState.putString(TRANSACTION_KEY, null);
         }
