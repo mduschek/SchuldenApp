@@ -150,8 +150,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.option_menu_qr_code_bank_details:
                 intent = new Intent(this, QrGeneratorActivity.class);
                 intent.setAction(Intent.ACTION_SEND);
-                String data = "test";   //Stuzza code here Firstname;Lastname;IBAN
-                intent.putExtra("qr", URLEncoder.encode(data));
+                intent.putExtra("shareData", URLEncoder.encode(createBankDetailsString()));
                 startActivity(intent);
                 return true;
 
@@ -180,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
-
 
     public void changeTab(int position) {
         viewPager.setCurrentItem(position);
@@ -227,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
             final String split[] = inMsg.split(";");
             insertIntoDb(split);
         }
-        Toast.makeText(this,"onResume",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"onResume",Toast.LENGTH_LONG).show();
         customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(customPagerAdapter);
         viewPager.addOnPageChangeListener(getOnPageChangedListener());
@@ -284,13 +282,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static String createStuzzString(String firstname, String lastname, String iban, float value, String usage) {
+    public static String createStuzzaString(String firstname, String lastname, String iban, float value, String usage) {
         //partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date));
         //BCD1 \r\n 001 \r\n 1 \r\n SCT \r\n BIC \r\n Creditor \r\n IBAN \r\n Value \r\n Reas \r\n Reference \r\n Text \r\n Message \r\n
-        return "BCD1" + System.lineSeparator() +
-                "001" +
-                "1" +
-                "SCT" +
+        return "BCD" + System.lineSeparator() +
+                "001" + System.lineSeparator() +
+                "1" + System.lineSeparator() +
+                "SCT" + System.lineSeparator() +
                 "" +  System.lineSeparator() + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
                 firstname + " " + lastname + System.lineSeparator() + //Creditor
                 iban +  System.lineSeparator() +   //iban
@@ -299,6 +297,15 @@ public class MainActivity extends AppCompatActivity {
                 "" +  System.lineSeparator() +   //REFERENCE OR TEXT
                 usage +  System.lineSeparator() +     //text
                 "" + System.lineSeparator();   //message
+    }
+
+    public static String createBankDetailsString(){
+        return  ";" +
+                UserData.firstname + ";" +
+                UserData.lastname  + ";" +
+                ";" +
+                UserData.iban + ";" +
+                ";";
     }
 
     @Override
@@ -317,7 +324,21 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, DetailActivity.class);
                 String string = URLDecoder.decode(result.getContents().toString());
                 intent.putExtra("qr_code", data);
-                insertIntoDb(string.split(";"));
+                String[] split = string.split(";");
+                if(!split[0].equals(""))
+                {
+                    insertIntoDb(string.split(";"));
+                }
+                else
+                {
+                    //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;24.12.2016
+                    //public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date) {
+
+                    Debt d = new Debt(-1,false,split[1],split[2],split[3],split[4],"",Double.parseDouble(split[5]),new java.util.Date().toString());
+                    Intent i = new Intent(getApplicationContext(), DetailActivity.class);
+                    i.putExtra("object", d);
+                    startActivity(i);
+                }
                 Toast.makeText(this, string, Toast.LENGTH_LONG).show();
                 //startActivity(intent);
             }

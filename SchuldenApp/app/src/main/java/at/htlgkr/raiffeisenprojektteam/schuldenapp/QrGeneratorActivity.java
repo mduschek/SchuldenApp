@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -20,6 +21,7 @@ public class QrGeneratorActivity extends AppCompatActivity {
 
     ImageView imgVw;
 
+    RadioGroup radioGroupQrCode;
     RadioButton radioButtonCreateShareQrCode, onRadioButtonCreateStuzzaQrCode;
     String shareData;
     String stuzzaData;
@@ -30,6 +32,7 @@ public class QrGeneratorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qr_scanner);
 
         imgVw = (ImageView) findViewById(R.id.imgView);
+        radioGroupQrCode = (RadioGroup)findViewById(R.id.radioGroupQrCode);
 
         Bundle extras = getIntent().getExtras();
 
@@ -39,18 +42,23 @@ public class QrGeneratorActivity extends AppCompatActivity {
             stuzzaData = extras.getString("stuzzaData");
         }
 
+        //Falls nur 1 QR Code verfügbar, RadioGroup ausschalten
+        if (extras.getString("shareData") == null || extras.getString("stuzzaData") == null){
+            radioGroupQrCode.setVisibility(View.GONE);
+        }
+
         radioButtonCreateShareQrCode = (RadioButton) findViewById(R.id.radioButtonCreateShareQrCode);
         //onRadioButtonCreateStuzzaQrCode = (RadioButton) findViewById(R.id.onRadioButtonCreateStuzzaQrCode);
 
-        Log.d("shareData", shareData);
-        Log.d("stuzzaData", stuzzaData);
+        //Log.d("shareData", shareData);
+        //Log.d("stuzzaData", stuzzaData);
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onResume() {
+        super.onResume();
 
-        if (radioButtonCreateShareQrCode.isSelected())
+        if (radioButtonCreateShareQrCode.isChecked())
             createQrCode(shareData);
         else
             createQrCode(stuzzaData);
@@ -69,6 +77,7 @@ public class QrGeneratorActivity extends AppCompatActivity {
     }
 
     public void createQrCode(String data) {
+        Log.d("Data", URLDecoder.decode(data));
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
         try {
@@ -79,7 +88,5 @@ public class QrGeneratorActivity extends AppCompatActivity {
         } catch (WriterException e) {
             e.printStackTrace();
         }
-
     }
 }
-

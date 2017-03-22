@@ -31,8 +31,7 @@ public class TblMyDebts {
             PERS_I_OWE_FIRSTNAME+" TEXT," +
             PERS_I_OWE_LASTNAME+" TEXT NOT NULL," +
             PERS_I_OWE_VALUE+" DOUBLE NOT NULL," +
-            PERS_I_OWE_USUAGE+" TEXT," +
-            "FOREIGN KEY(status) REFERENCES Statuses(status));";
+            PERS_I_OWE_USUAGE+" TEXT);";
 
     public static final String SQL_DROP_TABLE="DROP TABLE "+TABLE_NAME+";";
 

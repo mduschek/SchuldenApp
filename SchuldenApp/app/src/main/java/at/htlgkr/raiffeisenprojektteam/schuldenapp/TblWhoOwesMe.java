@@ -30,8 +30,7 @@ public class TblWhoOwesMe {
             PERS_WHO_OWES_ME_FIRSTNAME + " TEXT," +
             PERS_WHO_OWES_ME_LASTNAME + " TEXT NOT NULL," +
             PERS_WHO_OWES_ME_VALUE + " DOUBLE NOT NULL," +
-            PERS_WHO_OWES_ME_USUAGE + " TEXT, "+
-            "FOREIGN KEY(status) REFERENCES Statuses(status));";
+            PERS_WHO_OWES_ME_USUAGE + " TEXT);";
 
     public static final String SQL_DROP_TABLE = "DROP TABLE " + TABLE_NAME + ";";
 }
