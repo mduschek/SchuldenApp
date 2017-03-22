@@ -1,7 +1,6 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
 import android.app.Dialog;
-import android.bluetooth.BluetoothDevice;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -138,7 +137,7 @@ public class DetailActivity extends AppCompatActivity {
                 String shareData = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date);
                         //createStuzziString(); //
 
-                String stuzzaData = MainActivity.createStuzzString(firstname, lastname, iban, Float.parseFloat(value), usage);
+                String stuzzaData = MainActivity.createStuzzaString(firstname, lastname, iban, Float.parseFloat(value), usage);
 
                 qrgenint.putExtra("shareData", URLEncoder.encode(shareData));
                 qrgenint.putExtra("stuzzaData", URLEncoder.encode(stuzzaData));
@@ -378,9 +377,7 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-
-    private void initTexts()//speichert die werte der textfelder in die variablen
-    {
+    private void initTexts() {   //speichert die werte der textfelder in die variablen
         DBData.firstname = edFirstname.getText().toString();
         DBData.lastname = edLastname.getText().toString();
         DBData.usuage = edUsuage.getText().toString();

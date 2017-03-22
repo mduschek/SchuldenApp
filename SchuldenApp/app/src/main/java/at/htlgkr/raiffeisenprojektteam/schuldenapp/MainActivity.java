@@ -180,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-
     public void changeTab(int position) {
         viewPager.setCurrentItem(position);
     }
@@ -226,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
             final String split[] = inMsg.split(";");
             insertIntoDb(split);
         }
-        Toast.makeText(this,"onResume",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"onResume",Toast.LENGTH_LONG).show();
         customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(customPagerAdapter);
         viewPager.addOnPageChangeListener(getOnPageChangedListener());
@@ -283,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static String createStuzzString(String firstname, String lastname, String iban, float value, String usage) {
+    public static String createStuzzaString(String firstname, String lastname, String iban, float value, String usage) {
         //partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date));
         //BCD1 \r\n 001 \r\n 1 \r\n SCT \r\n BIC \r\n Creditor \r\n IBAN \r\n Value \r\n Reas \r\n Reference \r\n Text \r\n Message \r\n
         return "BCD" + System.lineSeparator() +
