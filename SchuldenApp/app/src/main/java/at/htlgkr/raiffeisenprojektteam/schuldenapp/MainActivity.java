@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, DetailActivity.class);
                 String string = URLDecoder.decode(result.getContents().toString());
                 intent.putExtra("qr_code", data);
-                String[] split = string.split(";");
+                String[] split = string.split(";");//cmment
                 if(!split[0].equals(""))
                 {
                     insertIntoDb(string.split(";"));
