@@ -317,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, DetailActivity.class);
                 String string = URLDecoder.decode(result.getContents().toString());
                 intent.putExtra("qr_code", data);
+                if(string.split(";")[0].equals(""))
                 insertIntoDb(string.split(";"));
                 Toast.makeText(this, string, Toast.LENGTH_LONG).show();
                 //startActivity(intent);
