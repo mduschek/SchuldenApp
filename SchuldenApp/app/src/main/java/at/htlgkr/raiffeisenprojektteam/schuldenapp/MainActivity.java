@@ -285,6 +285,22 @@ public class MainActivity extends AppCompatActivity {
     public static String createStuzzaString(String firstname, String lastname, String iban, float value, String usage) {
         //partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date));
         //BCD1 \r\n 001 \r\n 1 \r\n SCT \r\n BIC \r\n Creditor \r\n IBAN \r\n Value \r\n Reas \r\n Reference \r\n Text \r\n Message \r\n
+
+        Log.d("asdf", "BCD" + System.lineSeparator() +
+                "001" + System.lineSeparator() +
+                "1" + System.lineSeparator() +
+                "SCT" + System.lineSeparator() +
+                "" +  System.lineSeparator() + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
+                firstname + " " + lastname + System.lineSeparator() + //Creditor
+                iban +  System.lineSeparator() +   //iban
+                "EUR" + value +  System.lineSeparator() +  //value
+                "" + System.lineSeparator() +   //reason
+                "" +  System.lineSeparator() +   //REFERENCE OR TEXT
+                usage +  System.lineSeparator()// +     //text
+        //"" + System.lineSeparator();   //message)
+        );
+
+
         return "BCD" + System.lineSeparator() +
                 "001" + System.lineSeparator() +
                 "1" + System.lineSeparator() +
@@ -295,8 +311,8 @@ public class MainActivity extends AppCompatActivity {
                 "EUR" + value +  System.lineSeparator() +  //value
                 "" + System.lineSeparator() +   //reason
                 "" +  System.lineSeparator() +   //REFERENCE OR TEXT
-                usage +  System.lineSeparator() +     //text
-                "" + System.lineSeparator();   //message
+                usage +  System.lineSeparator();// +     //text
+                //"" + System.lineSeparator();   //message
     }
 
     public static String createBankDetailsString(){

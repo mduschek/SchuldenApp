@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -18,9 +19,12 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.net.URLDecoder;
+
 public class MainActivity extends AppCompatActivity {
     Button generate;
     Button scanner;
+    EditText editTextMsg;
     ImageView imgVw;
 
     @Override
@@ -28,19 +32,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         final Activity activity=this;
+
         imgVw= (ImageView) findViewById(R.id.imgView);
+        editTextMsg =(EditText) findViewById(R.id.editTextMsg);
 
         generate= (Button) findViewById(R.id.btnGnrt);
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String demo="Alex, Michi und Flo"; //i moch a qr code aus euch muahahahahaahaha
+                String qrCodeString= editTextMsg.getText().toString(); //i moch a qr code aus euch muahahahahaahaha
                 MultiFormatWriter multiFormatWriter=new MultiFormatWriter();
 
                 try {
-                    BitMatrix bitMatrix = multiFormatWriter.encode(demo, BarcodeFormat.QR_CODE,200,200); //boom schaka laka
+                    BitMatrix bitMatrix = multiFormatWriter.encode(URLDecoder.decode(qrCodeString), BarcodeFormat.QR_CODE,200,200); //boom schaka laka
                     BarcodeEncoder barcodeEncoder=new BarcodeEncoder(); //simsalabim
                     Bitmap bitmap=barcodeEncoder.createBitmap(bitMatrix);//expiliamos
                     imgVw.setImageBitmap(bitmap);//stupor
@@ -78,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
             if (result.getContents()==null){
                 Toast.makeText(this,"Cancelled",Toast.LENGTH_LONG).show();
             }else{
-                Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
+                editTextMsg.setText(result.getContents());
             }
         }
     }
