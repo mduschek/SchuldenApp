@@ -325,16 +325,20 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, DetailActivity.class);
                 String string = URLDecoder.decode(result.getContents().toString());
                 intent.putExtra("qr_code", data);
-                if(!string.split(";")[0].equals(""))
+                String[] split = string.split(";");
+                if(!split[0].equals(""))
                 {
                     insertIntoDb(string.split(";"));
                 }
                 else
                 {
-                    Debt d = new Debt(null,);
+                    //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;24.12.2016
+                    //public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date) {
+
+                    Debt d = new Debt(-1,false,split[1],split[2],split[3],split[4],"",Double.parseDouble(split[5]),new java.util.Date().toString());
                     Intent i = new Intent(getApplicationContext(), DetailActivity.class);
-                    i.putExtra("object", adapter.getItem(i));
-                    startActivity(intent);
+                    i.putExtra("object", d);
+                    startActivity(i);
                 }
                 Toast.makeText(this, string, Toast.LENGTH_LONG).show();
                 //startActivity(intent);
