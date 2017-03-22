@@ -150,8 +150,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.option_menu_qr_code_bank_details:
                 intent = new Intent(this, QrGeneratorActivity.class);
                 intent.setAction(Intent.ACTION_SEND);
-                String data = "test";   //Stuzza code here Firstname;Lastname;IBAN
-                intent.putExtra("qr", URLEncoder.encode(data));
+                intent.putExtra("shareData", URLEncoder.encode(createBankDetailsString()));
                 startActivity(intent);
                 return true;
 
@@ -299,6 +298,15 @@ public class MainActivity extends AppCompatActivity {
                 "" +  System.lineSeparator() +   //REFERENCE OR TEXT
                 usage +  System.lineSeparator() +     //text
                 "" + System.lineSeparator();   //message
+    }
+
+    public static String createBankDetailsString(){
+        return  ";" +
+                UserData.firstname + ";" +
+                UserData.lastname  + ";" +
+                ";" +
+                UserData.iban + ";" +
+                ";";
     }
 
     @Override
