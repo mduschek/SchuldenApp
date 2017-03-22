@@ -7,15 +7,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 /**
  * Created by yg on 15/11/16.
  */
-@Deprecated
+
 public class DebtsContentProvider extends ContentProvider {
 
     private static final String AUTH="at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider";
-    //public static final Uri URI=Uri.parse("content//:"+AUTH+"/"+TblClients);
+    public static final Uri URI_mydebts=Uri.parse("content//:"+AUTH+"/"+TblMyDebts.TABLE_NAME);
+    public static final Uri URI_whoowesme=Uri.parse("content//:"+AUTH+"/"+TblWhoOwesMe.TABLE_NAME);
     private static final int CLIENTS_VERZ=1;
     private static final int CLIENT_ID=2;
     private static final int STATUSES_VERZ=3;
@@ -50,7 +52,7 @@ public class DebtsContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)){
 
-            case STATUSES_VERZ:
+           /* case STATUSES_VERZ:
                 cursor=dbHelper.query(TblStatus.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
             case STATUS_ID:
@@ -59,7 +61,7 @@ public class DebtsContentProvider extends ContentProvider {
                 }
                 selection = "_id = " + uri.getPathSegments().get(1);
                 cursor = dbHelper.query(TblStatus.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
-                break;
+                break;*/
             case MYDEBTS_VERZ:
                 cursor=dbHelper.query(TblMyDebts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
@@ -99,9 +101,9 @@ public class DebtsContentProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues contentValues) {
         switch (uriMatcher.match(uri))
         {
-            case STATUSES_VERZ:
+           /* case STATUSES_VERZ:
                 dbHelper.insert(TblStatus.TABLE_NAME,null,contentValues);
-                break;
+                break;*/
             case MYDEBTS_VERZ:
                 dbHelper.insert(TblMyDebts.TABLE_NAME,null,contentValues);
                 break;
@@ -116,11 +118,73 @@ public class DebtsContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String s, String[] strings) {
-        return 0;
+        int count = 0;
+        String id;
+        switch (uriMatcher.match(uri)){
+
+           /* case STATUSES_VERZ:
+                count = dbHelper.delete(TblStatus.TABLE_NAME, s, strings);
+                break;
+            case STATUS_ID:
+                String id = uri.getPathSegments().get(1);
+                count = dbHelper.delete( TblStatus.TABLE_NAME, TblStatus.ID +  " = " + id +
+                        (!TextUtils.isEmpty(s) ? " AND (" + s + ')' : ""), strings);
+                break;*/
+            case MYDEBTS_VERZ:
+                count = dbHelper.delete(TblMyDebts.TABLE_NAME, s, strings);
+                break;
+            case MYDEPT_ID:
+                id = uri.getPathSegments().get(1);
+                count = dbHelper.delete( TblMyDebts.TABLE_NAME, TblMyDebts.ID +  " = " + id +
+                        (!TextUtils.isEmpty(s) ? " AND (" + s + ')' : ""), strings);
+                break;
+            case WHOOWESME_VERZ:
+                count = dbHelper.delete(TblWhoOwesMe.TABLE_NAME, s, strings);
+                break;
+            case WHOOWESME_ID:
+                id = uri.getPathSegments().get(1);
+                count = dbHelper.delete( TblWhoOwesMe.TABLE_NAME, TblWhoOwesMe.ID +  " = " + id +
+                        (!TextUtils.isEmpty(s) ? " AND (" + s + ')' : ""), strings);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+
+        }
+
+        return count;
+
     }
 
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+        int count=0;
+        switch (uriMatcher.match(uri)){
+/*
+            case STATUSES_VERZ:
+
+                break;
+            case STATUS_ID:
+
+                break;*/
+            case MYDEBTS_VERZ:
+                count = dbHelper.update(TblMyDebts.TABLE_NAME, contentValues, s, strings);
+                break;
+            case MYDEPT_ID:
+                count = dbHelper.update(TblMyDebts.TABLE_NAME, contentValues, TblMyDebts.ID + " = " + uri.getPathSegments().get(1) +
+                        (!TextUtils.isEmpty(s) ? " AND (" +s + ')' : ""), strings);
+                break;
+            case WHOOWESME_VERZ:
+                count = dbHelper.update(TblWhoOwesMe.TABLE_NAME, contentValues, s, strings);
+                break;
+            case WHOOWESME_ID:
+                count = dbHelper.update(TblWhoOwesMe.TABLE_NAME, contentValues, TblWhoOwesMe.ID + " = " + uri.getPathSegments().get(1) +
+                        (!TextUtils.isEmpty(s) ? " AND (" +s + ')' : ""), strings);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+
+        }
+        return count;
+
     }
 }

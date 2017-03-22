@@ -51,6 +51,9 @@
         <activity android:name=".DetailActivity" />
         <activity android:name=".QrGeneratorActivity"/>
         <activity android:name=".NFCSender"/>
+        <provider
+            android:authorities="at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider"
+            android:name="DebtsContentProvider"/>
         <!--<activity android:name=".BTSender" />-->
     </application>
 
