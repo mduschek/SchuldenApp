@@ -239,6 +239,14 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Transaktion laden"
+        android:id="@+id/buttonLoadTransaction"
+        android:onClick="buttonLoadTransactionClicked"
+        style="@style/Widget.AppCompat.Button.Colored" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Transaktion löschen"
         android:id="@+id/buttonDeleteTransaction"
         android:onClick="buttonDeleteTransactionClicked"

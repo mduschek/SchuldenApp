@@ -130,17 +130,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String transactionToStuzzaStringConverter(){
-        return "BCD1\r\n" +
-                "001\r\n" +
-                "1\r\n" +
-                "SCT\r\n" +
-                transaction.getBic() + "\r\n" +
-                transaction.getCreditor() + "\r\n" +
-                transaction.getIban() + "\r\n" +
-                transaction.getAmount() + "\r\n" +
-                transaction.getReason() + "\r\n" +
-                transaction.getReference() + "\r\n" +
-                transaction.getText() + "\r\n" +
+        return "BCD1\n" +
+                "001\n" +
+                "1\n" +
+                "SCT\n" +
+                transaction.getBic() + "\n" +
+                transaction.getCreditor() + "\n" +
+                transaction.getIban() + "\n" +
+                transaction.getAmount() + "\n" +
+                transaction.getReason() + "\n" +
+                transaction.getReference() + "\n" +
+                transaction.getText() + "\n" +
                 transaction.getMessage();
     }
 
@@ -169,6 +169,12 @@ public class MainActivity extends AppCompatActivity {
             textViewText.setText("");
             textViewMessage.setText("");
         }
+    }
+
+    public void buttonLoadTransactionClicked(View view){
+        Intent intent = new Intent();
+
+        updateViews();
     }
 
     public void buttonDeleteTransactionClicked(View view){
