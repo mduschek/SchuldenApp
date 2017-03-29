@@ -3,7 +3,7 @@
     <PreferenceCategory
         android:title="@string/userdata"
         android:key="pref_userdata">
-        <EditTextPreference
+       <!--<EditTextPreference
             android:key="pref_userdata_firstname"
             android:title="@string/firstname"
             android:summary="Geben Sie Ihren Vornamen ein"
@@ -22,7 +22,7 @@
             android:key="pref_userdata_email"
             android:title="@string/email"
             android:summary="Geben Sie Ihre E-Mail Adresse ein"
-            android:defaultValue="danny@hu.at" />
+            android:defaultValue="danny@hu.at" />-->
         <EditTextPreference
             android:key="pref_userdata_credit"
             android:title="@string/credit"
