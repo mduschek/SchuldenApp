@@ -32,7 +32,7 @@ class CustomPagerAdapter extends FragmentStatePagerAdapter {
             fragment = new DetailFragment();
         }
         Bundle args = new Bundle();
-        // our object is just a boolean :-P
+        // Our object is just a boolean :-P
         switch (i) {
             case 0:
                 args.putBoolean("showMyDepts", true);
