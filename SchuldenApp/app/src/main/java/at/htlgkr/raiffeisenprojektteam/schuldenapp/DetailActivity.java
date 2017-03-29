@@ -299,6 +299,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setInputs() {
         if (debt != null) {
+            if(debt.getId() != -1)
+            {
+
+            }
             if (debt.isiAmCreditor()) {
                 radioButtonCreditor.setChecked(true);
             }
