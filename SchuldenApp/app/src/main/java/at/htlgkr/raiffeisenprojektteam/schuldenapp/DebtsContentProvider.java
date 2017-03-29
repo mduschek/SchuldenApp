@@ -28,8 +28,8 @@ public class DebtsContentProvider extends ContentProvider {
     private static final int WHOOWESME_ID=8;
     private static final UriMatcher uriMatcher=new UriMatcher(UriMatcher.NO_MATCH);
     static{
-        uriMatcher.addURI(AUTH,TblStatus.TABLE_NAME,STATUSES_VERZ);
-        uriMatcher.addURI(AUTH,TblStatus.TABLE_NAME+"/#",STATUS_ID);
+        //uriMatcher.addURI(AUTH,TblStatus.TABLE_NAME,STATUSES_VERZ);
+        //uriMatcher.addURI(AUTH,TblStatus.TABLE_NAME+"/#",STATUS_ID);
         uriMatcher.addURI(AUTH, TblMyDebts.TABLE_NAME, MYDEBTS_VERZ);
         uriMatcher.addURI(AUTH, TblMyDebts.TABLE_NAME+"/#",MYDEPT_ID);
         uriMatcher.addURI(AUTH,TblWhoOwesMe.TABLE_NAME,WHOOWESME_VERZ);

@@ -22,15 +22,16 @@ class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        Fragment fragment;
+        Fragment fragment = new Fragment();
         if (i<=1) {
             fragment = new DebtListFragment();
             Log.e("*=", "getItem: "+i );
-        }else
-        {
-            Log.w("*=", "getItem: "+i );
-            fragment = new DetailFragment();
         }
+//        else
+//        {
+//            Log.w("*=", "getItem: "+i );
+//            fragment = new DetailFragment();
+//        }
         Bundle args = new Bundle();
         // Our object is just a boolean :-P
         switch (i) {

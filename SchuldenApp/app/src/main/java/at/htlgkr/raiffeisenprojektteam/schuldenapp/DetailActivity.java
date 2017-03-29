@@ -72,7 +72,7 @@ public class DetailActivity extends AppCompatActivity {
         textViewStatus = (TextView) findViewById(R.id.textViewStatus);
         buttonSelectDate =  (Button) findViewById(R.id.buttonSelectDate);
         buttonManualInput = (Button) findViewById(R.id.buttonManualInput);
-        buttonBluetooth = (Button) findViewById(R.id.buttonBluetooth);
+        //buttonBluetooth = (Button) findViewById(R.id.buttonBluetooth);
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
         buttonGenerateQrCode = (Button) findViewById(R.id.buttonGenerateQrCode);
         buttonOther = (Button) findViewById(R.id.buttonOther);      //Activity Chooser mit anderen Apps

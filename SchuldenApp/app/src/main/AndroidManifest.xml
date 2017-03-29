@@ -46,12 +46,14 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
-        <activity android:name=".CreateLoanActivity" />
-        <activity android:name=".SettingsActivity" />
         <activity android:name=".DetailActivity" />
+        <activity android:name=".ArchiveActivity"/>
         <activity android:name=".QrGeneratorActivity"/>
         <activity android:name=".NFCSender"/>
+        <activity android:name=".SettingsActivity" />
+
         <!--at.htlgkr.raiffeisenprojektteam.-->
+
         <provider
             android:authorities="schuldenappDebtsContentProvider"
             android:name=".DebtsContentProvider"/>
