@@ -191,11 +191,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonLoadTransactionClicked(View view){
-        Intent intent = new Intent();
+//        Intent intent = new Intent();
         ContentResolver contentResolver=getContentResolver();
-        final Uri debtsUri=Uri.parse("content//:at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/MyDepts");
+        final Uri debtsUri=Uri.parse("schuldenappDebtsContentProvider");
         Cursor cursor=contentResolver.query(debtsUri,new String[]{"pers_i_owe_iban","pers_i_owe_date","person_i_owe_value"},null,null,null);
-        Toast.makeText(this,"!!!!!!!"+cursor.getColumnCount()+"!!!!!!!",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"!!!!!!!"+cursor.getCount()+"!!!!!!!",Toast.LENGTH_LONG).show();
         updateViews();
     }
 
