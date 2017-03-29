@@ -121,26 +121,43 @@ public class MainActivity extends AppCompatActivity {
 
     public void stuzzaStringToTransactionConverter(String transactionString){
         try{
-            Log.d("Stuzza", transactionString);
-            final String splitArr[] = transactionString.split(System.lineSeparator());
-            transaction = new Transaction(splitArr[4], splitArr[5], splitArr[6], Float.parseFloat(splitArr[7].substring(3)), splitArr[8], splitArr[9], splitArr[10], splitArr[11]);
+            Log.d("Stuzza", transactionString.trim());
+
+            final String splitArr1[] = transactionString.trim().split(System.lineSeparator());
+            String splitArr[] = new String [11];
+
+            for (int i = 0; i < splitArr1.length; i++){
+                splitArr[i] =  splitArr1[1];
+            }
+
+            transaction = new Transaction(
+                    splitArr[4],
+                    splitArr[5],
+                    splitArr[6],
+                    Float.parseFloat(splitArr[7].substring(3)),
+                    splitArr[8],
+                    splitArr[9],
+                    splitArr[10],
+                    splitArr[11]);
+
         } catch (Exception e){
             Toast.makeText(this,"Fehler stuzzaStringToTransactionConverter", Toast.LENGTH_LONG).show();
+            Log.e("Error", e.toString());
         }
     }
 
     public String transactionToStuzzaStringConverter(){
-        return "BCD1\r\n" +
-                "001\r\n" +
-                "1\r\n" +
-                "SCT\r\n" +
-                transaction.getBic() + "\r\n" +
-                transaction.getCreditor() + "\r\n" +
-                transaction.getIban() + "\r\n" +
-                transaction.getAmount() + "\r\n" +
-                transaction.getReason() + "\r\n" +
-                transaction.getReference() + "\r\n" +
-                transaction.getText() + "\r\n" +
+        return "BCD1\n" +
+                "001\n" +
+                "1\n" +
+                "SCT\n" +
+                transaction.getBic() + "\n" +
+                transaction.getCreditor() + "\n" +
+                transaction.getIban() + "\n" +
+                transaction.getAmount() + "\n" +
+                transaction.getReason() + "\n" +
+                transaction.getReference() + "\n" +
+                transaction.getText() + "\n" +
                 transaction.getMessage();
     }
 
@@ -169,6 +186,12 @@ public class MainActivity extends AppCompatActivity {
             textViewText.setText("");
             textViewMessage.setText("");
         }
+    }
+
+    public void buttonLoadTransactionClicked(View view){
+        Intent intent = new Intent();
+
+        updateViews();
     }
 
     public void buttonDeleteTransactionClicked(View view){

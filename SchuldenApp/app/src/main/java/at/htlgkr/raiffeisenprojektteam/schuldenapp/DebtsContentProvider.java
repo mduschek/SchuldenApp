@@ -14,7 +14,7 @@ import android.text.TextUtils;
  */
 
 public class DebtsContentProvider extends ContentProvider {
-
+//   content//:at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/MyDepts
     private static final String AUTH="at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider";
     public static final Uri URI_mydebts=Uri.parse("content//:"+AUTH+"/"+TblMyDebts.TABLE_NAME);
     public static final Uri URI_whoowesme=Uri.parse("content//:"+AUTH+"/"+TblWhoOwesMe.TABLE_NAME);
