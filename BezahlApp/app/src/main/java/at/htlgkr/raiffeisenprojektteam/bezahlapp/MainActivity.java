@@ -1,7 +1,10 @@
 package at.htlgkr.raiffeisenprojektteam.bezahlapp;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -190,7 +193,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void buttonLoadTransactionClicked(View view){
         Intent intent = new Intent();
-
+        ContentResolver contentResolver=getContentResolver();
+        final Uri debtsUri=Uri.parse("content//:at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/MyDepts");
+        Cursor cursor=contentResolver.query(debtsUri,new String[]{"pers_i_owe_iban","pers_i_owe_date","person_i_owe_value"},null,null,null);
+        Toast.makeText(this,"!!!!!!!"+cursor.getColumnCount()+"!!!!!!!",Toast.LENGTH_LONG).show();
         updateViews();
     }
 
