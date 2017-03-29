@@ -125,12 +125,11 @@ public class MainActivity extends AppCompatActivity {
     public void stuzzaStringToTransactionConverter(String transactionString){
         try{
             Log.d("Stuzza", transactionString.trim());
-
             final String splitArr1[] = transactionString.trim().split(System.lineSeparator());
-            String splitArr[] = new String [11];
+            String splitArr[] = new String [12];
 
             for (int i = 0; i < splitArr1.length; i++){
-                splitArr[i] =  splitArr1[1];
+                splitArr[i] =  splitArr1[i];
             }
 
             transaction = new Transaction(
