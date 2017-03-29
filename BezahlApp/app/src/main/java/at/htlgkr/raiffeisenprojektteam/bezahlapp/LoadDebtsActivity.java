@@ -16,10 +16,10 @@ public class LoadDebtsActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.to_load_layout);
-        ContentResolver contentResolver=getContentResolver();
-        final Uri debtsUri=Uri.parse("content//:at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/MyDepts");
-        Cursor cursor=contentResolver.query(debtsUri,new String[]{"pers_i_owe_iban","pers_i_owe_date","person_i_owe_value"},null,null,null);
-        Toast.makeText(this,"!!!!!!!"+cursor.getColumnCount()+"!!!!!!!",Toast.LENGTH_LONG).show();
+//        ContentResolver contentResolver=getContentResolver();
+//        final Uri debtsUri=Uri.parse("content//:at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/MyDepts");
+//        Cursor cursor=contentResolver.query(debtsUri,new String[]{"pers_i_owe_iban","pers_i_owe_date","person_i_owe_value"},null,null,null);
+//        Toast.makeText(this,"!!!!!!!"+cursor.getColumnCount()+"!!!!!!!",Toast.LENGTH_LONG).show();
     }
 
 }
