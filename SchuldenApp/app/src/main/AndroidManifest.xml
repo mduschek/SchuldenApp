@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="at.htlgkr.raiffeisenprojektteam.schuldenapp">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+   <!--<uses-permission android:name="android.permission.INTERNET" />-->
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
 

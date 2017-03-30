@@ -15,19 +15,31 @@ import android.text.TextUtils;
 
 public class DebtsContentProvider extends ContentProvider {
 //   content//:at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/MyDepts
+
     private static final String AUTH="at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider";
+    public static final Uri URI_debts=Uri.parse("content//:"+AUTH+"/"+TblDebts.TABLE_NAME); //Warum wird URI nicht benutzt?
+    private static final int DEBTS_VERZ=1;
+    private static final int DEBT_ID=2;
+
+    //Deprecated?
     public static final Uri URI_mydebts=Uri.parse("content//:"+AUTH+"/"+TblMyDebts.TABLE_NAME);
     public static final Uri URI_whoowesme=Uri.parse("content//:"+AUTH+"/"+TblWhoOwesMe.TABLE_NAME);
-    private static final int CLIENTS_VERZ=1;
-    private static final int CLIENT_ID=2;
-    private static final int STATUSES_VERZ=3;
-    private static final int STATUS_ID=4;
+    //private static final int CLIENTS_VERZ=1;
+    //private static final int CLIENT_ID=2;
+    //private static final int STATUSES_VERZ=3;
+    //private static final int STATUS_ID=4;
     private static final int MYDEBTS_VERZ =5;
     private static final int MYDEPT_ID=6;
     private static final int WHOOWESME_VERZ=7;
     private static final int WHOOWESME_ID=8;
+
     private static final UriMatcher uriMatcher=new UriMatcher(UriMatcher.NO_MATCH);
+
     static{
+        uriMatcher.addURI(AUTH, TblDebts.TABLE_NAME, DEBTS_VERZ);
+        uriMatcher.addURI(AUTH, TblDebts.TABLE_NAME+"/#",DEBT_ID);
+
+        //Deprecated?
         //uriMatcher.addURI(AUTH,TblStatus.TABLE_NAME,STATUSES_VERZ);
         //uriMatcher.addURI(AUTH,TblStatus.TABLE_NAME+"/#",STATUS_ID);
         uriMatcher.addURI(AUTH, TblMyDebts.TABLE_NAME, MYDEBTS_VERZ);
@@ -51,6 +63,17 @@ public class DebtsContentProvider extends ContentProvider {
         Cursor cursor=null;
 
         switch (uriMatcher.match(uri)){
+
+            case DEBTS_VERZ:
+                cursor=dbHelper.query(TblDebts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
+                break;
+            case DEBT_ID:
+                if(selection != null) {
+                    throw new UnsupportedOperationException("No Arguments plz");
+                }
+                selection = "_id = " + uri.getPathSegments().get(1);
+                cursor = dbHelper.query(TblDebts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
+                break;
 
            /* case STATUSES_VERZ:
                 cursor=dbHelper.query(TblStatus.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);

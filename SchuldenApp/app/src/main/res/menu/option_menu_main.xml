@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/option_menu_new_entry"
-        android:icon="@android:drawable/ic_input_add"
+        android:icon="@android:drawable/ic_menu_add"
         app:showAsAction="always"
         android:title="@string/newDept"/>
 
