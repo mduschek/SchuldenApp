@@ -10,11 +10,11 @@ public class Debt implements Serializable
 {
     public static int OWN_DEPT = 0, SBDY_OWES_ME_DEPT = 1;
 
+    private int id;
     private boolean iAmCreditor;
     private String deptorFirstName, deptorLastName, usuage, iBan, status;
     private double value;
     private String date;
-    private int id;
 
     public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date) {
         this.id=id;
@@ -26,10 +26,6 @@ public class Debt implements Serializable
         this.status = status;   //open, not_paid, paid
         this.value = value;
         this.date = date;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public static int getOwnDept() {
@@ -46,6 +42,14 @@ public class Debt implements Serializable
 
     public static void setSbdyOwesMeDept(int sbdyOwesMeDept) {
         SBDY_OWES_ME_DEPT = sbdyOwesMeDept;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isiAmCreditor() {
@@ -108,11 +112,9 @@ public class Debt implements Serializable
         return date;
     }
 
-    public void setDate(String date){
+    public void setDate(String date) {
         this.date = date;
     }
-
-
 
     @Override
     public String toString() {

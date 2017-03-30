@@ -7,7 +7,6 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 public class TblMyDebts {
     public static final String TABLE_NAME="MyDepts";
 
-
     //region PrimaryKeys
     public static final String PERS_I_OWE_IBAN="pers_i_owe_iban";
     //endregion
@@ -34,6 +33,4 @@ public class TblMyDebts {
             PERS_I_OWE_USUAGE+" TEXT);";
 
     public static final String SQL_DROP_TABLE="DROP TABLE "+TABLE_NAME+";";
-
-
 }

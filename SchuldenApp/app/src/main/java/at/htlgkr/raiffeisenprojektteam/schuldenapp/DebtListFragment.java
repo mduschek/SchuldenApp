@@ -46,16 +46,18 @@ public class DebtListFragment extends Fragment
             Log.e("*===", "onCreateView: " +c.hashCode() );
             while (c.moveToNext())
             {
-                int id = c.getInt(c.getColumnIndex(TblMyDebts.ID));
-                String firstname = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_FIRSTNAME));
-                String lastname = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_LASTNAME));
-                double value = c.getDouble(c.getColumnIndex(TblMyDebts.PERS_I_OWE_VALUE));
-                String usuage = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_USUAGE));
-                String iban = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_IBAN));
-                String status = c.getString(c.getColumnIndex(TblMyDebts.STATUS));
-                String date = c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_DATE));
-                Log.d("*==", firstname);
-                listItems.add(new Debt(id,false,firstname,lastname,usuage,iban,status,value, date));
+                Debt d = new Debt(
+                        c.getInt(c.getColumnIndex(TblMyDebts.ID)),
+                        false,
+                        c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_FIRSTNAME)),
+                        c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_LASTNAME)),
+                        c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_USUAGE)),
+                        c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_IBAN)),
+                        c.getString(c.getColumnIndex(TblMyDebts.STATUS)),
+                        c.getDouble(c.getColumnIndex(TblMyDebts.PERS_I_OWE_VALUE)),
+                        c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_DATE))
+                );
+                listItems.add(d);
             }
         }
         else
@@ -63,16 +65,18 @@ public class DebtListFragment extends Fragment
             Cursor c = MainActivity.db.rawQuery("SELECT * FROM WhoOwesMe;",null);
             while (c.moveToNext())
             {
-                int id = c.getInt(c.getColumnIndex(TblWhoOwesMe.ID));
-                String firstname = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME));
-                String lastname = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME));
-                double value = c.getDouble(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE));
-                String usuage = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE));
-                String iban = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN));
-                String status = c.getString(c.getColumnIndex(TblWhoOwesMe.STATUS));
-                String date = c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE));
-                Log.d("*==", firstname);
-                listItems.add(new Debt(id,true,firstname,lastname,usuage,iban,status,value, date));
+                Debt d = new Debt(
+                        c.getInt(c.getColumnIndex(TblWhoOwesMe.ID)),
+                        true,
+                        c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME)),
+                        c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME)),
+                        c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE)),
+                        c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN)),
+                        c.getString(c.getColumnIndex(TblWhoOwesMe.STATUS)),
+                        c.getDouble(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE)),
+                        c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE))
+                );
+                listItems.add(d);
             }
         }
 

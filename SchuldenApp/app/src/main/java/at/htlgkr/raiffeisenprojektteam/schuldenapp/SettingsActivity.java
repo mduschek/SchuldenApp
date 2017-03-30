@@ -8,7 +8,6 @@ import android.preference.PreferenceFragment;
  * Created by michael on 23.11.16.
  */
 
-
 public class SettingsActivity extends PreferenceActivity {
 
     @Override
