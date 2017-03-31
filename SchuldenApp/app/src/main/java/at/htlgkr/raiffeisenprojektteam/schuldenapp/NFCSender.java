@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Perndorfer on 11.02.2017.
@@ -22,12 +23,14 @@ import android.widget.TextView;
 
 public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
 
-    String date, firstname, lastname, iban, usage, value;
+    private String date, firstname, lastname, iban, usage, value;
     boolean partnerIsCreditor;
     private static final String TAG = "*=NFCSender";
     private ProgressBar progressBar;
     private TextView tv;
     private boolean inserted = false;
+    private boolean isNewEntry;
+    private int updateId=-1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,12 +50,16 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
         usage = i.getStringExtra("usage");
         iban = i.getStringExtra("iban");
         value = i.getStringExtra("value");
+        isNewEntry = i.getBooleanExtra("isNewEntry",true);
         String picstr = i.getStringExtra("partneriscreditor");
         Log.e(TAG, "usage "+usage);
         if(picstr.equals("true")) partnerIsCreditor=true;
         else partnerIsCreditor = false;
 
-        Log.w(TAG, firstname + lastname + usage + iban + value + partnerIsCreditor);
+        if(!isNewEntry) updateId = i.getIntExtra("updateId",-1);
+
+        Toast.makeText(this,TAG+"isNewEntry "+isNewEntry+"ID:"+updateId,Toast.LENGTH_LONG).show();
+        Log.w(TAG, firstname + lastname + usage + iban + value + partnerIsCreditor+ isNewEntry);
 
         adapter.setNdefPushMessageCallback(this, this);
 
@@ -72,8 +79,20 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
                 tv.setText("Fertig");
             }
         });
-        if (inserted == false) {
+        if (inserted == false&&isNewEntry) {
             insert("not_paid");
+        }
+        else
+        {
+            if (partnerIsCreditor)
+            {
+                MainActivity.db.execSQL("UPDATE "+TblMyDebts.TABLE_NAME + " SET "+TblMyDebts.STATUS+" = 'not_paid' WHERE "+TblMyDebts.ID+" = "+updateId+";");
+            }
+            else
+            {
+                MainActivity.db.execSQL("UPDATE "+TblWhoOwesMe.TABLE_NAME + " SET "+TblWhoOwesMe.STATUS+" = 'not_paid' WHERE "+TblWhoOwesMe.ID+" = "+updateId+";");
+
+            }
         }
         return ndefMessage;
     }

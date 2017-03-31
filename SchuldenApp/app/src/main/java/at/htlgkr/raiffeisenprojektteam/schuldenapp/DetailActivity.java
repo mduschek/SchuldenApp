@@ -212,7 +212,7 @@ public class DetailActivity extends AppCompatActivity {
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         } else {
 
-            if (debt != null) {
+            /*if (debt != null) {
                 if (debt.isiAmCreditor()) {
                     MainActivity.db.execSQL("DELETE FROM " + TblWhoOwesMe.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
                     Toast.makeText(this, "DELETED TblWhoOwesMe", Toast.LENGTH_LONG).show();
@@ -220,9 +220,10 @@ public class DetailActivity extends AppCompatActivity {
                     MainActivity.db.execSQL("DELETE FROM " + TblMyDebts.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
                     Toast.makeText(this, "DELETED TblMyDebts", Toast.LENGTH_LONG).show();
                 }
-            }
+            }*/
             initTexts();
             Intent i = new Intent(this, NFCSender.class);
+            //Klcck in ich schulde partneriscreditor ist falsch... bei neu anlegen stimmts aber
             Log.w(TAG, "iAmCreditor " + iAmCreditor + "partnerIsCreditor " + partnerIsCreditor);
             i.putExtra("partneriscreditor", partnerIsCreditor + "");
             i.putExtra("firstname", firstname);
@@ -231,6 +232,16 @@ public class DetailActivity extends AppCompatActivity {
             i.putExtra("iban", iban);
             i.putExtra("value", value);
             i.putExtra("date", sdf.format(date));
+            if(debt == null|| debt.getId()==-1)
+            {
+                i.putExtra("isNewEntry", true);
+                Toast.makeText(this,"NewEntry",Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                i.putExtra("isNewEntry",false);
+                i.putExtra("updateId",debt.getId());
+            }
             Log.w(TAG, firstname + lastname + usage + iban + value + partnerIsCreditor);
             startActivity(i);
         }

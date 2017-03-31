@@ -231,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(getOnPageChangedListener());
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         viewPager.setCurrentItem(0);
+        actionBar.setSelectedNavigationItem(0);
     }
     //endregion
 
