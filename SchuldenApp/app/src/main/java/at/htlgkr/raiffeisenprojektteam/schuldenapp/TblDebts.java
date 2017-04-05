@@ -18,7 +18,7 @@ public class TblDebts {
 
     public static final String SQL_CREATE_TABLE="CREATE TABLE "+TABLE_NAME+" ( "+
             ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
-            I_AM_CREDITOR+" BOOLEAN," +
+            I_AM_CREDITOR+" BOOLEAN NOT NULL," +
             FIRSTNAME+" TEXT," +
             LASTNAME +" TEXT NOT NULL," +
             USAGE +" TEXT," +

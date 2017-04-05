@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public static BufferedReader br;
     public static BufferedWriter bw;
 
-    public int isCreditorBool;
+    public boolean i_am_creditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,11 +295,11 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (split[0].equals("true")) {
             builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
-            isCreditorBool = 1;
+            i_am_creditor = true;
         }
         else {
             builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nIch schulde " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
-            isCreditorBool = 0;
+            i_am_creditor = false;
         }
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setPositiveButton("Ja", new DialogInterface.OnClickListener()
@@ -308,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 ContentValues cv = new ContentValues();
                 Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
-                cv.put(TblDebts.I_AM_CREDITOR, isCreditorBool);
+                cv.put(TblDebts.I_AM_CREDITOR, i_am_creditor);
                 cv.put(TblDebts.FIRSTNAME, split[1]);
                 cv.put(TblDebts.LASTNAME, split[2]);
                 cv.put(TblDebts.USAGE, split[3]);
@@ -317,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
                 cv.put(TblDebts.VALUE, split[5]);
                 cv.put(TblDebts.DATE, split[6]);
                 db.insert(TblDebts.TABLE_NAME, null, cv);
+                refresh();
             }
         });
         builder.setCancelable(false);

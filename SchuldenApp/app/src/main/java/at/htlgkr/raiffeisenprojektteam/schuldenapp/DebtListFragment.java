@@ -40,7 +40,29 @@ public class DebtListFragment extends Fragment
 
         //Database is going to be queried
         //Struktur  public Debt(int deptType, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value)
-        if (args.getBoolean("showMyDepts")==true)
+        boolean iAmCreditor = args.getBoolean("showMyDepts");
+
+        Cursor c = MainActivity.db.rawQuery("SELECT * FROM Debts WHERE iAmCreditor = "+iAmCreditor+";",null);
+        Log.e("*===", "onCreateView: " +c.hashCode() );
+        while (c.moveToNext())
+        {
+            Debt d = new Debt(
+                    c.getInt(c.getColumnIndex(TblDebts.ID)),
+                    false,
+                    c.getString(c.getColumnIndex(TblDebts.FIRSTNAME)),
+                    c.getString(c.getColumnIndex(TblDebts.LASTNAME)),
+                    c.getString(c.getColumnIndex(TblDebts.USAGE)),
+                    c.getString(c.getColumnIndex(TblDebts.IBAN)),
+                    c.getString(c.getColumnIndex(TblDebts.STATUS)),
+                    c.getDouble(c.getColumnIndex(TblDebts.VALUE)),
+                    c.getString(c.getColumnIndex(TblDebts.DATE))
+            );
+            listItems.add(d);
+        }
+        c.close();
+
+
+        /*if (args.getBoolean("showMyDepts")==true)
         {
             Cursor c = MainActivity.db.rawQuery("SELECT * FROM myDepts;",null);
             Log.e("*===", "onCreateView: " +c.hashCode() );
@@ -79,6 +101,7 @@ public class DebtListFragment extends Fragment
                 listItems.add(d);
             }
         }
+        */
 
         adapter = new ArrayAdapter<Debt>(getActivity(),android.R.layout.simple_list_item_1,listItems);
         listView.setAdapter(adapter);
