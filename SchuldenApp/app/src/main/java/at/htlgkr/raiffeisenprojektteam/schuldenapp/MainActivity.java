@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     public static BufferedReader br;
     public static BufferedWriter bw;
 
+    public int isCreditorBool;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertIntoDb(final String[] split) {//STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+        /*
         if (split[0].equals("true")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
@@ -287,7 +290,38 @@ public class MainActivity extends AppCompatActivity {
             builder.setNegativeButton("Nein", null);
             builder.create().show();
         }
+        */
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if (split[0].equals("true")) {
+            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
+            isCreditorBool = 1;
+        }
+        else {
+            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nIch schulde " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
+            isCreditorBool = 0;
+        }
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ContentValues cv = new ContentValues();
+                Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
+                cv.put(TblDebts.I_AM_CREDITOR, isCreditorBool);
+                cv.put(TblDebts.FIRSTNAME, split[1]);
+                cv.put(TblDebts.LASTNAME, split[2]);
+                cv.put(TblDebts.USAGE, split[3]);
+                cv.put(TblDebts.IBAN, split[4]);
+                cv.put(TblDebts.STATUS, "not_paid");
+                cv.put(TblDebts.VALUE, split[5]);
+                cv.put(TblDebts.DATE, split[6]);
+                db.insert(TblDebts.TABLE_NAME, null, cv);
+            }
+        });
+        builder.setCancelable(false);
+        builder.setNegativeButton("Nein", null);
+        builder.create().show();
     }
 
     public static String createStuzzaString(String firstname, String lastname, String iban, float value, String usage) {
