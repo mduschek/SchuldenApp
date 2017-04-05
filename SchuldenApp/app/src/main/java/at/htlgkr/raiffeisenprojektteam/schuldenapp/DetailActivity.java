@@ -96,6 +96,7 @@ public class DetailActivity extends AppCompatActivity {
         //buttonNfc.setVisibility(View.GONE);
         //buttonOther.setVisibility(View.GONE);
 
+
         //NFC
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -105,6 +106,11 @@ public class DetailActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             debt = (Debt) getIntent().getExtras().getSerializable("object");
+            if (debt.isiAmCreditor()) {
+                iAmCreditor = true;
+            } else {
+                iAmCreditor = false;
+            }
         }
     }
 
@@ -211,7 +217,7 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         } else {
-
+            //region
             /*if (debt != null) {
                 if (debt.isiAmCreditor()) {
                     MainActivity.db.execSQL("DELETE FROM " + TblWhoOwesMe.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
@@ -221,6 +227,8 @@ public class DetailActivity extends AppCompatActivity {
                     Toast.makeText(this, "DELETED TblMyDebts", Toast.LENGTH_LONG).show();
                 }
             }*/
+            //endregion
+
             initTexts();
             Intent i = new Intent(this, NFCSender.class);
             //Klcck in ich schulde partneriscreditor ist falsch... bei neu anlegen stimmts aber

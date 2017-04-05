@@ -226,6 +226,11 @@ public class MainActivity extends AppCompatActivity {
             insertIntoDb(split);
         }
         //Toast.makeText(this,"onResume",Toast.LENGTH_LONG).show();
+        refresh();
+    }
+
+    //endregion
+    private void refresh() {
         customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(customPagerAdapter);
         viewPager.addOnPageChangeListener(getOnPageChangedListener());
@@ -233,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(0);
         actionBar.setSelectedNavigationItem(0);
     }
-    //endregion
 
     private void insertIntoDb(final String[] split) {//STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
         if (split[0].equals("true")) {
@@ -253,6 +257,8 @@ public class MainActivity extends AppCompatActivity {
                     cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, split[5]);
                     cv.put(TblWhoOwesMe.STATUS, "not_paid");
                     db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
+                    refresh();
+
 
                 }
             });
@@ -292,20 +298,20 @@ public class MainActivity extends AppCompatActivity {
                 "001" + System.lineSeparator() +
                 "1" + System.lineSeparator() +
                 "SCT" + System.lineSeparator() +
-                "" +  System.lineSeparator() + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
+                "" + System.lineSeparator() + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
                 firstname + " " + lastname + System.lineSeparator() + //Creditor
-                iban +  System.lineSeparator() +   //iban
-                "EUR" + value +  System.lineSeparator() +  //value
+                iban + System.lineSeparator() +   //iban
+                "EUR" + value + System.lineSeparator() +  //value
                 "" + System.lineSeparator() +   //reason
-                "" +  System.lineSeparator() +   //REFERENCE OR TEXT
-                usage +  System.lineSeparator();// +     //text
-                //"" + System.lineSeparator();   //message
+                "" + System.lineSeparator() +   //REFERENCE OR TEXT
+                usage + System.lineSeparator();// +     //text
+        //"" + System.lineSeparator();   //message
     }
 
-    public static String createBankDetailsString(){
-        return  ";" +
+    public static String createBankDetailsString() {
+        return ";" +
                 UserData.firstname + ";" +
-                UserData.lastname  + ";" +
+                UserData.lastname + ";" +
                 ";" +
                 UserData.iban + ";" +
                 ";";
@@ -328,16 +334,13 @@ public class MainActivity extends AppCompatActivity {
                 String string = URLDecoder.decode(result.getContents().toString());
                 intent.putExtra("qr_code", data);
                 String[] split = string.split(";");
-                if(!split[0].equals(""))
-                {
+                if (!split[0].equals("")) {
                     insertIntoDb(string.split(";"));
-                }
-                else
-                {
+                } else {
                     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;24.12.2016
                     //public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date) {
 
-                    Debt d = new Debt(-1,false,split[1],split[2],split[3],split[4],"",0,new java.util.Date().toString());
+                    Debt d = new Debt(-1, false, split[1], split[2], split[3], split[4], "", 0, new java.util.Date().toString());
                     Intent i = new Intent(getApplicationContext(), DetailActivity.class);
                     i.putExtra("object", d);
                     startActivity(i);
