@@ -423,6 +423,19 @@ public class DetailActivity extends AppCompatActivity {
     private void insert(String status) {
         initTexts();
 
+        ContentValues cv = new ContentValues();
+        Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
+        cv.put(TblDebts.I_AM_CREDITOR, iAmCreditor);
+        cv.put(TblDebts.FIRSTNAME, firstname);
+        cv.put(TblDebts.LASTNAME, lastname);
+        cv.put(TblDebts.USAGE, usage);
+        cv.put(TblDebts.IBAN, iban);
+        cv.put(TblDebts.STATUS, "not_paid");
+        cv.put(TblDebts.VALUE,value);
+        cv.put(TblDebts.DATE, sdf.format(date));
+        MainActivity.db.insert(TblDebts.TABLE_NAME, null, cv);
+
+        /*
         if (iAmCreditor) {//iAmCreditor==true == wir sind Gläubiger== wir leihen geld
             ContentValues cv = new ContentValues();
             cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, sdf.format(date));
@@ -444,6 +457,7 @@ public class DetailActivity extends AppCompatActivity {
             cv.put(TblMyDebts.STATUS, status);
             MainActivity.db.insert(TblMyDebts.TABLE_NAME, null, cv);
         }
+        */
     }
 
     private boolean checkInputValues() {

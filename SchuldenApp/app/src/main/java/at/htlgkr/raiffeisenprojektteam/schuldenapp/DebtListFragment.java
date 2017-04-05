@@ -40,15 +40,18 @@ public class DebtListFragment extends Fragment
 
         //Database is going to be queried
         //Struktur  public Debt(int deptType, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value)
-        boolean iAmCreditor = args.getBoolean("showMyDepts");
+        boolean iAmCreditor = !showMyDepts;
+        int iAmCreditorInt = 0;
+        if (iAmCreditor) iAmCreditorInt = 1;
+        if (!iAmCreditor) iAmCreditorInt = 0;
 
-        Cursor c = MainActivity.db.rawQuery("SELECT * FROM Debts WHERE iAmCreditor = "+iAmCreditor+";",null);
+        Cursor c = MainActivity.db.rawQuery("SELECT * FROM Debts WHERE iAmCreditor = " + iAmCreditorInt + ";",null);
         Log.e("*===", "onCreateView: " +c.hashCode() );
         while (c.moveToNext())
         {
             Debt d = new Debt(
                     c.getInt(c.getColumnIndex(TblDebts.ID)),
-                    false,
+                    iAmCreditor,
                     c.getString(c.getColumnIndex(TblDebts.FIRSTNAME)),
                     c.getString(c.getColumnIndex(TblDebts.LASTNAME)),
                     c.getString(c.getColumnIndex(TblDebts.USAGE)),
