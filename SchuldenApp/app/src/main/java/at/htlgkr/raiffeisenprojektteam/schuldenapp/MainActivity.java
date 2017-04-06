@@ -297,14 +297,12 @@ public class MainActivity extends AppCompatActivity {
         if (split[0].equals("true")) {
             builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
             i_am_creditor = true;
-        }
-        else {
+        } else {
             builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nIch schulde " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
             i_am_creditor = false;
         }
         builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener()
-        {
+        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 ContentValues cv = new ContentValues();

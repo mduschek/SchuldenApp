@@ -155,9 +155,9 @@ public class DetailActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + " AND "+TblDebts.I_AM_CREDITOR+" ='true';");
+                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + " AND "+TblDebts.I_AM_CREDITOR+" ='false';");
+                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 finish();
                 break;
@@ -177,9 +177,9 @@ public class DetailActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " +  TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 finish();
                 /*Intent sendIntent = new Intent();
