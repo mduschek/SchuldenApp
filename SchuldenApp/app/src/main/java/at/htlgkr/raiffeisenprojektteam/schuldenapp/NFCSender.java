@@ -94,7 +94,7 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
             {
                 MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME + " SET "+TblDebts.STATUS+" = 'not_paid' WHERE "+TblDebts.ID+" = "+updateId+";");
 
-            }*/
+            }*///
         }
         return ndefMessage;
     }
