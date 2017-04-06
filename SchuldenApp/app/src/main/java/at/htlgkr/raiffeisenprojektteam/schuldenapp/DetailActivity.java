@@ -426,12 +426,12 @@ public class DetailActivity extends AppCompatActivity {
         ContentValues cv = new ContentValues();
         Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
         cv.put(TblDebts.I_AM_CREDITOR, iAmCreditor);
-        cv.put(TblDebts.FIRSTNAME, firstname);
-        cv.put(TblDebts.LASTNAME, lastname);
-        cv.put(TblDebts.USAGE, usage);
-        cv.put(TblDebts.IBAN, iban);
+        cv.put(TblDebts.FIRSTNAME, DBData.firstname);
+        cv.put(TblDebts.LASTNAME, DBData.lastname);
+        cv.put(TblDebts.USAGE, DBData.usuage);
+        cv.put(TblDebts.IBAN, DBData.iban);
         cv.put(TblDebts.STATUS, status);
-        cv.put(TblDebts.VALUE,value);
+        cv.put(TblDebts.VALUE,DBData.value);
         cv.put(TblDebts.DATE, sdf.format(date));
         MainActivity.db.insert(TblDebts.TABLE_NAME, null, cv);
 
