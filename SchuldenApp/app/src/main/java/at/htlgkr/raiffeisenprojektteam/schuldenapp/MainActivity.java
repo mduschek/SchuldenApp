@@ -241,56 +241,57 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setSelectedNavigationItem(0);
     }
 
-    private void insertIntoDb(final String[] split) {//STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
-        /*
-        if (split[0].equals("true")) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
-            builder.setIcon(android.R.drawable.ic_dialog_alert);
-            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    ContentValues cv = new ContentValues();
-                    Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, split[6]);
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, split[1]);
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, split[4]);
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, split[3]);
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, split[2]);
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, split[5]);
-                    cv.put(TblWhoOwesMe.STATUS, "not_paid");
-                    db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
-                    refresh();
+    private void insertIntoDb(final String[] split) {
+        //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
 
+//        if (split[0].equals("true")) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
+//            builder.setIcon(android.R.drawable.ic_dialog_alert);
+//            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    ContentValues cv = new ContentValues();
+//                    Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, split[6]);
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, split[1]);
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, split[4]);
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, split[3]);
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, split[2]);
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, split[5]);
+//                    cv.put(TblWhoOwesMe.STATUS, "not_paid");
+//                    db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
+//                    refresh();
+//
+//
+//                }
+//            });
+//            builder.setCancelable(false);
+//            builder.setNegativeButton("Nein", null);
+//            builder.create().show();
+//        } else {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nIch schulde " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
+//            builder.setIcon(android.R.drawable.ic_dialog_alert);
+//            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    ContentValues cv = new ContentValues();
+//                    cv.put(TblMyDebts.PERS_I_OWE_DATE, split[6]);
+//                    cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, split[1]);
+//                    cv.put(TblMyDebts.PERS_I_OWE_IBAN, split[4]);
+//                    cv.put(TblMyDebts.PERS_I_OWE_USUAGE, split[3]);
+//                    cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, split[2]);
+//                    cv.put(TblMyDebts.PERS_I_OWE_VALUE, split[5]);
+//                    cv.put(TblMyDebts.STATUS, "not_paid");
+//                    db.insert(TblMyDebts.TABLE_NAME, null, cv);
+//                }
+//            });
+//            builder.setCancelable(false);
+//            builder.setNegativeButton("Nein", null);
+//            builder.create().show();
+//        }
 
-                }
-            });
-            builder.setCancelable(false);
-            builder.setNegativeButton("Nein", null);
-            builder.create().show();
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nIch schulde " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
-            builder.setIcon(android.R.drawable.ic_dialog_alert);
-            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    ContentValues cv = new ContentValues();
-                    cv.put(TblMyDebts.PERS_I_OWE_DATE, split[6]);
-                    cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, split[1]);
-                    cv.put(TblMyDebts.PERS_I_OWE_IBAN, split[4]);
-                    cv.put(TblMyDebts.PERS_I_OWE_USUAGE, split[3]);
-                    cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, split[2]);
-                    cv.put(TblMyDebts.PERS_I_OWE_VALUE, split[5]);
-                    cv.put(TblMyDebts.STATUS, "not_paid");
-                    db.insert(TblMyDebts.TABLE_NAME, null, cv);
-                }
-            });
-            builder.setCancelable(false);
-            builder.setNegativeButton("Nein", null);
-            builder.create().show();
-        }
-        */
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (split[0].equals("true")) {
