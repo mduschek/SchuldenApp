@@ -430,7 +430,7 @@ public class DetailActivity extends AppCompatActivity {
         cv.put(TblDebts.LASTNAME, lastname);
         cv.put(TblDebts.USAGE, usage);
         cv.put(TblDebts.IBAN, iban);
-        cv.put(TblDebts.STATUS, "not_paid");
+        cv.put(TblDebts.STATUS, status);
         cv.put(TblDebts.VALUE,value);
         cv.put(TblDebts.DATE, sdf.format(date));
         MainActivity.db.insert(TblDebts.TABLE_NAME, null, cv);
