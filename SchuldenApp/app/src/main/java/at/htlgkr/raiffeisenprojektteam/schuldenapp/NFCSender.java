@@ -84,15 +84,17 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
         }
         else
         {
+            MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME + " SET "+TblDebts.STATUS+" = 'not_paid' WHERE "+TblDebts.ID+" = "+updateId+";");
+            /*
             if (partnerIsCreditor)
             {
-                MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME + " SET "+TblDebts.STATUS+" = 'not_paid' WHERE "+TblDebts.ID+" = "+updateId+" AND "+ TblDebts.I_AM_CREDITOR +" = 'false';");
+                MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME + " SET "+TblDebts.STATUS+" = 'not_paid' WHERE "+TblDebts.ID+" = "+updateId+";");
             }
             else
             {
-                MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME + " SET "+TblDebts.STATUS+" = 'not_paid' WHERE "+TblDebts.ID+" = "+updateId+" AND "+ TblDebts.I_AM_CREDITOR +" = 'true';");
+                MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME + " SET "+TblDebts.STATUS+" = 'not_paid' WHERE "+TblDebts.ID+" = "+updateId+";");
 
-            }
+            }*/
         }
         return ndefMessage;
     }
