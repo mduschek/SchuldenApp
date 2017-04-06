@@ -155,9 +155,9 @@ public class DetailActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + " AND "+TblDebts.I_AM_CREDITOR+" ='true';");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + " AND "+TblDebts.I_AM_CREDITOR+" ='false';");
                 }
                 finish();
                 break;
@@ -424,7 +424,7 @@ public class DetailActivity extends AppCompatActivity {
         initTexts();
 
         ContentValues cv = new ContentValues();
-        Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "insert", Toast.LENGTH_LONG).show();
         cv.put(TblDebts.I_AM_CREDITOR, iAmCreditor);
         cv.put(TblDebts.FIRSTNAME, DBData.firstname);
         cv.put(TblDebts.LASTNAME, DBData.lastname);

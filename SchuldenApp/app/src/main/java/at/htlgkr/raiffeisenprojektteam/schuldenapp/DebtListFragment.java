@@ -64,7 +64,7 @@ public class DebtListFragment extends Fragment
         }
         c.close();
 
-
+        //region old version
         /*if (args.getBoolean("showMyDepts")==true)
         {
             Cursor c = MainActivity.db.rawQuery("SELECT * FROM myDepts;",null);
@@ -105,7 +105,7 @@ public class DebtListFragment extends Fragment
             }
         }
         */
-
+//endregion
         adapter = new ArrayAdapter<Debt>(getActivity(),android.R.layout.simple_list_item_1,listItems);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
