@@ -22,7 +22,8 @@ public class ArchiveActivity extends AppCompatActivity {
 
     ListView listView;
     private ArrayList<Debt> debts;
-    private ArrayAdapter<Debt> adapter;
+    //private ArrayAdapter<Debt> adapter;
+    private DebtsArchiveAdapter adapter;
     private int clickedIndex;
 
     @Override
@@ -54,24 +55,23 @@ public class ArchiveActivity extends AppCompatActivity {
     private void loadDbEntries() {
         //Cursor c = MainActivity.db.rawQuery("SELECT * FROM  "+TblDebts.TABLE_NAME+ ";", null);
         //Cursor c = MainActivity.db.rawQuery("SELECT * FROM "+TblDebts.TABLE_NAME+" WHERE "+TblDebts.STATUS+" = 'paid';",null);
-//        Cursor c = getContentResolver().query(
-//                DebtsContentProvider.DEBT_URI,
-//                null,
-//                //DebtsContentProvider.Debts.DEBT_ID + "= ?",
-//                //new String[]{String.valueOf(2)},
-//                null,
-//                null,
-//                null);
-//                //DebtsContentProvider.Debts.DATE);
-
-        Cursor c = getContentResolver().query(DebtsContentProvider.DEBT_URI, null, null, null, DebtsContentProvider.Debts.DATE);
+        //Cursor c = getContentResolver().query(DebtsContentProvider.DEBT_URI, null, null, null, DebtsContentProvider.Debts.DATE);
+        Cursor c = getContentResolver().query(
+                DebtsContentProvider.DEBT_URI,
+                null,
+                DebtsContentProvider.Debts.STATUS + " = ?",
+                new String[]{"paid"},
+                DebtsContentProvider.Debts.DATE + " DESC");
 
         c.moveToFirst();
 
         while (c.moveToNext()) {
+            boolean iAmCreditor = false;
+            if (c.getInt(c.getColumnIndex(TblDebts.I_AM_CREDITOR)) == 1) iAmCreditor = true;
+
             Debt d = new Debt(
                     c.getInt(c.getColumnIndex(TblDebts.ID)),
-                    true,
+                    iAmCreditor,
                     c.getString(c.getColumnIndex(TblDebts.FIRSTNAME)),
                     c.getString(c.getColumnIndex(TblDebts.LASTNAME)),
                     c.getString(c.getColumnIndex(TblDebts.USAGE)),
@@ -84,7 +84,8 @@ public class ArchiveActivity extends AppCompatActivity {
         }
         c.close();
 
-        adapter = new ArrayAdapter<Debt>(this, android.R.layout.simple_list_item_1, debts);
+        adapter = new DebtsArchiveAdapter(this, debts);
+        //adapter = new ArrayAdapter<Debt>(this, android.R.layout.simple_list_item_1, debts);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

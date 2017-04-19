@@ -32,7 +32,7 @@ import java.util.GregorianCalendar;
 public class DetailActivity extends AppCompatActivity {
 
     private static final String IS_DEBTOR_KEY = "isDebtorKey";
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    public static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     private TextView textViewDate, textViewCreateLoanDescription, textViewStatus, textViewIban;
     private RadioButton radioButtonDebtor, radioButtonCreditor;
     private Button buttonSelectDate, buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt;
