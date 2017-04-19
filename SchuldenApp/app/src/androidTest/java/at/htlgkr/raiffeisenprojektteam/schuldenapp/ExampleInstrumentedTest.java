@@ -55,19 +55,19 @@ public class ExampleInstrumentedTest {
         cv.put(tbltoinsert.LASTNAME,"P.");
         cv.put(tbltoinsert.USAGE,"hookers and drugs");
         cv.put(tbltoinsert.IBAN,"666USA69LAL");
-        cv.put(tbltoinsert.STATUS,"swaggy");
+        cv.put(tbltoinsert.STATUS,"paid");
         cv.put(tbltoinsert.VALUE,"100000");
         cv.put(tbltoinsert.DATE,"4-7-1776");
         appContext.getContentResolver().insert(DebtsContentProvider.DEBT_URI,cv);
 
         ContentValues cv1=new ContentValues();
-        cv1.put(tbltoinsert.STATUS,"notsoswaggyanymore");
-        appContext.getContentResolver().update(DebtsContentProvider.DEBT_URI,cv1,"status=swaggy",null);
+        cv1.put(tbltoinsert.STATUS,"notpaid");
+        appContext.getContentResolver().update(DebtsContentProvider.DEBT_URI,cv1,"status=paid",null);
         SQLiteDatabase db = new DebtsDbHelper(appContext).getWritableDatabase();
-        Cursor c =  db.rawQuery("SELECT * FROM "+TblDebts.TABLE_NAME+" WHERE STATUS=notsoswaggyanymore ORDER BY "+TblDebts.ID+";",null);
+        Cursor c =  db.rawQuery("SELECT * FROM "+TblDebts.TABLE_NAME+" WHERE STATUS=notpaid ORDER BY "+TblDebts.ID+";",null);
         c.moveToLast();
 
-        assertEquals("notsoswaggyanymore",TblDebts.STATUS);
+        assertEquals("notpaid",TblDebts.STATUS);
 
     }
 }
