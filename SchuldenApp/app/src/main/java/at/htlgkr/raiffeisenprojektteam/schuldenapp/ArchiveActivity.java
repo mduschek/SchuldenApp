@@ -1,5 +1,6 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
+import android.content.ContentProvider;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -52,7 +53,20 @@ public class ArchiveActivity extends AppCompatActivity {
 
     private void loadDbEntries() {
         //Cursor c = MainActivity.db.rawQuery("SELECT * FROM  "+TblDebts.TABLE_NAME+ ";", null);
-        Cursor c = MainActivity.db.rawQuery("SELECT * FROM "+TblDebts.TABLE_NAME+" WHERE "+TblDebts.STATUS+" = 'paid';",null);
+        //Cursor c = MainActivity.db.rawQuery("SELECT * FROM "+TblDebts.TABLE_NAME+" WHERE "+TblDebts.STATUS+" = 'paid';",null);
+//        Cursor c = getContentResolver().query(
+//                DebtsContentProvider.DEBT_URI,
+//                null,
+//                //DebtsContentProvider.Debts.DEBT_ID + "= ?",
+//                //new String[]{String.valueOf(2)},
+//                null,
+//                null,
+//                null);
+//                //DebtsContentProvider.Debts.DATE);
+
+        Cursor c = getContentResolver().query(DebtsContentProvider.DEBT_URI, null, null, null, DebtsContentProvider.Debts.DATE);
+
+        c.moveToFirst();
 
         while (c.moveToNext()) {
             Debt d = new Debt(
