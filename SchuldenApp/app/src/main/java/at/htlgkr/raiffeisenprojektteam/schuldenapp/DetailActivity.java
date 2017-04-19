@@ -74,7 +74,6 @@ public class DetailActivity extends AppCompatActivity {
         textViewStatus = (TextView) findViewById(R.id.textViewStatus);
         buttonSelectDate = (Button) findViewById(R.id.buttonSelectDate);
         buttonManualInput = (Button) findViewById(R.id.buttonManualInput);
-        //buttonBluetooth = (Button) findViewById(R.id.buttonBluetooth);
         buttonNfc = (Button) findViewById(R.id.buttonNfc);
         buttonGenerateQrCode = (Button) findViewById(R.id.buttonGenerateQrCode);
         buttonOther = (Button) findViewById(R.id.buttonOther);      //Activity Chooser mit anderen Apps
@@ -96,6 +95,7 @@ public class DetailActivity extends AppCompatActivity {
         //buttonNfc.setVisibility(View.GONE);
         //buttonOther.setVisibility(View.GONE);
 
+
         //NFC
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -105,6 +105,11 @@ public class DetailActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             debt = (Debt) getIntent().getExtras().getSerializable("object");
+            if (debt.isiAmCreditor()) {
+                iAmCreditor = true;
+            } else {
+                iAmCreditor = false;
+            }
         }
     }
 
@@ -149,9 +154,9 @@ public class DetailActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 finish();
                 break;
@@ -171,9 +176,9 @@ public class DetailActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblWhoOwesMe.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " + TblMyDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " +  TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 finish();
                 /*Intent sendIntent = new Intent();
@@ -211,7 +216,7 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         } else {
-
+            //region
             /*if (debt != null) {
                 if (debt.isiAmCreditor()) {
                     MainActivity.db.execSQL("DELETE FROM " + TblWhoOwesMe.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
@@ -221,6 +226,8 @@ public class DetailActivity extends AppCompatActivity {
                     Toast.makeText(this, "DELETED TblMyDebts", Toast.LENGTH_LONG).show();
                 }
             }*/
+            //endregion
+
             initTexts();
             Intent i = new Intent(this, NFCSender.class);
             //Klcck in ich schulde partneriscreditor ist falsch... bei neu anlegen stimmts aber
@@ -415,6 +422,19 @@ public class DetailActivity extends AppCompatActivity {
     private void insert(String status) {
         initTexts();
 
+        ContentValues cv = new ContentValues();
+        Toast.makeText(getApplicationContext(), "insert", Toast.LENGTH_LONG).show();
+        cv.put(TblDebts.I_AM_CREDITOR, iAmCreditor);
+        cv.put(TblDebts.FIRSTNAME, DBData.firstname);
+        cv.put(TblDebts.LASTNAME, DBData.lastname);
+        cv.put(TblDebts.USAGE, DBData.usuage);
+        cv.put(TblDebts.IBAN, DBData.iban);
+        cv.put(TblDebts.STATUS, status);
+        cv.put(TblDebts.VALUE,DBData.value);
+        cv.put(TblDebts.DATE, sdf.format(date));
+        MainActivity.db.insert(TblDebts.TABLE_NAME, null, cv);
+
+        /*
         if (iAmCreditor) {//iAmCreditor==true == wir sind Gläubiger== wir leihen geld
             ContentValues cv = new ContentValues();
             cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, sdf.format(date));
@@ -436,6 +456,7 @@ public class DetailActivity extends AppCompatActivity {
             cv.put(TblMyDebts.STATUS, status);
             MainActivity.db.insert(TblMyDebts.TABLE_NAME, null, cv);
         }
+        */
     }
 
     private boolean checkInputValues() {

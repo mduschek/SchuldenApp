@@ -84,15 +84,17 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
         }
         else
         {
+            MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME + " SET "+TblDebts.STATUS+" = 'not_paid' WHERE "+TblDebts.ID+" = "+updateId+";");
+            /*
             if (partnerIsCreditor)
             {
-                MainActivity.db.execSQL("UPDATE "+TblMyDebts.TABLE_NAME + " SET "+TblMyDebts.STATUS+" = 'not_paid' WHERE "+TblMyDebts.ID+" = "+updateId+";");
+                MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME + " SET "+TblDebts.STATUS+" = 'not_paid' WHERE "+TblDebts.ID+" = "+updateId+";");
             }
             else
             {
-                MainActivity.db.execSQL("UPDATE "+TblWhoOwesMe.TABLE_NAME + " SET "+TblWhoOwesMe.STATUS+" = 'not_paid' WHERE "+TblWhoOwesMe.ID+" = "+updateId+";");
+                MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME + " SET "+TblDebts.STATUS+" = 'not_paid' WHERE "+TblDebts.ID+" = "+updateId+";");
 
-            }
+            }*///
         }
         return ndefMessage;
     }
@@ -102,24 +104,26 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
         Log.d(TAG, inserted+"");
         if (!partnerIsCreditor) {
             ContentValues cv = new ContentValues();
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, date);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, DBData.firstname);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, DBData.iban);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, DBData.usuage);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, DBData.lastname);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, DBData.value);
-            cv.put(TblWhoOwesMe.STATUS, status);
-            MainActivity.db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
+            cv.put(TblDebts.DATE, date);
+            cv.put(TblDebts.FIRSTNAME, DBData.firstname);
+            cv.put(TblDebts.IBAN, DBData.iban);
+            cv.put(TblDebts.USAGE, DBData.usuage);
+            cv.put(TblDebts.LASTNAME, DBData.lastname);
+            cv.put(TblDebts.VALUE, DBData.value);
+            cv.put(TblDebts.STATUS, status);
+            cv.put(TblDebts.I_AM_CREDITOR,true);
+            MainActivity.db.insert(TblDebts.TABLE_NAME, null, cv);
         } else {
             ContentValues cv = new ContentValues();
-            cv.put(TblMyDebts.PERS_I_OWE_DATE, date);
-            cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, DBData.firstname);
-            cv.put(TblMyDebts.PERS_I_OWE_IBAN, DBData.iban);
-            cv.put(TblMyDebts.PERS_I_OWE_USUAGE, DBData.usuage);
-            cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, DBData.lastname);
-            cv.put(TblMyDebts.PERS_I_OWE_VALUE, DBData.value);
-            cv.put(TblMyDebts.STATUS, status);
-            MainActivity.db.insert(TblMyDebts.TABLE_NAME, null, cv);
+            cv.put(TblDebts.DATE, date);
+            cv.put(TblDebts.FIRSTNAME, DBData.firstname);
+            cv.put(TblDebts.LASTNAME, DBData.iban);
+            cv.put(TblDebts.USAGE, DBData.usuage);
+            cv.put(TblDebts.LASTNAME, DBData.lastname);
+            cv.put(TblDebts.VALUE, DBData.value);
+            cv.put(TblDebts.STATUS, status);
+            cv.put(TblDebts.I_AM_CREDITOR,false);
+            MainActivity.db.insert(TblDebts.TABLE_NAME, null, cv);
         }
     }
 }

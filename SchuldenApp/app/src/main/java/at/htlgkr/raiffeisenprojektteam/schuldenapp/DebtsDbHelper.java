@@ -28,10 +28,6 @@ public class DebtsDbHelper extends SQLiteOpenHelper
 
         db.execSQL(TblDebts.SQL_CREATE_TABLE);
 
-        //Deprecated?
-        db.execSQL(TblMyDebts.SQL_CREATE_TABLE);
-        db.execSQL(TblWhoOwesMe.SQL_CREATE_TABLE);
-
         //seed(db);
     }
 
@@ -44,14 +40,5 @@ public class DebtsDbHelper extends SQLiteOpenHelper
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL(TblDebts.SQL_DROP_TABLE);
         db.execSQL(TblDebts.SQL_CREATE_TABLE);
-
-        //Deprecated?
-        //db.execSQL(TblStatus.SQL_DROP_TABLE);
-        db.execSQL(TblMyDebts.SQL_DROP_TABLE);
-        db.execSQL(TblWhoOwesMe.SQL_DROP_TABLE);
-
-        //db.execSQL(TblStatus.SQL_CREATE_TABEL);
-        db.execSQL(TblMyDebts.SQL_CREATE_TABLE);
-        db.execSQL(TblWhoOwesMe.SQL_CREATE_TABLE);
     }
 }

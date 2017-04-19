@@ -55,7 +55,7 @@
         <!--at.htlgkr.raiffeisenprojektteam.-->
 
         <provider
-            android:authorities="schuldenappDebtsContentProvider"
+            android:authorities="at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider"
             android:name=".DebtsContentProvider"/>
         <!--<activity android:name=".BTSender" />-->
     </application>

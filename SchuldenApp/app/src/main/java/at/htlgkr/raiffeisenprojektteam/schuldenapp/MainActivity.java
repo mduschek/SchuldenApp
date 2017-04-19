@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     public static BufferedReader br;
     public static BufferedWriter bw;
 
+    public boolean i_am_creditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,6 +228,11 @@ public class MainActivity extends AppCompatActivity {
             insertIntoDb(split);
         }
         //Toast.makeText(this,"onResume",Toast.LENGTH_LONG).show();
+        refresh();
+    }
+
+    //endregion
+    private void refresh() {
         customPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(customPagerAdapter);
         viewPager.addOnPageChangeListener(getOnPageChangedListener());
@@ -233,55 +240,88 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(0);
         actionBar.setSelectedNavigationItem(0);
     }
-    //endregion
 
-    private void insertIntoDb(final String[] split) {//STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+    private void insertIntoDb(final String[] split) {
+        //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+
+//        if (split[0].equals("true")) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
+//            builder.setIcon(android.R.drawable.ic_dialog_alert);
+//            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    ContentValues cv = new ContentValues();
+//                    Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, split[6]);
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, split[1]);
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, split[4]);
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, split[3]);
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, split[2]);
+//                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, split[5]);
+//                    cv.put(TblWhoOwesMe.STATUS, "not_paid");
+//                    db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
+//                    refresh();
+//
+//
+//                }
+//            });
+//            builder.setCancelable(false);
+//            builder.setNegativeButton("Nein", null);
+//            builder.create().show();
+//        } else {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nIch schulde " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
+//            builder.setIcon(android.R.drawable.ic_dialog_alert);
+//            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    ContentValues cv = new ContentValues();
+//                    cv.put(TblMyDebts.PERS_I_OWE_DATE, split[6]);
+//                    cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, split[1]);
+//                    cv.put(TblMyDebts.PERS_I_OWE_IBAN, split[4]);
+//                    cv.put(TblMyDebts.PERS_I_OWE_USUAGE, split[3]);
+//                    cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, split[2]);
+//                    cv.put(TblMyDebts.PERS_I_OWE_VALUE, split[5]);
+//                    cv.put(TblMyDebts.STATUS, "not_paid");
+//                    db.insert(TblMyDebts.TABLE_NAME, null, cv);
+//                }
+//            });
+//            builder.setCancelable(false);
+//            builder.setNegativeButton("Nein", null);
+//            builder.create().show();
+//        }
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (split[0].equals("true")) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
-            builder.setIcon(android.R.drawable.ic_dialog_alert);
-            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    ContentValues cv = new ContentValues();
-                    Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, split[6]);
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, split[1]);
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, split[4]);
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, split[3]);
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, split[2]);
-                    cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, split[5]);
-                    cv.put(TblWhoOwesMe.STATUS, "not_paid");
-                    db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
-
-                }
-            });
-            builder.setCancelable(false);
-            builder.setNegativeButton("Nein", null);
-            builder.create().show();
+            i_am_creditor = true;
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nIch schulde " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
-            builder.setIcon(android.R.drawable.ic_dialog_alert);
-            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    ContentValues cv = new ContentValues();
-                    cv.put(TblMyDebts.PERS_I_OWE_DATE, split[6]);
-                    cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, split[1]);
-                    cv.put(TblMyDebts.PERS_I_OWE_IBAN, split[4]);
-                    cv.put(TblMyDebts.PERS_I_OWE_USUAGE, split[3]);
-                    cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, split[2]);
-                    cv.put(TblMyDebts.PERS_I_OWE_VALUE, split[5]);
-                    cv.put(TblMyDebts.STATUS, "not_paid");
-                    db.insert(TblMyDebts.TABLE_NAME, null, cv);
-                }
-            });
-            builder.setCancelable(false);
-            builder.setNegativeButton("Nein", null);
-            builder.create().show();
+            i_am_creditor = false;
         }
-
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ContentValues cv = new ContentValues();
+                Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
+                cv.put(TblDebts.I_AM_CREDITOR, i_am_creditor);
+                cv.put(TblDebts.FIRSTNAME, split[1]);
+                cv.put(TblDebts.LASTNAME, split[2]);
+                cv.put(TblDebts.USAGE, split[3]);
+                cv.put(TblDebts.IBAN, split[4]);
+                cv.put(TblDebts.STATUS, "not_paid");
+                cv.put(TblDebts.VALUE, split[5]);
+                cv.put(TblDebts.DATE, split[6]);
+                db.insert(TblDebts.TABLE_NAME, null, cv);
+                refresh();
+            }
+        });
+        builder.setCancelable(false);
+        builder.setNegativeButton("Nein", null);
+        builder.create().show();
     }
 
     public static String createStuzzaString(String firstname, String lastname, String iban, float value, String usage) {
@@ -292,20 +332,20 @@ public class MainActivity extends AppCompatActivity {
                 "001" + System.lineSeparator() +
                 "1" + System.lineSeparator() +
                 "SCT" + System.lineSeparator() +
-                "" +  System.lineSeparator() + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
+                "" + System.lineSeparator() + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
                 firstname + " " + lastname + System.lineSeparator() + //Creditor
-                iban +  System.lineSeparator() +   //iban
-                "EUR" + value +  System.lineSeparator() +  //value
+                iban + System.lineSeparator() +   //iban
+                "EUR" + value + System.lineSeparator() +  //value
                 "" + System.lineSeparator() +   //reason
-                "" +  System.lineSeparator() +   //REFERENCE OR TEXT
-                usage +  System.lineSeparator();// +     //text
-                //"" + System.lineSeparator();   //message
+                "" + System.lineSeparator() +   //REFERENCE OR TEXT
+                usage + System.lineSeparator();// +     //text
+        //"" + System.lineSeparator();   //message
     }
 
-    public static String createBankDetailsString(){
-        return  ";" +
+    public static String createBankDetailsString() {
+        return ";" +
                 UserData.firstname + ";" +
-                UserData.lastname  + ";" +
+                UserData.lastname + ";" +
                 ";" +
                 UserData.iban + ";" +
                 ";";
@@ -328,16 +368,13 @@ public class MainActivity extends AppCompatActivity {
                 String string = URLDecoder.decode(result.getContents().toString());
                 intent.putExtra("qr_code", data);
                 String[] split = string.split(";");
-                if(!split[0].equals(""))
-                {
+                if (!split[0].equals("")) {
                     insertIntoDb(string.split(";"));
-                }
-                else
-                {
+                } else {
                     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;24.12.2016
                     //public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date) {
 
-                    Debt d = new Debt(-1,false,split[1],split[2],split[3],split[4],"",0,new java.util.Date().toString());
+                    Debt d = new Debt(-1, false, split[1], split[2], split[3], split[4], "", 0, new java.util.Date().toString());
                     Intent i = new Intent(getApplicationContext(), DetailActivity.class);
                     i.putExtra("object", d);
                     startActivity(i);
