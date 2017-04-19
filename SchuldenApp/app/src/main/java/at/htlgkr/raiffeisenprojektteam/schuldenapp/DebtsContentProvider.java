@@ -14,10 +14,8 @@ import android.text.TextUtils;
  */
 
 public class DebtsContentProvider extends ContentProvider {
-//   content//:at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/MyDepts
-
     public static final String PROVIDER_NAME ="at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider";
-    public static final String DEBT_URL = "content://" + PROVIDER_NAME + "/" + TblDebts.TABLE_NAME;
+    public static final String DEBT_URL = "content://" + PROVIDER_NAME + "/debts";  // + TblDebts.TABLE_NAME; --> Geht so nicht - uri matcher geht nicht
     public static final Uri DEBT_URI =Uri.parse(DEBT_URL);
 
     public class Debts{
@@ -36,18 +34,16 @@ public class DebtsContentProvider extends ContentProvider {
     private static final int DEBTS =1;
     private static final int DEBT_ID=2;
 
-    private static final UriMatcher uriMatcher=new UriMatcher(UriMatcher.NO_MATCH);
+    static final UriMatcher uriMatcher=new UriMatcher(UriMatcher.NO_MATCH);
 
     SQLiteDatabase db;
-
-    private SQLiteDatabase dbHelper;
 
     @Override
     public boolean onCreate() {
         uriMatcher.addURI(PROVIDER_NAME, "debts", DEBTS);
         uriMatcher.addURI(PROVIDER_NAME, "debts/#", DEBT_ID);
 
-        dbHelper=new DebtsDbHelper(getContext()).getReadableDatabase();
+        db =new DebtsDbHelper(getContext()).getWritableDatabase();
         return true;
     }
 
@@ -59,14 +55,14 @@ public class DebtsContentProvider extends ContentProvider {
         switch (uriMatcher.match(uri)){
 
             case DEBTS:
-                cursor=dbHelper.query(TblDebts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
+                cursor=db.query(TblDebts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
             case DEBT_ID:
                 if(selection != null) {
                     throw new UnsupportedOperationException("No Arguments plz");
                 }
-                selection = "_id = " + uri.getPathSegments().get(1);
-                cursor = dbHelper.query(TblDebts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
+                selection = TblDebts.ID + " = " + uri.getPathSegments().get(1);
+                cursor = db.query(TblDebts.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -88,7 +84,7 @@ public class DebtsContentProvider extends ContentProvider {
         switch (uriMatcher.match(uri))
         {
             case DEBTS:
-                dbHelper.insert(TblDebts.TABLE_NAME,null,contentValues);
+                db.insert(TblDebts.TABLE_NAME,null,contentValues);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI for EntryContentProvider: " + uri);
@@ -103,7 +99,7 @@ public class DebtsContentProvider extends ContentProvider {
         switch (uriMatcher.match(uri)){
 
             case DEBTS:
-                count = dbHelper.delete(TblDebts.TABLE_NAME, s, strings);
+                count = db.delete(TblDebts.TABLE_NAME, s, strings);
                 break;
             case DEBT_ID:
                 db.delete(TblDebts.TABLE_NAME, TblDebts.ID + " = " + uri.getPathSegments().get(1), null);
@@ -120,10 +116,10 @@ public class DebtsContentProvider extends ContentProvider {
         int count=0;
         switch (uriMatcher.match(uri)){
             case DEBTS:
-                count = dbHelper.update(TblDebts.TABLE_NAME, contentValues, s, strings);
+                count = db.update(TblDebts.TABLE_NAME, contentValues, s, strings);
                 break;
             case DEBT_ID:
-                count = dbHelper.update(TblDebts.TABLE_NAME, contentValues, TblDebts.ID + " = " + uri.getPathSegments().get(1) +
+                count = db.update(TblDebts.TABLE_NAME, contentValues, TblDebts.ID + " = " + uri.getPathSegments().get(1) +
                         (!TextUtils.isEmpty(s) ? " AND (" +s + ')' : ""), strings);
                 break;
             default:
