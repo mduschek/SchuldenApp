@@ -85,6 +85,7 @@ public class DebtsContentProvider extends ContentProvider {
         {
             case DEBTS:
                 db.insert(TblDebts.TABLE_NAME,null,contentValues);
+
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI for EntryContentProvider: " + uri);
