@@ -45,4 +45,29 @@ public class ExampleInstrumentedTest {
         Log.w("*=TESTEN=*",c.getInt(c.getColumnIndex(TblDebts.VALUE))+"");
         assertEquals(666,c.getInt(c.getColumnIndex(TblDebts.VALUE)));
     }
+
+    @Test
+    public void update_dataBase(){
+        Context appContext= InstrumentationRegistry.getContext();
+        TblDebts tbltoinsert=new TblDebts();
+        ContentValues cv=new ContentValues();
+        cv.put(tbltoinsert.FIRSTNAME,"swaggy");
+        cv.put(tbltoinsert.LASTNAME,"P.");
+        cv.put(tbltoinsert.USAGE,"hookers and drugs");
+        cv.put(tbltoinsert.IBAN,"666USA69LAL");
+        cv.put(tbltoinsert.STATUS,"swaggy");
+        cv.put(tbltoinsert.VALUE,"100000");
+        cv.put(tbltoinsert.DATE,"4-7-1776");
+        appContext.getContentResolver().insert(DebtsContentProvider.DEBT_URI,cv);
+
+        ContentValues cv1=new ContentValues();
+        cv1.put(tbltoinsert.STATUS,"notsoswaggyanymore");
+        appContext.getContentResolver().update(DebtsContentProvider.DEBT_URI,cv1,"status=swaggy",null);
+        SQLiteDatabase db = new DebtsDbHelper(appContext).getWritableDatabase();
+        Cursor c =  db.rawQuery("SELECT * FROM "+TblDebts.TABLE_NAME+" WHERE STATUS=notsoswaggyanymore ORDER BY "+TblDebts.ID+";",null);
+        c.moveToLast();
+
+        assertEquals("notsoswaggyanymore",TblDebts.STATUS);
+
+    }
 }
