@@ -62,7 +62,7 @@ public class ExampleInstrumentedTest {
 
         ContentValues cv1=new ContentValues();
         cv1.put(tbltoinsert.STATUS,"notpaid");
-        appContext.getContentResolver().update(DebtsContentProvider.DEBT_URI,cv1,"status=paid",null);
+        appContext.getContentResolver().update(DebtsContentProvider.DEBT_URI,cv1,"FIRSTNAME='swaggy' AND LASTNAME='P.'",null);
         SQLiteDatabase db = new DebtsDbHelper(appContext).getWritableDatabase();
         Cursor c =  db.rawQuery("SELECT * FROM "+TblDebts.TABLE_NAME+" WHERE STATUS=notpaid ORDER BY "+TblDebts.ID+";",null);
         c.moveToLast();
