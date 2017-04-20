@@ -44,7 +44,7 @@ public class DebtsArchiveAdapter extends ArrayAdapter<Debt>{
         debtDate.setText(debt.getDate());
         debtCreditorOrDebitor.setText(creditorDebitorString);
         debtName.setText(debt.getDeptorFirstName() + " " + debt.getDeptorLastName());
-        debtValue.setText(debt.getValue() + "");
+        debtValue.setText(debt.getValue() + " €");
         // Return the completed view to render on screen
         return convertView;
     }

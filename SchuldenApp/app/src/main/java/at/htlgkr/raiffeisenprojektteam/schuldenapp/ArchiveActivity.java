@@ -3,8 +3,10 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 import android.content.ContentProvider;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +33,8 @@ public class ArchiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_archive);
         listView = (ListView) findViewById(R.id.archiveListView);
+        registerForContextMenu(listView);
+
         debts = new ArrayList<Debt>();
 
         loadDbEntries();
@@ -44,26 +48,46 @@ public class ArchiveActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId()) {
             case R.id.context_menu_archive_list_delete:
                 //SQL für DELETE
+                deleteEntry(info.position);
         }
         return super.onContextItemSelected(item);
     }
 
+    public void deleteEntry(int itemPosition){
+        Debt d = adapter.getItem(itemPosition);
+        getContentResolver().delete(Uri.parse(DebtsContentProvider.DEBT_URL + "/" + d.getId()), null, null);
+        Log.i("deleteEntry", "Deleting item: " + d.getId());
+        loadDbEntries();
+    }
+
     private void loadDbEntries() {
+        Log.i("loadDbEntries", "loading Db Entries to from DB to list");
+        if(adapter!= null)
+        {
+            adapter.clear();
+            //adapter.notifyDataSetChanged();
+            Log.i("loadDbEntries", "ArrayAdapter Cleared!");
+        }
         //Cursor c = MainActivity.db.rawQuery("SELECT * FROM  "+TblDebts.TABLE_NAME+ ";", null);
         //Cursor c = MainActivity.db.rawQuery("SELECT * FROM "+TblDebts.TABLE_NAME+" WHERE "+TblDebts.STATUS+" = 'paid';",null);
         //Cursor c = getContentResolver().query(DebtsContentProvider.DEBT_URI, null, null, null, DebtsContentProvider.Debts.DATE);
         Cursor c = getContentResolver().query(
                 DebtsContentProvider.DEBT_URI,
                 null,
-                DebtsContentProvider.Debts.STATUS + " = ?",
-                new String[]{"paid"},
+                null,
+                null,
+                //DebtsContentProvider.Debts.STATUS + " = ?",
+                //new String[]{"paid"},
                 DebtsContentProvider.Debts.DATE + " DESC");
 
-        c.moveToFirst();
+        //c.moveToFirst();
+
+        Log.i("loadDbEntries", "Item Count: " + c.getCount());
 
         while (c.moveToNext()) {
             boolean iAmCreditor = false;
@@ -83,6 +107,8 @@ public class ArchiveActivity extends AppCompatActivity {
             debts.add(d);
         }
         c.close();
+
+
 
         adapter = new DebtsArchiveAdapter(this, debts);
         //adapter = new ArrayAdapter<Debt>(this, android.R.layout.simple_list_item_1, debts);
