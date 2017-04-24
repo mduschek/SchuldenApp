@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="at.htlgkr.raiffeisenprojektteam.bezahlapp">
+    <!--<uses-permission android:name="at.htlgkr.raiffeisenprojektteam.schuldenapp.WRITE_DATABASE"/>
+    <uses-permission android:name="at.htlgkr.raiffeisenprojektteam.schuldenapp.READ_DATABASE"/>-->
 
     <application
         android:allowBackup="true"
