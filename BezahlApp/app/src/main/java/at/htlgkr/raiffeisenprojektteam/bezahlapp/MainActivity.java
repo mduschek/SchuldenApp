@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String TAG = "*=MainActivity";
     Transaction transaction;
+    public static final int PICK_DEBT_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         final Uri debtsUri=Uri.parse("content://at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/debts");
         Cursor cursor=contentResolver.query(debtsUri,null,null,null,null);
         Log.d(TAG, "buttonLoadTransactionClicked: "+cursor.getCount());
-        startActivityForResult(new Intent(this,LoadDebtsActivity.class),1);
+        startActivityForResult(new Intent(this,LoadDebtsActivity.class),PICK_DEBT_REQUEST);
         updateViews();
     }
 
@@ -233,4 +234,6 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onSaveInstanceState(outState);
     }
+
+
 }
