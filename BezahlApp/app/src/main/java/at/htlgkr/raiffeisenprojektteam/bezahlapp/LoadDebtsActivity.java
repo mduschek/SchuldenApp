@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,15 +16,15 @@ import java.util.ArrayList;
  */
 
 public class LoadDebtsActivity extends Activity{
-    ListView lv;
-    ArrayList<Debt> debts = new ArrayList<>();
+    private ListView lv;
+    private ArrayList<Debt> debts = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.to_load_layout);
         ContentResolver contentResolver=getContentResolver();
         final Uri debtsUri=Uri.parse("content://at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/debts");
-        Cursor cursor=contentResolver.query(debtsUri,new String[]{"pers_i_owe_iban","pers_i_owe_date","person_i_owe_value"},null,null,null);
+        Cursor cursor=contentResolver.query(debtsUri,null,null,null,null);
         Toast.makeText(this,"!!!!!!!"+cursor.getColumnCount()+"!!!!!!!",Toast.LENGTH_LONG).show();
         lv = (ListView) findViewById(R.id.lstAllDebts);
 
@@ -40,7 +41,11 @@ public class LoadDebtsActivity extends Activity{
             boolean iAmCreditor = false;
 
             Debt d = new Debt(id,iAmCreditor,firstname,lastname,usage,iban,status,value,date);
+            debts.add(d);
         }
+        cursor.close();
+        ArrayAdapter<Debt> adapter = new ArrayAdapter<Debt>(this,android.R.layout.simple_list_item_1,debts);
+        lv.setAdapter(adapter);
     }
 
 }
