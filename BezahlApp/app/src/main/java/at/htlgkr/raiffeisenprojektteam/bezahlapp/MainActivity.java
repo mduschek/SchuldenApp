@@ -27,33 +27,34 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewCredit, textViewBic, textViewCreditor, textViewIban, textViewAmount, textViewReason, textViewReference, textViewText, textViewMessage;
     SharedPreferences sharedPreferences;
     private static final String TAG = "*=MainActivity";
-    Transaction transaction;
+    private Transaction transaction;
     public static final int PICK_DEBT_REQUEST = 1;
+    private Debt selectedDebt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        transaction = null;
         if (savedInstanceState != null) {
-            if(savedInstanceState.getString(TRANSACTION_KEY) != null){
-                stuzzaStringToTransactionConverter(savedInstanceState.getString(TRANSACTION_KEY));
+            if (savedInstanceState.getSerializable(TRANSACTION_KEY) != null) {
+                transaction = (Transaction) savedInstanceState.getSerializable(TRANSACTION_KEY);
+                Log.e(TAG, "onCreate: "+ transaction.getCreditor() );
             }
         }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        textViewCredit= (TextView) findViewById(R.id.textViewCredit);
-        textViewBic= (TextView) findViewById(R.id.textViewBic);
+        textViewCredit = (TextView) findViewById(R.id.textViewCredit);
+        textViewBic = (TextView) findViewById(R.id.textViewBic);
         textViewCreditor = (TextView) findViewById(R.id.textViewCreditor);
-        textViewIban= (TextView) findViewById(R.id.textViewIban);
+        textViewIban = (TextView) findViewById(R.id.textViewIban);
         textViewAmount = (TextView) findViewById(R.id.textViewAmount);
-        textViewReason= (TextView) findViewById(R.id.textViewReason);
-        textViewReference= (TextView) findViewById(R.id.textViewReference);
-        textViewText= (TextView) findViewById(R.id.textViewText);
-        textViewMessage= (TextView) findViewById(R.id.textViewMessage);
-        buttonTransaction= (Button) findViewById(R.id.buttonTransaction);
+        textViewReason = (TextView) findViewById(R.id.textViewReason);
+        textViewReference = (TextView) findViewById(R.id.textViewReference);
+        textViewText = (TextView) findViewById(R.id.textViewText);
+        textViewMessage = (TextView) findViewById(R.id.textViewMessage);
+        buttonTransaction = (Button) findViewById(R.id.buttonTransaction);
 
         //Intent intent = getIntent();
         //String action = intent.getAction();
@@ -65,12 +66,12 @@ public class MainActivity extends AppCompatActivity {
             updateViews();
             //Toast.makeText(this,"Data: " + data1,Toast.LENGTH_LONG).show();
         }
+        updateViews();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        updateViews();
     }
 
     @Override
@@ -85,14 +86,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch (id) {
             case R.id.option_menu_qr_scanner:
-                IntentIntegrator integrator=new IntentIntegrator(this);
+                IntentIntegrator integrator = new IntentIntegrator(this);
                 integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                 integrator.setPrompt("Scan");
                 integrator.setCameraId(0);
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(false);
                 integrator.initiateScan();
-            return true;
+                return true;
 
             case R.id.option_menu_preferences:
                 intent = new Intent(this, SettingsActivity.class);
@@ -103,34 +104,62 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    /*
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result=IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
-
-        if(result==null) {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-        else{
-            if (result.getContents()==null){
-                Toast.makeText(this,"Cancelled",Toast.LENGTH_LONG).show();
-            }else{
-                //Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
-                //stringToTransactionConverter(result.getContents());
-                stuzzaStringToTransactionConverter(result.getContents());
-                updateViews();
+            if (result == null) {
+                super.onActivityResult(requestCode, resultCode, data);
+            } else {
+                if (result.getContents() == null) {
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                } else {
+                    //Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
+                    //stringToTransactionConverter(result.getContents());
+                    stuzzaStringToTransactionConverter(result.getContents());
+                    updateViews();
+                }
             }
         }
-    }
+    */
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-    public void stuzzaStringToTransactionConverter(String transactionString){
-        try{
+            if (requestCode == 1 && data != null) {
+                if (resultCode == AppCompatActivity.RESULT_OK) {
+                    transaction = (Transaction) data.getSerializableExtra("result");
+                    updateViews();
+                }
+                if (resultCode == AppCompatActivity.RESULT_CANCELED) {
+                    Toast.makeText(this,"Kein Eintrag ausgewählt.",Toast.LENGTH_SHORT).show();
+                }
+            }else
+            {
+                IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+                if (result == null) {
+                    super.onActivityResult(requestCode, resultCode, data);
+                } else {
+                    if (result.getContents() == null) {
+                        Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this,"result.getContents()",Toast.LENGTH_LONG).show();
+                        //stringToTransactionConverter(result.getContents());
+                        stuzzaStringToTransactionConverter(result.getContents());
+                        updateViews();
+                    }
+                }
+            }
+        }
+
+    public void stuzzaStringToTransactionConverter(String transactionString) {
+        try {
             Log.d("Stuzza", transactionString.trim());
             final String splitArr1[] = transactionString.trim().split(System.lineSeparator());
-            String splitArr[] = new String [12];
+            String splitArr[] = new String[12];
 
-            for (int i = 0; i < splitArr1.length; i++){
-                splitArr[i] =  splitArr1[i];
+            for (int i = 0; i < splitArr1.length; i++) {
+                splitArr[i] = splitArr1[i];
             }
 
             transaction = new Transaction(
@@ -143,13 +172,13 @@ public class MainActivity extends AppCompatActivity {
                     splitArr[10],
                     splitArr[11]);
 
-        } catch (Exception e){
-            Toast.makeText(this,"Fehler stuzzaStringToTransactionConverter", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Fehler stuzzaStringToTransactionConverter", Toast.LENGTH_LONG).show();
             Log.e("Error", e.toString());
         }
     }
 
-    public String transactionToStuzzaStringConverter(){
+    public String transactionToStuzzaStringConverter() {
         return "BCD1\n" +
                 "001\n" +
                 "1\n" +
@@ -164,10 +193,10 @@ public class MainActivity extends AppCompatActivity {
                 transaction.getMessage();
     }
 
-    public void updateViews(){
+    public void updateViews() {
         textViewCredit.setText(sharedPreferences.getString("pref_userdata_credit", null));
 
-        if (transaction != null){
+        if (transaction != null) {
 
             textViewBic.setText(transaction.getBic());
             textViewCreditor.setText(transaction.getCreditor());
@@ -177,9 +206,7 @@ public class MainActivity extends AppCompatActivity {
             textViewReference.setText(transaction.getReference());
             textViewText.setText(transaction.getText());
             textViewMessage.setText(transaction.getMessage());
-        }
-
-        else{
+        } else {
             textViewBic.setText("");
             textViewCreditor.setText("");
             textViewIban.setText("");
@@ -191,49 +218,48 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void buttonLoadTransactionClicked(View view){
+    public void buttonLoadTransactionClicked(View view) {
 //        Intent intent = new Intent();
-        ContentResolver contentResolver=getContentResolver();
-        final Uri debtsUri=Uri.parse("content://at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/debts");
-        Cursor cursor=contentResolver.query(debtsUri,null,null,null,null);
-        Log.d(TAG, "buttonLoadTransactionClicked: "+cursor.getCount());
-        startActivityForResult(new Intent(this,LoadDebtsActivity.class),PICK_DEBT_REQUEST);
+        ContentResolver contentResolver = getContentResolver();
+        final Uri debtsUri = Uri.parse("content://at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/debts");
+        Cursor cursor = contentResolver.query(debtsUri, null, null, null, null);
+        Log.d(TAG, "buttonLoadTransactionClicked: " + cursor.getCount());
+        startActivityForResult(new Intent(this, LoadDebtsActivity.class), PICK_DEBT_REQUEST);
         updateViews();
     }
 
-    public void buttonDeleteTransactionClicked(View view){
+    public void buttonDeleteTransactionClicked(View view) {
         transaction = null;
         updateViews();
     }
 
-    public void buttonTransactionClicked(View view){
-        if (transaction == null || transaction.getAmount() <= 0){
-            Toast.makeText(this,"Ungültige Transaktion",Toast.LENGTH_LONG).show();
+    public void buttonTransactionClicked(View view) {
+        if (transaction == null || transaction.getAmount() <= 0) {
+            Toast.makeText(this, "Ungültige Transaktion", Toast.LENGTH_LONG).show();
             return;
         }
 
         double newVal = (Double.parseDouble(sharedPreferences.getString("pref_userdata_credit", null)) - transaction.getAmount());
 
-        if(newVal < 0){
-            Toast.makeText(this,"Zu wenig Guthaben vorhanden!",Toast.LENGTH_LONG).show();
+        if (newVal < 0) {
+            Toast.makeText(this, "Zu wenig Guthaben vorhanden!", Toast.LENGTH_LONG).show();
             return;
         }
 
-        sharedPreferences.edit().putString("pref_userdata_credit", newVal+"").apply();
+        sharedPreferences.edit().putString("pref_userdata_credit", newVal + "").apply();
         transaction = null;
-        Toast.makeText(this,"Transaktion erfolgreich!",Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Transaktion erfolgreich!", Toast.LENGTH_LONG).show();
         updateViews();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if (transaction != null){
-            outState.putString(TRANSACTION_KEY, transactionToStuzzaStringConverter());
+        if (transaction != null) {
+            outState.putSerializable(TRANSACTION_KEY,transaction);
         } else {
-            outState.putString(TRANSACTION_KEY, null);
+            //outState.putString(TRANSACTION_KEY, null);
         }
         super.onSaveInstanceState(outState);
     }
-
 
 }

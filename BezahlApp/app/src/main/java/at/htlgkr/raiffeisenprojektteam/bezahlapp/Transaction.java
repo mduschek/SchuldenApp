@@ -1,10 +1,12 @@
 package at.htlgkr.raiffeisenprojektteam.bezahlapp;
 
+import java.io.Serializable;
+
 /**
  * Created by michael on 09.02.17.
  */
 
-public class Transaction {
+public class Transaction implements Serializable{
 
     private String bic;
     private String creditor;
@@ -90,6 +92,10 @@ public class Transaction {
         this.message = message;
     }
 
+    @Override
+    public String toString() {
+        return this.creditor+" " + this.amount +"€";
+    }
     /*
     private String iban;
     private String partnerFirstname;
