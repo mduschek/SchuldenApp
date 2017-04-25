@@ -76,14 +76,7 @@ public class ArchiveActivity extends AppCompatActivity {
         //Cursor c = MainActivity.db.rawQuery("SELECT * FROM  "+TblDebts.TABLE_NAME+ ";", null);
         //Cursor c = MainActivity.db.rawQuery("SELECT * FROM "+TblDebts.TABLE_NAME+" WHERE "+TblDebts.STATUS+" = 'paid';",null);
         //Cursor c = getContentResolver().query(DebtsContentProvider.DEBT_URI, null, null, null, DebtsContentProvider.Debts.DATE);
-        Cursor c = getContentResolver().query(
-                DebtsContentProvider.DEBT_URI,
-                null,
-                null,
-                null,
-                //DebtsContentProvider.Debts.STATUS + " = ?",
-                //new String[]{"paid"},
-                DebtsContentProvider.Debts.DATE + " DESC");
+        Cursor c = getContentResolver().query(DebtsContentProvider.DEBT_URI,null," status = 'paid'",null,TblDebts.DATE+ " DESC");
 
         //c.moveToFirst();
 
