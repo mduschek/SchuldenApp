@@ -46,6 +46,7 @@ public class LoadDebtsActivity extends AppCompatActivity{
 
             //Debt d = new Debt(id,iAmCreditor,firstname,lastname,usage,iban,status,value,date);
             Transaction transaction = new Transaction("",firstname+ " "+lastname,iban,(float)value,"","",usage,usage);
+            transaction.setID(id);
             transactions.add(transaction);
         }
         cursor.close();

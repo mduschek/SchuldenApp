@@ -1,6 +1,7 @@
 package at.htlgkr.raiffeisenprojektteam.bezahlapp;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Transaction transaction;
     public static final int PICK_DEBT_REQUEST = 1;
     private Debt selectedDebt;
+    private final Uri debtsUri = Uri.parse("content://at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/debts");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,7 +223,6 @@ public class MainActivity extends AppCompatActivity {
     public void buttonLoadTransactionClicked(View view) {
 //        Intent intent = new Intent();
         ContentResolver contentResolver = getContentResolver();
-        final Uri debtsUri = Uri.parse("content://at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/debts");
         Cursor cursor = contentResolver.query(debtsUri, null, null, null, null);
         Log.d(TAG, "buttonLoadTransactionClicked: " + cursor.getCount());
         startActivityForResult(new Intent(this, LoadDebtsActivity.class), PICK_DEBT_REQUEST);
@@ -243,10 +244,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (newVal < 0) {
             Toast.makeText(this, "Zu wenig Guthaben vorhanden!", Toast.LENGTH_LONG).show();
+            //Geld wird nicht wieder gutgeschrieben da es nur eine Simulation ist
             return;
         }
 
         sharedPreferences.edit().putString("pref_userdata_credit", newVal + "").apply();
+        ContentValues cv = new ContentValues();
+        cv.put(Debt.STATUS,"paid");
+        String selection = "_id = "+transaction.getID() +" OR ("+Debt.USAGE+" = '"+transaction.getMessage()+"' AND "+Debt.I_AM_CREDITOR+" = 0 AND "+Debt.FIRSTNAME +" = '" +transaction.getCreditor().split(" ")[0] + "' AND "+Debt.LASTNAME+" = '"+transaction.getCreditor().split(" ")[1]+"')";
+        int rows = getContentResolver().update(debtsUri,cv,selection, null);
+        if(rows >1) Log.w(TAG, "buttonTransactionClicked: too many rows updated");
         transaction = null;
         Toast.makeText(this, "Transaktion erfolgreich!", Toast.LENGTH_LONG).show();
         updateViews();

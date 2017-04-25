@@ -16,6 +16,15 @@ public class Transaction implements Serializable{
     private String reference;
     private String text;
     private String message;
+    private int ID;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public Transaction(String bic, String creditor, String iban, float amount, String reason, String reference, String text, String message) {
         this.bic = bic;
@@ -26,6 +35,7 @@ public class Transaction implements Serializable{
         this.reference = reference;
         this.text = text;
         this.message = message;
+        this.ID = 0;
     }
 
     public String getBic() {
