@@ -119,11 +119,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //setButtons();
-//        buttonNfc.setVisibility(View.GONE);
-////        buttonPayDebt.setVisibility(View.GONE);
-//        buttonGenerateQrCode.setVisibility(View.GONE);
-//        buttonOther.setVisibility(View.GONE);
+
         setInputs();
     }
 
@@ -413,7 +409,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         if (isArchiveEntry) {   //Wenn aus Archive aufgerufen alle Buttons ausblenden
-            buttonBluetooth.setVisibility(View.GONE);
+            //buttonBluetooth.setVisibility(View.GONE);
             buttonNfc.setVisibility(View.GONE);
             buttonPayDebt.setVisibility(View.GONE);
             buttonGenerateQrCode.setVisibility(View.GONE);

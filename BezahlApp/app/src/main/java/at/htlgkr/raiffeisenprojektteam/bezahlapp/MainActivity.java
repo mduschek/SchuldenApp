@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             String data1 = getIntent().getExtras().getString("BezahlApp");
-            Log.d("debug", data1);
+            //Log.d("debug", data1);
             stuzzaStringToTransactionConverter(data1);
             updateViews();
             //Toast.makeText(this,"Data: " + data1,Toast.LENGTH_LONG).show();
