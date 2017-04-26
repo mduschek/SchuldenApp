@@ -114,10 +114,12 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
             cv.put(TblDebts.I_AM_CREDITOR,true);
             MainActivity.db.insert(TblDebts.TABLE_NAME, null, cv);
         } else {
+            Log.w(TAG, status+ " Status" +
+                    DBData.lastname+ " "+ DBData.iban+ " " + DBData.value+ " " +date);
             ContentValues cv = new ContentValues();
             cv.put(TblDebts.DATE, date);
             cv.put(TblDebts.FIRSTNAME, DBData.firstname);
-            cv.put(TblDebts.LASTNAME, DBData.iban);
+            cv.put(TblDebts.IBAN, DBData.iban);
             cv.put(TblDebts.USAGE, DBData.usuage);
             cv.put(TblDebts.LASTNAME, DBData.lastname);
             cv.put(TblDebts.VALUE, DBData.value);
