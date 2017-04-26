@@ -223,6 +223,14 @@
                 android:onClick="onButtonPressed"
                 android:visibility="visible"
                 style="@style/Widget.AppCompat.Button.Colored" />
+            <Button
+                android:text="Bestätigen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonConfirmPayment"
+                android:onClick="onButtonPressed"
+                android:visibility="visible"
+                style="@style/Widget.AppCompat.Button.Colored" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

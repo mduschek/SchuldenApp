@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
     public static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     private TextView textViewDate, textViewCreateLoanDescription, textViewStatus, textViewIban;
     private RadioButton radioButtonDebtor, radioButtonCreditor;
-    private Button buttonSelectDate, buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt;
+    private Button buttonSelectDate, buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt, buttonConfirmPayment;
     private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
     private LinearLayout linearLayoutPartnerData;
     private LinearLayout linearLayoutName;
@@ -79,6 +79,7 @@ public class DetailActivity extends AppCompatActivity {
         buttonGenerateQrCode = (Button) findViewById(R.id.buttonGenerateQrCode);
         buttonOther = (Button) findViewById(R.id.buttonOther);      //Activity Chooser mit anderen Apps
         buttonPayDebt = (Button) findViewById(R.id.buttonPayDebt);  //Button setzt den Status auf Bezahlt
+        buttonConfirmPayment = (Button) findViewById(R.id.buttonConfirmPayment);
 
         radioButtonDebtor = (RadioButton) findViewById(R.id.radioButtonDebtor);
         radioButtonCreditor = (RadioButton) findViewById(R.id.radioButtonCreditor);
@@ -335,8 +336,13 @@ public class DetailActivity extends AppCompatActivity {
                 if (debt.isiAmCreditor()) {
                     radioButtonCreditor.setChecked(true);
                     buttonPayDebt.setVisibility(View.GONE);
+
+                    buttonConfirmPayment.setVisibility(View.VISIBLE);
+
                 } else {
                     radioButtonDebtor.setChecked(true);
+                    buttonConfirmPayment.setVisibility(View.GONE);
+                    buttonPayDebt.setVisibility(View.VISIBLE);
                 }
 
                 edVal.setText(debt.getValue() + "");
@@ -391,6 +397,7 @@ public class DetailActivity extends AppCompatActivity {
             buttonGenerateQrCode.setVisibility(View.VISIBLE);
             buttonOther.setVisibility(View.VISIBLE);
             buttonPayDebt.setVisibility(View.GONE);
+
         }
         if (nfcAdapter == null) {
             buttonNfc.setVisibility(View.GONE);
