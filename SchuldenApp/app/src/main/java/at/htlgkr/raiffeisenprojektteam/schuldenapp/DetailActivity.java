@@ -339,14 +339,15 @@ public class DetailActivity extends AppCompatActivity {
             {
                 if (debt.isiAmCreditor()) {
                     radioButtonCreditor.setChecked(true);
-                    buttonPayDebt.setVisibility(View.GONE);
 
+                    buttonPayDebt.setVisibility(View.GONE);
                     buttonConfirmPayment.setVisibility(View.VISIBLE);
 
                 } else {
                     radioButtonDebtor.setChecked(true);
-                    buttonConfirmPayment.setVisibility(View.GONE);
+
                     buttonPayDebt.setVisibility(View.VISIBLE);
+                    buttonConfirmPayment.setVisibility(View.GONE);
                 }
 
                 edVal.setText(debt.getValue() + "");
@@ -381,7 +382,7 @@ public class DetailActivity extends AppCompatActivity {
                     buttonNfc.setVisibility(View.VISIBLE);
                     buttonGenerateQrCode.setVisibility(View.VISIBLE);
                     buttonOther.setVisibility(View.VISIBLE);
-                    buttonPayDebt.setVisibility(View.VISIBLE);
+                    //buttonPayDebt.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -401,6 +402,7 @@ public class DetailActivity extends AppCompatActivity {
             buttonGenerateQrCode.setVisibility(View.VISIBLE);
             buttonOther.setVisibility(View.VISIBLE);
             buttonPayDebt.setVisibility(View.GONE);
+            buttonConfirmPayment.setVisibility(View.GONE);  //neu
 
         }
         if (nfcAdapter == null) {
@@ -423,6 +425,7 @@ public class DetailActivity extends AppCompatActivity {
             //buttonBluetooth.setVisibility(View.GONE);
             buttonNfc.setVisibility(View.GONE);
             buttonPayDebt.setVisibility(View.GONE);
+            buttonConfirmPayment.setVisibility(View.GONE);
             buttonGenerateQrCode.setVisibility(View.GONE);
             buttonOther.setVisibility(View.GONE);
         }
