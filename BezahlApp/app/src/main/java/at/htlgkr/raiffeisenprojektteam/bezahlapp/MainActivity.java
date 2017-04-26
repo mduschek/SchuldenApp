@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         textViewCredit = (TextView) findViewById(R.id.textViewCredit);
