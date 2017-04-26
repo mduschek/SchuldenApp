@@ -120,10 +120,10 @@ public class DetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //setButtons();
-        buttonNfc.setVisibility(View.GONE);
-        buttonPayDebt.setVisibility(View.GONE);
-        buttonGenerateQrCode.setVisibility(View.GONE);
-        buttonOther.setVisibility(View.GONE);
+//        buttonNfc.setVisibility(View.GONE);
+////        buttonPayDebt.setVisibility(View.GONE);
+//        buttonGenerateQrCode.setVisibility(View.GONE);
+//        buttonOther.setVisibility(View.GONE);
         setInputs();
     }
 
@@ -336,6 +336,7 @@ public class DetailActivity extends AppCompatActivity {
             {
                 if (debt.isiAmCreditor()) {
                     radioButtonCreditor.setChecked(true);
+                    buttonPayDebt.setVisibility(View.GONE);
                 } else {
                     radioButtonDebtor.setChecked(true);
                 }
@@ -411,6 +412,10 @@ public class DetailActivity extends AppCompatActivity {
 
         if (isArchiveEntry) {   //Wenn aus Archive aufgerufen alle Buttons ausblenden
             buttonBluetooth.setVisibility(View.GONE);
+            buttonNfc.setVisibility(View.GONE);
+            buttonPayDebt.setVisibility(View.GONE);
+            buttonGenerateQrCode.setVisibility(View.GONE);
+            buttonOther.setVisibility(View.GONE);
         }
     }
 
