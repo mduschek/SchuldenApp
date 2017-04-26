@@ -120,6 +120,10 @@ public class DetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //setButtons();
+        buttonNfc.setVisibility(View.GONE);
+        buttonPayDebt.setVisibility(View.GONE);
+        buttonGenerateQrCode.setVisibility(View.GONE);
+        buttonOther.setVisibility(View.GONE);
         setInputs();
     }
 
