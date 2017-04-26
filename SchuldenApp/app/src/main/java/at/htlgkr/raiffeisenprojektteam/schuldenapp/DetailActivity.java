@@ -214,6 +214,10 @@ public class DetailActivity extends AppCompatActivity {
                 dateDialog.show();
                 textViewDate.setText(sdf.format(date).toString());
                 break;
+
+            case R.id.buttonConfirmPayment:
+
+                break;
         }
     }
 
