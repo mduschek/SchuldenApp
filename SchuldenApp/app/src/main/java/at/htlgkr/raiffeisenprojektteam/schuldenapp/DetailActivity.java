@@ -194,7 +194,9 @@ public class DetailActivity extends AppCompatActivity {
                 break;
             case R.id.buttonPayDebt:
                 Intent baintent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
-                baintent.putExtra("BezahlApp", transactionToStringConverter());
+                //baintent.putExtra("BezahlApp", transactionToStringConverter());
+                initTexts();
+                baintent.putExtra("BezahlApp", MainActivity.createStuzzaString(firstname, lastname, iban, Float.parseFloat(value), usage));
                 startActivity(baintent);
                 break;
             case R.id.buttonSelectDate:

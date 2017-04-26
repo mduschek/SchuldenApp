@@ -156,29 +156,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void intentStringToTransactionConverter (String intentString){
-
-        final String splitArr1[] = intentString.split(";");
-        String splitArr[] = new String[12];
-
-        for (int i = 0; i < splitArr1.length; i++) {
-            splitArr[i] = splitArr1[i];
-        }
-
-        try {
-            transaction = new Transaction(
-                    splitArr[4],
-                    splitArr[5],
-                    splitArr[6],
-                    Float.parseFloat(splitArr[7].substring(3)),
-                    splitArr[11]);
-        }
-        catch (Exception e) {
-            Toast.makeText(this, "Fehler intentStringToTransactionConverter", Toast.LENGTH_LONG).show();
-            Log.e("Error", e.toString());
-        }
-    }
-
     public void stuzzaStringToTransactionConverter(String transactionString) {
         try {
             Log.d("Stuzza", transactionString.trim());
@@ -205,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Deprecated
     public String transactionToStuzzaStringConverter() {
         return "BCD1\n" +
                 "001\n" +
