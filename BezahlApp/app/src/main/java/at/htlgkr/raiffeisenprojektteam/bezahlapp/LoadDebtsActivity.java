@@ -28,7 +28,7 @@ public class LoadDebtsActivity extends AppCompatActivity{
         setContentView(R.layout.to_load_layout);
         ContentResolver contentResolver=getContentResolver();
         final Uri debtsUri=Uri.parse("content://at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/debts");
-        Cursor cursor=contentResolver.query(debtsUri,null,Debt.STATUS +" = 'not_paid' OR status = 'open' AND "+Debt.I_AM_CREDITOR +" = "+0,null,Debt.ID);
+        Cursor cursor=contentResolver.query(debtsUri,null,"("+Debt.STATUS +" = 'not_paid' OR status = 'open') AND "+Debt.I_AM_CREDITOR +" = "+0,null,Debt.ID);
         Toast.makeText(this,"Geladen",Toast.LENGTH_LONG).show();
         lv = (ListView) findViewById(R.id.lstAllDebts);
 
