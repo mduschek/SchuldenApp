@@ -217,6 +217,7 @@ public class DetailActivity extends AppCompatActivity {
 
             case R.id.buttonConfirmPayment:
                     MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME+ " SET status = 'paid' WHERE _id = "+debt.getId()+";");
+                finish();
                 break;
         }
     }
