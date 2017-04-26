@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             if (savedInstanceState.getSerializable(TRANSACTION_KEY) != null) {
                 transaction = (Transaction) savedInstanceState.getSerializable(TRANSACTION_KEY);
-                Log.e(TAG, "onCreate: "+ transaction.getCreditor() );
+                Log.e(TAG, "onCreate: " + transaction.getCreditor());
             }
         }
 
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             String data1 = getIntent().getExtras().getString("BezahlApp");
+            Log.d("debug", data1);
             stuzzaStringToTransactionConverter(data1);
             updateViews();
             //Toast.makeText(this,"Data: " + data1,Toast.LENGTH_LONG).show();
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     /*
         @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -126,34 +128,56 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     */
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-            if (requestCode == 1 && data != null) {
-                if (resultCode == AppCompatActivity.RESULT_OK) {
-                    transaction = (Transaction) data.getSerializableExtra("result");
-                    updateViews();
-                }
-                if (resultCode == AppCompatActivity.RESULT_CANCELED) {
-                    Toast.makeText(this,"Kein Eintrag ausgewählt.",Toast.LENGTH_SHORT).show();
-                }
-            }else
-            {
-                IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-                if (result == null) {
-                    super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && data != null) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                transaction = (Transaction) data.getSerializableExtra("result");
+                updateViews();
+            }
+            if (resultCode == AppCompatActivity.RESULT_CANCELED) {
+                Toast.makeText(this, "Kein Eintrag ausgewählt.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (result == null) {
+                super.onActivityResult(requestCode, resultCode, data);
+            } else {
+                if (result.getContents() == null) {
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
                 } else {
-                    if (result.getContents() == null) {
-                        Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(this,"result.getContents()",Toast.LENGTH_LONG).show();
-                        //stringToTransactionConverter(result.getContents());
-                        stuzzaStringToTransactionConverter(result.getContents());
-                        updateViews();
-                    }
+                    Toast.makeText(this, "result.getContents()", Toast.LENGTH_LONG).show();
+                    //stringToTransactionConverter(result.getContents());
+                    stuzzaStringToTransactionConverter(result.getContents());
+                    updateViews();
                 }
             }
         }
+    }
+
+    public void intentStringToTransactionConverter (String intentString){
+
+        final String splitArr1[] = intentString.split(";");
+        String splitArr[] = new String[12];
+
+        for (int i = 0; i < splitArr1.length; i++) {
+            splitArr[i] = splitArr1[i];
+        }
+
+        try {
+            transaction = new Transaction(
+                    splitArr[4],
+                    splitArr[5],
+                    splitArr[6],
+                    Float.parseFloat(splitArr[7].substring(3)),
+                    splitArr[11]);
+        }
+        catch (Exception e) {
+            Toast.makeText(this, "Fehler intentStringToTransactionConverter", Toast.LENGTH_LONG).show();
+            Log.e("Error", e.toString());
+        }
+    }
 
     public void stuzzaStringToTransactionConverter(String transactionString) {
         try {
@@ -225,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent();
         ContentResolver contentResolver = getContentResolver();
         Cursor cursor = contentResolver.query(debtsUri, null, null, null, null);
-        Log.d(TAG, "buttonLoadTransactionClicked: " + cursor.getCount());
+        //Log.d(TAG, "buttonLoadTransactionClicked: " + cursor.getCount());
         startActivityForResult(new Intent(this, LoadDebtsActivity.class), PICK_DEBT_REQUEST);
         updateViews();
     }
@@ -251,10 +275,10 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences.edit().putString("pref_userdata_credit", newVal + "").apply();
         ContentValues cv = new ContentValues();
-        cv.put(Debt.STATUS,"paid");
-        String selection = "_id = "+transaction.getID() +" OR ("+Debt.USAGE+" = '"+transaction.getMessage()+"' AND "+Debt.I_AM_CREDITOR+" = 0 AND "+Debt.FIRSTNAME +" = '" +transaction.getCreditor().split(" ")[0] + "' AND "+Debt.LASTNAME+" = '"+transaction.getCreditor().split(" ")[1]+"')";
-        int rows = getContentResolver().update(debtsUri,cv,selection, null);
-        if(rows >1) Log.w(TAG, "buttonTransactionClicked: too many rows updated");
+        cv.put(Debt.STATUS, "paid");
+        String selection = "_id = " + transaction.getID() + " OR (" + Debt.USAGE + " = '" + transaction.getMessage() + "' AND " + Debt.I_AM_CREDITOR + " = 0 AND " + Debt.FIRSTNAME + " = '" + transaction.getCreditor().split(" ")[0] + "' AND " + Debt.LASTNAME + " = '" + transaction.getCreditor().split(" ")[1] + "')";
+        int rows = getContentResolver().update(debtsUri, cv, selection, null);
+        if (rows > 1) Log.w(TAG, "buttonTransactionClicked: too many rows updated");
         transaction = null;
         Toast.makeText(this, "Transaktion erfolgreich!", Toast.LENGTH_LONG).show();
         updateViews();
@@ -263,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (transaction != null) {
-            outState.putSerializable(TRANSACTION_KEY,transaction);
+            outState.putSerializable(TRANSACTION_KEY, transaction);
         } else {
             //outState.putString(TRANSACTION_KEY, null);
         }

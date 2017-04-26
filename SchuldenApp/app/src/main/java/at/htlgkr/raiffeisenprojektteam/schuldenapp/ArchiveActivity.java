@@ -112,6 +112,7 @@ public class ArchiveActivity extends AppCompatActivity {
                 clickedIndex = i;
                 Intent intent = new Intent(ArchiveActivity.this, DetailActivity.class);
                 intent.putExtra("object", adapter.getItem(i));
+                intent.putExtra ("isArchiveEntry", true);
                 startActivity(intent);
             }
         });

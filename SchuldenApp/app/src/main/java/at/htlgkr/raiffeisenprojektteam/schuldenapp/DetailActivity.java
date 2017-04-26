@@ -56,6 +56,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public Debt debt;
     public boolean iAmCreditor = true;
+    public boolean isArchiveEntry = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,6 +111,8 @@ public class DetailActivity extends AppCompatActivity {
             } else {
                 iAmCreditor = false;
             }
+
+            isArchiveEntry = getIntent().getBooleanExtra("isArchiveEntry", false);
         }
     }
 
@@ -400,6 +403,10 @@ public class DetailActivity extends AppCompatActivity {
             //linearLayoutName.setVisibility(View.VISIBLE);
             textViewIban.setVisibility(View.VISIBLE);
             edIBAN.setVisibility(View.VISIBLE);
+        }
+
+        if (isArchiveEntry) {   //Wenn aus Archive aufgerufen alle Buttons ausblenden
+            buttonBluetooth.setVisibility(View.GONE);
         }
     }
 
