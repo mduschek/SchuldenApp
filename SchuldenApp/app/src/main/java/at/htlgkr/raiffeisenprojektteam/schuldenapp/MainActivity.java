@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         UserData.firstname = sharedPreferences.getString("pref_userdata_firstname", null);
         UserData.lastname = sharedPreferences.getString("pref_userdata_lastname", null);
         UserData.iban = sharedPreferences.getString("pref_userdata_iban", null);
-        UserData.email = sharedPreferences.getString("pref_userdata_email", null);
+        UserData.bic = sharedPreferences.getString("pref_userdata_bic","");
 
         Log.d(TAG, UserData.getString());
 
@@ -372,9 +372,9 @@ public class MainActivity extends AppCompatActivity {
                     insertIntoDb(string.split(";"));
                 } else {
                     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;24.12.2016
-                    //public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date) {
+                    //public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String bic String status, double value, String date) {
 
-                    Debt d = new Debt(-1, false, split[1], split[2], split[3], split[4], "", 0, new java.util.Date().toString());
+                    Debt d = new Debt(-1, false, split[1], split[2], split[3], split[4],split[5], "", 0, new java.util.Date().toString());
                     Intent i = new Intent(getApplicationContext(), DetailActivity.class);
                     i.putExtra("object", d);
                     startActivity(i);
