@@ -81,6 +81,19 @@
                 android:ems="10"
                 android:inputType="textPersonName" />
 
+            <TextView
+                android:id="@+id/tvBic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bicOptional" />
+
+            <EditText
+                android:id="@+id/editTextBic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
             <LinearLayout
                 android:id="@+id/linearLayoutName"
                 android:layout_width="match_parent"

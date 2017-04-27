@@ -3,7 +3,6 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -34,10 +33,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String IS_DEBTOR_KEY = "isDebtorKey";
     public static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    private TextView textViewDate, textViewCreateLoanDescription, textViewStatus, textViewIban;
+    private TextView textViewDate, textViewCreateLoanDescription, textViewStatus, textViewIban, textViewBic;
     private RadioButton radioButtonDebtor, radioButtonCreditor;
     private Button buttonSelectDate, buttonManualInput, buttonBluetooth, buttonNfc, buttonGenerateQrCode, buttonOther, buttonPayDebt, buttonConfirmPayment;
-    private EditText edVal, edUsuage, edIBAN, edFirstname, edLastname;
+    private EditText edVal, edUsuage, edIBAN, edBIC, edFirstname, edLastname;
     private LinearLayout linearLayoutPartnerData;
     private LinearLayout linearLayoutName;
     private RadioGroup radioGroupCreditorDebtor;
@@ -49,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
     //private CalendarView calendarView;
 
 
-    private String firstname = "", lastname = "", usage = "", value = "", iban = "", partnerIsCreditor = "", bic = "";
+    private String firstname = "", lastname = "", usage = "", value = "", iban = "", bic="", partnerIsCreditor = "";
     private Date date = new Date();
 
     //public int dialogWich = -1;
@@ -89,6 +88,7 @@ public class DetailActivity extends AppCompatActivity {
         edVal = (EditText) findViewById(R.id.editTextValue);
         edUsuage = (EditText) findViewById(R.id.editTextUsuage);
         edIBAN = (EditText) findViewById(R.id.editTextIban);
+        edBIC = (EditText) findViewById(R.id.editTextBic);
         edFirstname = (EditText) findViewById(R.id.editTextFirstName);
         edLastname = (EditText) findViewById(R.id.editTextLastName);
 
@@ -432,6 +432,7 @@ public class DetailActivity extends AppCompatActivity {
         DBData.firstname = edFirstname.getText().toString();
         DBData.lastname = edLastname.getText().toString();
         DBData.usuage = edUsuage.getText().toString();
+        //DBData.bic = edBIC.getText().toString();    WENN FERTIG AUSKOMMENTIEREN
         DBData.iban = edIBAN.getText().toString();
         DBData.value = edVal.getText().toString();
 
@@ -439,6 +440,7 @@ public class DetailActivity extends AppCompatActivity {
 
         firstname = UserData.firstname;
         lastname = UserData.lastname;
+        //bic = UserData.bic; WENN FERTIG AUSKOMMENTIEREN
         iban = UserData.iban;
         value = DBData.value;
         usage = DBData.usuage;

@@ -13,7 +13,7 @@ public class DebtsDbHelper extends SQLiteOpenHelper
 {
     private java.lang.String TAG = "*=";
     public static final String DATABASE_NAME="Debts.db";
-    public static final int DATABASE_VERSION=3;
+    public static final int DATABASE_VERSION=4;
 
     public DebtsDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

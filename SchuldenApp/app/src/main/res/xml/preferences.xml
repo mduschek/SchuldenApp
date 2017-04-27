@@ -17,7 +17,12 @@
             android:defaultValue="AT611904300234573201"
             android:key="pref_userdata_iban"
             android:summary="Geben Sie Ihren IBAN ein"
-            android:title="Iban" />
+            android:title="IBAN" />
+        <EditTextPreference
+            android:defaultValue="ABCDATWW"
+            android:key="pref_userdata_bic"
+            android:summary="Geben Sie Ihren BIC ein"
+            android:title="BIC" />
         <!--<EditTextPreference
             android:defaultValue="duschek54321@gmail.com"
             android:key="pref_userdata_email"

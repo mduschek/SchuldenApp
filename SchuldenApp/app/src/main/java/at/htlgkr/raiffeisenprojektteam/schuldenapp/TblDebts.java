@@ -12,6 +12,7 @@ public class TblDebts {
     public static final String LASTNAME ="lastname";
     public static final String USAGE ="usage";
     public static final String IBAN="iban";
+    public static final String BIC="bic";
     public static final String STATUS="status";
     public static final String VALUE ="value";
     public static final String DATE="date";
@@ -23,6 +24,7 @@ public class TblDebts {
             LASTNAME +" TEXT NOT NULL," +
             USAGE +" TEXT," +
             IBAN+" TEXT NOT NULL,"+
+            BIC+" TEXT,"+
             STATUS+" TEXT NOT NULL,"+
             VALUE +" DOUBLE NOT NULL," +
             DATE+" DATE NOT NULL);";

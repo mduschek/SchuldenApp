@@ -25,6 +25,7 @@ public class DebtsContentProvider extends ContentProvider {
         public static final String LASTNAME = TblDebts.LASTNAME;
         public static final String USAGE = TblDebts.USAGE;
         public static final String IBAN = TblDebts.IBAN;
+        public static final String BIC = TblDebts.BIC;
         public static final String STATUS = TblDebts.STATUS;
         public static final String VALUE = TblDebts.VALUE;
         public static final String DATE = TblDebts.DATE;
