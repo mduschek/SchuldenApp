@@ -158,10 +158,8 @@ public class DetailActivity extends AppCompatActivity {
                     insert("not_paid");
                 } else {
                     Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
-                    if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
-                    else
-                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+
+                    MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 finish();
                 break;
@@ -278,53 +276,8 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    @Deprecated
-    private void getDebtOrCredit() {
-        iAmCreditor = radioButtonDebtor.isSelected();
-        //setButtons();
-    }
-
-    @Deprecated
-    private void setButtons() {
-
-        if (iAmCreditor) {
-
-        } else {
-
-        }
-//
-//        buttonManualInput, Nfc, GenerateQrCode, Other: wenn betrag, verwendung, iban, vorname, nachname, datum != null
-//        buttonBluetooth: wenn betrag, verwendung, datum != null (fremder iban, vorname, nachname soll übertragen werden, funktioniert noch nicht?)
-//
-//
-//        if (iAmCreditor){
-//            if (edVal != null && edUsuage != null && date != null){
-//                buttonBluetooth.setVisibility(View.VISIBLE);
-//            }
-//            if (edVal != null && edUsuage != null && edIBAN != null && edFirstname != null && edLastname != null && date != null){
-//                buttonManualInput.setVisibility(View.VISIBLE);
-//                buttonNfc.setVisibility(View.VISIBLE);
-//                buttonGenerateQrCode.setVisibility(View.VISIBLE);
-//                buttonOther.setVisibility(View.VISIBLE);
-//                buttonPayDebt.setVisibility(View.VISIBLE);
-//            }
-//        }
-//        else {
-//            if (edVal == null && edUsuage == null && date == null){
-//                buttonBluetooth.setVisibility(View.GONE);
-//            }
-//            if (edVal == null && edUsuage == null && edIBAN == null && edFirstname == null && edLastname == null && date == null){
-//                buttonManualInput.setVisibility(View.GONE);
-//                buttonNfc.setVisibility(View.GONE);
-//                buttonGenerateQrCode.setVisibility(View.GONE);
-//                buttonOther.setVisibility(View.GONE);
-//                buttonPayDebt.setVisibility(View.GONE);
-//            }
-//        }
-    }
-
     private void setInputs() {
-        if (debt != null) {
+        if (debt != null) {             //Wenn existierende Schuld aufgerufen wird
             if (debt.getId() == -1) {
                 edIBAN.setText(debt.getiBan() + "");
                 edFirstname.setText(debt.getDeptorFirstName() + "");
@@ -362,7 +315,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
 
 
-                if (debt.getStatus() != "open") {
+                if (debt.getStatus() != "open") {           //Wenn status "open" ist
                     radioButtonCreditor.setClickable(false);
                     radioButtonDebtor.setClickable(false);
                     edVal.setEnabled(false);
@@ -383,7 +336,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
 
-        } else {
+        } else {            //Wenn neue Schuld erstellt wird
             radioButtonCreditor.setClickable(true);
             radioButtonDebtor.setClickable(true);
             edVal.setEnabled(true);
@@ -406,16 +359,21 @@ public class DetailActivity extends AppCompatActivity {
             buttonNfc.setVisibility(View.GONE);
         }
 
-        if (radioButtonCreditor.isChecked()) {   //Wenn Kreditor Markiert ist Firstname und Lastname auf GONE setzen
+        if (radioButtonCreditor.isChecked()) {   //Wenn Kreditor Markiert ist IBAN und BIC auf GONE setzen
             //linearLayoutPartnerData.setVisibility(View.GONE);
             //linearLayoutName.setVisibility(View.GONE);
             edIBAN.setVisibility(View.GONE);
+            edBIC.setVisibility(View.GONE);
             textViewIban.setVisibility(View.GONE);
-        } else {
+            textViewBic.setVisibility(View.GONE);
+        } else {                                //Wenn Debitor Markiert ist IBAN und BIC auf VISIBLE setzen
             //linearLayoutPartnerData.setVisibility(View.VISIBLE);
             //linearLayoutName.setVisibility(View.VISIBLE);
-            textViewIban.setVisibility(View.VISIBLE);
             edIBAN.setVisibility(View.VISIBLE);
+            edBIC.setVisibility(View.VISIBLE);
+            textViewIban.setVisibility(View.VISIBLE);
+            textViewBic.setVisibility(View.VISIBLE);
+
         }
 
         if (isArchiveEntry) {   //Wenn aus Archive aufgerufen alle Buttons ausblenden
