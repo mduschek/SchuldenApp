@@ -15,9 +15,18 @@ public class Debt implements Serializable
     private String deptorFirstName, deptorLastName, usuage, iBan, status;
     private double value;
     private String date;
+
+    public String getBic() {
+        return bic;
+    }
+
+    public void setBic(String bic) {
+        this.bic = bic;
+    }
+
     private String bic;
 
-    public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date) {
+    public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date, String bic) {
         this.id=id;
         this.iAmCreditor = iAmCreditor;
         this.deptorFirstName = deptorFirstName;
@@ -27,6 +36,7 @@ public class Debt implements Serializable
         this.status = status;   //open, not_paid, paid
         this.value = value;
         this.date = date;
+        this.bic=bic;
     }
 
     public static int getOwnDept() {
