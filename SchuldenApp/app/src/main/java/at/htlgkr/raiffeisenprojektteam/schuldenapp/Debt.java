@@ -15,6 +15,7 @@ public class Debt implements Serializable
     private String deptorFirstName, deptorLastName, usuage, iBan, status;
     private double value;
     private String date;
+    private String bic;
 
     public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date) {
         this.id=id;
