@@ -3,6 +3,7 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -48,7 +49,7 @@ public class DetailActivity extends AppCompatActivity {
     //private CalendarView calendarView;
 
 
-    private String firstname = "", lastname = "", usage = "", value = "", iban = "", partnerIsCreditor = "";
+    private String firstname = "", lastname = "", usage = "", value = "", iban = "", partnerIsCreditor = "", bic = "";
     private Date date = new Date();
 
     //public int dialogWich = -1;
@@ -143,9 +144,9 @@ public class DetailActivity extends AppCompatActivity {
                 Intent qrgenint = new Intent(this, QrGeneratorActivity.class);
                 qrgenint.setAction(Intent.ACTION_SEND);
                 initTexts();
-                Log.d(TAG + "GenQR", partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date));
+                Log.d(TAG + "GenQR", partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + bic + ";" + value + ";" + sdf.format(date));
 
-                String shareData = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                String shareData = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + bic + ";" + value + ";" + sdf.format(date);
                 //createStuzziString(); //
 
                 String stuzzaData = MainActivity.createStuzzaString(firstname, lastname, iban, Float.parseFloat(value), usage);
@@ -153,7 +154,7 @@ public class DetailActivity extends AppCompatActivity {
                 qrgenint.putExtra("shareData", URLEncoder.encode(shareData));
                 qrgenint.putExtra("stuzzaData", URLEncoder.encode(stuzzaData));
                 startActivity(qrgenint);
-                if (debt == null || debt.getId()==-1) {
+                if (debt == null || debt.getId() == -1) {
                     insert("not_paid");
                 } else {
                     Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
@@ -182,7 +183,7 @@ public class DetailActivity extends AppCompatActivity {
                     if (debt.isiAmCreditor())
                         MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                     else
-                        MainActivity.db.execSQL("UPDATE " +  TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 finish();
                 /*Intent sendIntent = new Intent();
@@ -216,7 +217,7 @@ public class DetailActivity extends AppCompatActivity {
                 break;
 
             case R.id.buttonConfirmPayment:
-                    MainActivity.db.execSQL("UPDATE "+TblDebts.TABLE_NAME+ " SET status = 'paid' WHERE _id = "+debt.getId()+";");
+                MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'paid' WHERE _id = " + debt.getId() + ";");
                 finish();
                 break;
         }
@@ -248,17 +249,15 @@ public class DetailActivity extends AppCompatActivity {
             i.putExtra("lastname", lastname);
             i.putExtra("usage", usage);
             i.putExtra("iban", iban);
+            i.putExtra("bic",bic);
             i.putExtra("value", value);
             i.putExtra("date", sdf.format(date));
-            if(debt == null|| debt.getId()==-1)
-            {
+            if (debt == null || debt.getId() == -1) {
                 i.putExtra("isNewEntry", true);
-                Toast.makeText(this,"NewEntry",Toast.LENGTH_LONG).show();
-            }
-            else
-            {
-                i.putExtra("isNewEntry",false);
-                i.putExtra("updateId",debt.getId());
+                Toast.makeText(this, "NewEntry", Toast.LENGTH_LONG).show();
+            } else {
+                i.putExtra("isNewEntry", false);
+                i.putExtra("updateId", debt.getId());
             }
             Log.w(TAG, firstname + lastname + usage + iban + value + partnerIsCreditor);
             startActivity(i);
@@ -326,18 +325,15 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setInputs() {
         if (debt != null) {
-            if (debt.getId() == -1)
-            {
+            if (debt.getId() == -1) {
                 edIBAN.setText(debt.getiBan() + "");
                 edFirstname.setText(debt.getDeptorFirstName() + "");
                 edLastname.setText(debt.getDeptorLastName() + "");
                 radioButtonDebtor.setChecked(true);
                 radioGroupCreditorDebtor.setEnabled(false);
                 iAmCreditor = false;
-                Log.w(TAG, "iamCreditor: "+debt.isiAmCreditor() );
-            }
-            else
-            {
+                Log.w(TAG, "iamCreditor: " + debt.isiAmCreditor());
+            } else {
                 if (debt.isiAmCreditor()) {
                     radioButtonCreditor.setChecked(true);
 
@@ -432,12 +428,13 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    private void initTexts() {   //speichert die werte der textfelder in die variablen
+    private void initTexts() {   //speichert die werte der textfelder in die variable
         DBData.firstname = edFirstname.getText().toString();
         DBData.lastname = edLastname.getText().toString();
         DBData.usuage = edUsuage.getText().toString();
         DBData.iban = edIBAN.getText().toString();
         DBData.value = edVal.getText().toString();
+
         partnerIsCreditor = !iAmCreditor + "";
 
         firstname = UserData.firstname;
@@ -445,6 +442,7 @@ public class DetailActivity extends AppCompatActivity {
         iban = UserData.iban;
         value = DBData.value;
         usage = DBData.usuage;
+
         Log.w(TAG + "senddat", firstname + lastname + iban + value + usage);
     }
 
@@ -459,7 +457,7 @@ public class DetailActivity extends AppCompatActivity {
         cv.put(TblDebts.USAGE, DBData.usuage);
         cv.put(TblDebts.IBAN, DBData.iban);
         cv.put(TblDebts.STATUS, status);
-        cv.put(TblDebts.VALUE,DBData.value);
+        cv.put(TblDebts.VALUE, DBData.value);
         cv.put(TblDebts.DATE, sdf.format(date));
         MainActivity.db.insert(TblDebts.TABLE_NAME, null, cv);
 

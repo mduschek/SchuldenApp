@@ -26,7 +26,7 @@ public class Debt implements Serializable
 
     private String bic;
 
-    public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String status, double value, String date, String bic) {
+    public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan,String bic, String status, double value, String date) {
         this.id=id;
         this.iAmCreditor = iAmCreditor;
         this.deptorFirstName = deptorFirstName;

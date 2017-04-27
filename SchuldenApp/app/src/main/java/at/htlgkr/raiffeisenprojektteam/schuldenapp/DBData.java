@@ -6,5 +6,5 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
 public class DBData
 {
-    public static String firstname,lastname,iban, email, usuage, value;
+    public static String firstname,lastname,iban,bic, usuage, value;
 }
