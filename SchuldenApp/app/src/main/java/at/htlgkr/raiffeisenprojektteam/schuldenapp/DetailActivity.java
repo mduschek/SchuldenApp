@@ -432,7 +432,7 @@ public class DetailActivity extends AppCompatActivity {
         DBData.firstname = edFirstname.getText().toString();
         DBData.lastname = edLastname.getText().toString();
         DBData.usuage = edUsuage.getText().toString();
-        //DBData.bic = edBIC.getText().toString();    WENN FERTIG AUSKOMMENTIEREN
+        DBData.bic = edBIC.getText().toString();
         DBData.iban = edIBAN.getText().toString();
         DBData.value = edVal.getText().toString();
 
@@ -440,7 +440,7 @@ public class DetailActivity extends AppCompatActivity {
 
         firstname = UserData.firstname;
         lastname = UserData.lastname;
-        //bic = UserData.bic; WENN FERTIG AUSKOMMENTIEREN
+        bic = UserData.bic;
         iban = UserData.iban;
         value = DBData.value;
         usage = DBData.usuage;
