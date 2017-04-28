@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#303F9F</color>-->
 
-    <color name="yellow">#FED700</color>
-    <color name="blue">#00203C</color>
-    <color name="red">#EC382F</color>
+    <color name="red">#f44336</color>
+    <color name="blue">#304ffe</color>
+    <color name="reddark">#d32f2f</color>
 </resources>
