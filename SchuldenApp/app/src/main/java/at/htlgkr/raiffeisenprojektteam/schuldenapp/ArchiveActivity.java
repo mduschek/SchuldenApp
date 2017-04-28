@@ -93,6 +93,7 @@ public class ArchiveActivity extends AppCompatActivity {
                     c.getString(c.getColumnIndex(TblDebts.LASTNAME)),
                     c.getString(c.getColumnIndex(TblDebts.USAGE)),
                     c.getString(c.getColumnIndex(TblDebts.IBAN)),
+                    c.getString(c.getColumnIndex(TblDebts.BIC)),
                     c.getString(c.getColumnIndex(TblDebts.STATUS)),
                     c.getDouble(c.getColumnIndex(TblDebts.VALUE)),
                     c.getString(c.getColumnIndex(TblDebts.DATE))

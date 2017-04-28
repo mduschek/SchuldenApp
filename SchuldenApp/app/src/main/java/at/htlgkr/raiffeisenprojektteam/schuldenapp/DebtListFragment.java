@@ -68,6 +68,7 @@ public class DebtListFragment extends Fragment {
                     c.getString(c.getColumnIndex(TblDebts.LASTNAME)),
                     c.getString(c.getColumnIndex(TblDebts.USAGE)),
                     c.getString(c.getColumnIndex(TblDebts.IBAN)),
+                    c.getString(c.getColumnIndex(TblDebts.BIC)),
                     c.getString(c.getColumnIndex(TblDebts.STATUS)),
                     c.getDouble(c.getColumnIndex(TblDebts.VALUE)),
                     c.getString(c.getColumnIndex(TblDebts.DATE))
@@ -75,46 +76,6 @@ public class DebtListFragment extends Fragment {
             listItems.add(d);
         }
         c.close();
-
-//        if (args.getBoolean("showMyDepts")==true)
-//        {
-//            Cursor c = MainActivity.db.rawQuery("SELECT * FROM myDepts;",null);
-//            Log.e("*===", "onCreateView: " +c.hashCode() );
-//            while (c.moveToNext())
-//            {
-//                Debt d = new Debt(
-//                        c.getInt(c.getColumnIndex(TblMyDebts.ID)),
-//                        false,
-//                        c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_FIRSTNAME)),
-//                        c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_LASTNAME)),
-//                        c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_USUAGE)),
-//                        c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_IBAN)),
-//                        c.getString(c.getColumnIndex(TblMyDebts.STATUS)),
-//                        c.getDouble(c.getColumnIndex(TblMyDebts.PERS_I_OWE_VALUE)),
-//                        c.getString(c.getColumnIndex(TblMyDebts.PERS_I_OWE_DATE))
-//                );
-//                listItems.add(d);
-//            }
-//        }
-//        else
-//        {
-//            Cursor c = MainActivity.db.rawQuery("SELECT * FROM WhoOwesMe;",null);
-//            while (c.moveToNext())
-//            {
-//                Debt d = new Debt(
-//                        c.getInt(c.getColumnIndex(TblWhoOwesMe.ID)),
-//                        true,
-//                        c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME)),
-//                        c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME)),
-//                        c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE)),
-//                        c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN)),
-//                        c.getString(c.getColumnIndex(TblWhoOwesMe.STATUS)),
-//                        c.getDouble(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE)),
-//                        c.getString(c.getColumnIndex(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE))
-//                );
-//                listItems.add(d);
-//            }
-//        }
 
         adapter = new ArrayAdapter<Debt>(getActivity(), android.R.layout.simple_list_item_1, listItems);
         listView.setAdapter(adapter);

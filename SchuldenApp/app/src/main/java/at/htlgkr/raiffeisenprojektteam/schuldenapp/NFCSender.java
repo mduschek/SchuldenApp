@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
 
-    private String date, firstname, lastname, iban, usage, value;
+    private String date, firstname, lastname, iban, usage, value, bic;
     boolean partnerIsCreditor;
     private static final String TAG = "*=NFCSender";
     private ProgressBar progressBar;
@@ -49,6 +49,7 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
         lastname = i.getStringExtra("lastname");
         usage = i.getStringExtra("usage");
         iban = i.getStringExtra("iban");
+        bic = i.getStringExtra("bic");
         value = i.getStringExtra("value");
         isNewEntry = i.getBooleanExtra("isNewEntry",true);
         String picstr = i.getStringExtra("partneriscreditor");
@@ -59,7 +60,7 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
         if(!isNewEntry) updateId = i.getIntExtra("updateId",-1);
 
         Toast.makeText(this,TAG+"isNewEntry "+isNewEntry+"ID:"+updateId,Toast.LENGTH_LONG).show();
-        Log.w(TAG, firstname + lastname + usage + iban + value + partnerIsCreditor+ isNewEntry);
+        Log.w(TAG, firstname + lastname + usage + iban +bic+ value + partnerIsCreditor+ isNewEntry);
 
         adapter.setNdefPushMessageCallback(this, this);
 
@@ -67,7 +68,7 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
-        String stringOut = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + date;
+        String stringOut = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";"+bic+";" + value + ";" + date;
         Log.d(TAG, "createNdefMessage: ");
         NdefRecord ndefRecord = NdefRecord.createMime("text/plain", stringOut.getBytes());
         NdefMessage ndefMessage = new NdefMessage(ndefRecord);
@@ -107,6 +108,7 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
             cv.put(TblDebts.DATE, date);
             cv.put(TblDebts.FIRSTNAME, DBData.firstname);
             cv.put(TblDebts.IBAN, DBData.iban);
+            cv.put(TblDebts.BIC, DBData.bic);
             cv.put(TblDebts.USAGE, DBData.usuage);
             cv.put(TblDebts.LASTNAME, DBData.lastname);
             cv.put(TblDebts.VALUE, DBData.value);
@@ -120,6 +122,7 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
             cv.put(TblDebts.DATE, date);
             cv.put(TblDebts.FIRSTNAME, DBData.firstname);
             cv.put(TblDebts.IBAN, DBData.iban);
+            cv.put(TblDebts.BIC, DBData.bic);
             cv.put(TblDebts.USAGE, DBData.usuage);
             cv.put(TblDebts.LASTNAME, DBData.lastname);
             cv.put(TblDebts.VALUE, DBData.value);

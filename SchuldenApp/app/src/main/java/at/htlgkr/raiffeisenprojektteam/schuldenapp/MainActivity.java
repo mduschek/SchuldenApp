@@ -295,10 +295,10 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (split[0].equals("true")) {
-            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
+            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nMir schuldet " + split[1] + " " + split[2] + " " + split[6] + "€ für " + split[3] + ", am " + split[7]);
             i_am_creditor = true;
         } else {
-            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nIch schulde " + split[1] + " " + split[2] + " " + split[5] + "€ für " + split[3] + ", am " + split[6]);
+            builder.setMessage("Sind Sie sicher, dass Sie folgendes hinzufügen wollen?\r\nIch schulde " + split[1] + " " + split[2] + " " + split[6] + "€ für " + split[3] + ", am " + split[7]);
             i_am_creditor = false;
         }
         builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -312,9 +312,10 @@ public class MainActivity extends AppCompatActivity {
                 cv.put(TblDebts.LASTNAME, split[2]);
                 cv.put(TblDebts.USAGE, split[3]);
                 cv.put(TblDebts.IBAN, split[4]);
+                cv.put(TblDebts.BIC, split[5]);
                 cv.put(TblDebts.STATUS, "not_paid");
-                cv.put(TblDebts.VALUE, split[5]);
-                cv.put(TblDebts.DATE, split[6]);
+                cv.put(TblDebts.VALUE, split[6]);
+                cv.put(TblDebts.DATE, split[7]);
                 db.insert(TblDebts.TABLE_NAME, null, cv);
                 refresh();
             }
@@ -324,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
-    public static String createStuzzaString(String firstname, String lastname, String iban, float value, String usage) {
+    public static String createStuzzaString(String firstname, String lastname, String iban, String bic, float value, String usage) {
         //partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date));
         //BCD1 \r\n 001 \r\n 1 \r\n SCT \r\n BIC \r\n Creditor \r\n IBAN \r\n Value \r\n Reas \r\n Reference \r\n Text \r\n Message \r\n
 
@@ -332,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
                 "001" + System.lineSeparator() +
                 "1" + System.lineSeparator() +
                 "SCT" + System.lineSeparator() +
-                "" + System.lineSeparator() + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
+                bic + System.lineSeparator() + //Bic ...nicht vorhanden --> neuer als v2 != <März 2016
                 firstname + " " + lastname + System.lineSeparator() + //Creditor
                 iban + System.lineSeparator() +   //iban
                 "EUR" + value + System.lineSeparator() +  //value
@@ -348,6 +349,7 @@ public class MainActivity extends AppCompatActivity {
                 UserData.lastname + ";" +
                 ";" +
                 UserData.iban + ";" +
+                UserData.bic+
                 ";";
     }
 
@@ -372,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
                     insertIntoDb(string.split(";"));
                 } else {
                     //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;24.12.2016
-                    //public Debt(int id,boolean iAmCreditor, String deptorFirstName, String deptorLastName, String usuage, String iBan, String bic String status, double value, String date) {
+                    //public Debt(0 int id,1 boolean iAmCreditor, 2 String deptorFirstName,3 String deptorLastName,4 String usuage,5 String iBan,6 String bic,7 String status,8 double value,9 String date) {
 
                     Debt d = new Debt(-1, false, split[1], split[2], split[3], split[4],split[5], "", 0, new java.util.Date().toString());
                     Intent i = new Intent(getApplicationContext(), DetailActivity.class);

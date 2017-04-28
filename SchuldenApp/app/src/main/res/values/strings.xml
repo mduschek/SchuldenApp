@@ -11,8 +11,8 @@
     <string name="userdata">Ihre Daten</string>
     <string name="firstname">Vorname</string>
     <string name="lastname">Nachname</string>
-    <string name="iban">IBAN von Partner (optional)</string>
-    <string name="bicOptional">BIC von Partner</string>
+    <string name="iban">IBAN von Partner</string>
+    <string name="bicOptional">BIC von Partner (optional)</string>
     <string name="email">E-Mail</string>
     <string name="view">View</string>
     <string name="newDept">Neue Schuld</string>

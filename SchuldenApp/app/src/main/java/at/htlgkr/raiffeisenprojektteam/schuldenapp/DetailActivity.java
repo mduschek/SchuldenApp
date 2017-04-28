@@ -47,12 +47,10 @@ public class DetailActivity extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     //private CalendarView calendarView;
 
-
     private String firstname = "", lastname = "", usage = "", value = "", iban = "", bic="", partnerIsCreditor = "";
     private Date date = new Date();
 
     //public int dialogWich = -1;
-
 
     public Debt debt;
     public boolean iAmCreditor = true;
@@ -71,6 +69,7 @@ public class DetailActivity extends AppCompatActivity {
 
         textViewDate = (TextView) findViewById(R.id.textViewDate);
         textViewIban = (TextView) findViewById(R.id.tvIban);
+        textViewBic = (TextView) findViewById(R.id.tvBic);
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
         textViewStatus = (TextView) findViewById(R.id.textViewStatus);
         buttonSelectDate = (Button) findViewById(R.id.buttonSelectDate);
@@ -149,7 +148,7 @@ public class DetailActivity extends AppCompatActivity {
                 String shareData = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + bic + ";" + value + ";" + sdf.format(date);
                 //createStuzziString(); //
 
-                String stuzzaData = MainActivity.createStuzzaString(firstname, lastname, iban, Float.parseFloat(value), usage);
+                String stuzzaData = MainActivity.createStuzzaString(firstname, lastname, iban,bic, Float.parseFloat(value), usage);
 
                 qrgenint.putExtra("shareData", URLEncoder.encode(shareData));
                 qrgenint.putExtra("stuzzaData", URLEncoder.encode(stuzzaData));
@@ -158,10 +157,8 @@ public class DetailActivity extends AppCompatActivity {
                     insert("not_paid");
                 } else {
                     Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
-                    if (debt.isiAmCreditor())
-                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
-                    else
-                        MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+
+                    MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 finish();
                 break;
@@ -194,7 +191,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent baintent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
                 //baintent.putExtra("BezahlApp", transactionToStringConverter());
                 initTexts();
-                baintent.putExtra("BezahlApp", MainActivity.createStuzzaString(firstname, lastname, iban, Float.parseFloat(value), usage));
+                baintent.putExtra("BezahlApp", MainActivity.createStuzzaString(firstname, lastname, iban,bic, Float.parseFloat(value), usage));
                 startActivity(baintent);
                 break;
             case R.id.buttonSelectDate:
@@ -228,21 +225,8 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         } else {
-            //region
-            /*if (debt != null) {
-                if (debt.isiAmCreditor()) {
-                    MainActivity.db.execSQL("DELETE FROM " + TblWhoOwesMe.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
-                    Toast.makeText(this, "DELETED TblWhoOwesMe", Toast.LENGTH_LONG).show();
-                } else {
-                    MainActivity.db.execSQL("DELETE FROM " + TblMyDebts.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
-                    Toast.makeText(this, "DELETED TblMyDebts", Toast.LENGTH_LONG).show();
-                }
-            }*/
-            //endregion
-
             initTexts();
             Intent i = new Intent(this, NFCSender.class);
-            //Klcck in ich schulde partneriscreditor ist falsch... bei neu anlegen stimmts aber
             Log.w(TAG, "iAmCreditor " + iAmCreditor + "partnerIsCreditor " + partnerIsCreditor);
             i.putExtra("partneriscreditor", partnerIsCreditor + "");
             i.putExtra("firstname", firstname);
@@ -278,55 +262,11 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    @Deprecated
-    private void getDebtOrCredit() {
-        iAmCreditor = radioButtonDebtor.isSelected();
-        //setButtons();
-    }
-
-    @Deprecated
-    private void setButtons() {
-
-        if (iAmCreditor) {
-
-        } else {
-
-        }
-//
-//        buttonManualInput, Nfc, GenerateQrCode, Other: wenn betrag, verwendung, iban, vorname, nachname, datum != null
-//        buttonBluetooth: wenn betrag, verwendung, datum != null (fremder iban, vorname, nachname soll übertragen werden, funktioniert noch nicht?)
-//
-//
-//        if (iAmCreditor){
-//            if (edVal != null && edUsuage != null && date != null){
-//                buttonBluetooth.setVisibility(View.VISIBLE);
-//            }
-//            if (edVal != null && edUsuage != null && edIBAN != null && edFirstname != null && edLastname != null && date != null){
-//                buttonManualInput.setVisibility(View.VISIBLE);
-//                buttonNfc.setVisibility(View.VISIBLE);
-//                buttonGenerateQrCode.setVisibility(View.VISIBLE);
-//                buttonOther.setVisibility(View.VISIBLE);
-//                buttonPayDebt.setVisibility(View.VISIBLE);
-//            }
-//        }
-//        else {
-//            if (edVal == null && edUsuage == null && date == null){
-//                buttonBluetooth.setVisibility(View.GONE);
-//            }
-//            if (edVal == null && edUsuage == null && edIBAN == null && edFirstname == null && edLastname == null && date == null){
-//                buttonManualInput.setVisibility(View.GONE);
-//                buttonNfc.setVisibility(View.GONE);
-//                buttonGenerateQrCode.setVisibility(View.GONE);
-//                buttonOther.setVisibility(View.GONE);
-//                buttonPayDebt.setVisibility(View.GONE);
-//            }
-//        }
-    }
-
     private void setInputs() {
-        if (debt != null) {
+        if (debt != null) {             //Wenn existierende Schuld aufgerufen wird
             if (debt.getId() == -1) {
                 edIBAN.setText(debt.getiBan() + "");
+                edBIC.setText(debt.getBic() + "");
                 edFirstname.setText(debt.getDeptorFirstName() + "");
                 edLastname.setText(debt.getDeptorLastName() + "");
                 radioButtonDebtor.setChecked(true);
@@ -350,6 +290,7 @@ public class DetailActivity extends AppCompatActivity {
                 edVal.setText(debt.getValue() + "");
                 edUsuage.setText(debt.getUsuage() + "");
                 edIBAN.setText(debt.getiBan() + "");
+                edBIC.setText(debt.getBic() + "");
                 edFirstname.setText(debt.getDeptorFirstName() + "");
                 edLastname.setText(debt.getDeptorLastName() + "");
                 textViewStatus.setText(debt.getStatus() + "");
@@ -362,12 +303,13 @@ public class DetailActivity extends AppCompatActivity {
                 }
 
 
-                if (debt.getStatus() != "open") {
+                if (debt.getStatus() != "open") {           //Wenn status "open" ist
                     radioButtonCreditor.setClickable(false);
                     radioButtonDebtor.setClickable(false);
                     edVal.setEnabled(false);
                     edUsuage.setEnabled(false);
                     edIBAN.setEnabled(false);
+                    edBIC.setEnabled(false);
                     edFirstname.setEnabled(false);
                     edLastname.setEnabled(false);
 
@@ -383,12 +325,13 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
 
-        } else {
+        } else {            //Wenn neue Schuld erstellt wird
             radioButtonCreditor.setClickable(true);
             radioButtonDebtor.setClickable(true);
             edVal.setEnabled(true);
             edUsuage.setEnabled(true);
             edIBAN.setEnabled(true);
+            edBIC.setEnabled(true);
             edFirstname.setEnabled(true);
             edLastname.setEnabled(true);
 
@@ -406,16 +349,21 @@ public class DetailActivity extends AppCompatActivity {
             buttonNfc.setVisibility(View.GONE);
         }
 
-        if (radioButtonCreditor.isChecked()) {   //Wenn Kreditor Markiert ist Firstname und Lastname auf GONE setzen
+        if (radioButtonCreditor.isChecked()) {   //Wenn Kreditor Markiert ist IBAN und BIC auf GONE setzen
             //linearLayoutPartnerData.setVisibility(View.GONE);
             //linearLayoutName.setVisibility(View.GONE);
             edIBAN.setVisibility(View.GONE);
+            edBIC.setVisibility(View.GONE);
             textViewIban.setVisibility(View.GONE);
-        } else {
+            textViewBic.setVisibility(View.GONE);
+        } else {                                //Wenn Debitor Markiert ist IBAN und BIC auf VISIBLE setzen
             //linearLayoutPartnerData.setVisibility(View.VISIBLE);
             //linearLayoutName.setVisibility(View.VISIBLE);
-            textViewIban.setVisibility(View.VISIBLE);
             edIBAN.setVisibility(View.VISIBLE);
+            edBIC.setVisibility(View.VISIBLE);
+            textViewIban.setVisibility(View.VISIBLE);
+            textViewBic.setVisibility(View.VISIBLE);
+
         }
 
         if (isArchiveEntry) {   //Wenn aus Archive aufgerufen alle Buttons ausblenden
@@ -432,20 +380,20 @@ public class DetailActivity extends AppCompatActivity {
         DBData.firstname = edFirstname.getText().toString();
         DBData.lastname = edLastname.getText().toString();
         DBData.usuage = edUsuage.getText().toString();
-        DBData.bic = edBIC.getText().toString();
         DBData.iban = edIBAN.getText().toString();
+        DBData.bic = edBIC.getText().toString();
         DBData.value = edVal.getText().toString();
 
         partnerIsCreditor = !iAmCreditor + "";
 
         firstname = UserData.firstname;
         lastname = UserData.lastname;
-        bic = UserData.bic;
         iban = UserData.iban;
+        bic = UserData.bic;
         value = DBData.value;
         usage = DBData.usuage;
 
-        Log.w(TAG + "senddat", firstname + lastname + iban + value + usage);
+        Log.w(TAG + "senddat", firstname + lastname + iban +bic+ value + usage);
     }
 
     private void insert(String status) {
@@ -458,34 +406,11 @@ public class DetailActivity extends AppCompatActivity {
         cv.put(TblDebts.LASTNAME, DBData.lastname);
         cv.put(TblDebts.USAGE, DBData.usuage);
         cv.put(TblDebts.IBAN, DBData.iban);
+        cv.put(TblDebts.BIC, DBData.bic);
         cv.put(TblDebts.STATUS, status);
         cv.put(TblDebts.VALUE, DBData.value);
         cv.put(TblDebts.DATE, sdf.format(date));
         MainActivity.db.insert(TblDebts.TABLE_NAME, null, cv);
-
-        /*
-        if (iAmCreditor) {//iAmCreditor==true == wir sind Gläubiger== wir leihen geld
-            ContentValues cv = new ContentValues();
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, sdf.format(date));
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, DBData.firstname);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, DBData.iban);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, DBData.usuage);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, DBData.lastname);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, DBData.value);
-            cv.put(TblWhoOwesMe.STATUS, status);
-            MainActivity.db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
-        } else {
-            ContentValues cv = new ContentValues();
-            cv.put(TblMyDebts.PERS_I_OWE_DATE, sdf.format(date));
-            cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, DBData.firstname);
-            cv.put(TblMyDebts.PERS_I_OWE_IBAN, DBData.iban);
-            cv.put(TblMyDebts.PERS_I_OWE_USUAGE, DBData.usuage);
-            cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, DBData.lastname);
-            cv.put(TblMyDebts.PERS_I_OWE_VALUE, DBData.value);
-            cv.put(TblMyDebts.STATUS, status);
-            MainActivity.db.insert(TblMyDebts.TABLE_NAME, null, cv);
-        }
-        */
     }
 
     private boolean checkInputValues() {
@@ -494,6 +419,7 @@ public class DetailActivity extends AppCompatActivity {
                 && edIBAN.getText().toString() != ""
                 && edFirstname.getText().toString() != ""
                 && edLastname.getText().toString() != ""
+                && edBIC.getText().toString() != ""
             //&& date != null
                 ) {
             return true;
@@ -501,7 +427,7 @@ public class DetailActivity extends AppCompatActivity {
         return false;
     }
 
-    private String transactionToStringConverter() {
+   /*private String transactionToStringConverter() {
         initTexts();
         return iban + ";" +
                 firstname + ";" +
@@ -509,7 +435,7 @@ public class DetailActivity extends AppCompatActivity {
                 usage + ";" +
                 sdf.format(date) + ";" +
                 value;
-    }
+    }*/
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
