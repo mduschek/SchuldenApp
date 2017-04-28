@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
 
-    private String date, firstname, lastname, iban, usage, value;
+    private String date, firstname, lastname, iban, usage, value, bic;
     boolean partnerIsCreditor;
     private static final String TAG = "*=NFCSender";
     private ProgressBar progressBar;
@@ -49,6 +49,7 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
         lastname = i.getStringExtra("lastname");
         usage = i.getStringExtra("usage");
         iban = i.getStringExtra("iban");
+        bic = i.getStringExtra("bic");
         value = i.getStringExtra("value");
         isNewEntry = i.getBooleanExtra("isNewEntry",true);
         String picstr = i.getStringExtra("partneriscreditor");

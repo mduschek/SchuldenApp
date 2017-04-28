@@ -149,7 +149,7 @@ public class DetailActivity extends AppCompatActivity {
                 String shareData = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + bic + ";" + value + ";" + sdf.format(date);
                 //createStuzziString(); //
 
-                String stuzzaData = MainActivity.createStuzzaString(firstname, lastname, iban, Float.parseFloat(value), usage);
+                String stuzzaData = MainActivity.createStuzzaString(firstname, lastname, iban,bic, Float.parseFloat(value), usage);
 
                 qrgenint.putExtra("shareData", URLEncoder.encode(shareData));
                 qrgenint.putExtra("stuzzaData", URLEncoder.encode(stuzzaData));
@@ -192,7 +192,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent baintent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
                 //baintent.putExtra("BezahlApp", transactionToStringConverter());
                 initTexts();
-                baintent.putExtra("BezahlApp", MainActivity.createStuzzaString(firstname, lastname, iban, Float.parseFloat(value), usage));
+                baintent.putExtra("BezahlApp", MainActivity.createStuzzaString(firstname, lastname, iban,bic, Float.parseFloat(value), usage));
                 startActivity(baintent);
                 break;
             case R.id.buttonSelectDate:
@@ -282,6 +282,7 @@ public class DetailActivity extends AppCompatActivity {
                 edIBAN.setText(debt.getiBan() + "");
                 edFirstname.setText(debt.getDeptorFirstName() + "");
                 edLastname.setText(debt.getDeptorLastName() + "");
+                edBIC.setText(debt.getBic()+"");
                 radioButtonDebtor.setChecked(true);
                 radioGroupCreditorDebtor.setEnabled(false);
                 iAmCreditor = false;
@@ -303,6 +304,7 @@ public class DetailActivity extends AppCompatActivity {
                 edVal.setText(debt.getValue() + "");
                 edUsuage.setText(debt.getUsuage() + "");
                 edIBAN.setText(debt.getiBan() + "");
+                edBIC.setText(debt.getBic()+"");
                 edFirstname.setText(debt.getDeptorFirstName() + "");
                 edLastname.setText(debt.getDeptorLastName() + "");
                 textViewStatus.setText(debt.getStatus() + "");
@@ -321,6 +323,7 @@ public class DetailActivity extends AppCompatActivity {
                     edVal.setEnabled(false);
                     edUsuage.setEnabled(false);
                     edIBAN.setEnabled(false);
+                    edBIC.setEnabled(false);
                     edFirstname.setEnabled(false);
                     edLastname.setEnabled(false);
 
@@ -342,6 +345,7 @@ public class DetailActivity extends AppCompatActivity {
             edVal.setEnabled(true);
             edUsuage.setEnabled(true);
             edIBAN.setEnabled(true);
+            edBIC.setEnabled(true);
             edFirstname.setEnabled(true);
             edLastname.setEnabled(true);
 
@@ -403,7 +407,7 @@ public class DetailActivity extends AppCompatActivity {
         value = DBData.value;
         usage = DBData.usuage;
 
-        Log.w(TAG + "senddat", firstname + lastname + iban + value + usage);
+        Log.w(TAG + "senddat", firstname + lastname + iban +bic+ value + usage);
     }
 
     private void insert(String status) {
@@ -416,6 +420,7 @@ public class DetailActivity extends AppCompatActivity {
         cv.put(TblDebts.LASTNAME, DBData.lastname);
         cv.put(TblDebts.USAGE, DBData.usuage);
         cv.put(TblDebts.IBAN, DBData.iban);
+        cv.put(TblDebts.BIC, DBData.bic);
         cv.put(TblDebts.STATUS, status);
         cv.put(TblDebts.VALUE, DBData.value);
         cv.put(TblDebts.DATE, sdf.format(date));
@@ -452,6 +457,7 @@ public class DetailActivity extends AppCompatActivity {
                 && edIBAN.getText().toString() != ""
                 && edFirstname.getText().toString() != ""
                 && edLastname.getText().toString() != ""
+                && edBIC.getText().toString() != ""
             //&& date != null
                 ) {
             return true;
@@ -459,7 +465,7 @@ public class DetailActivity extends AppCompatActivity {
         return false;
     }
 
-    private String transactionToStringConverter() {
+   /*private String transactionToStringConverter() {
         initTexts();
         return iban + ";" +
                 firstname + ";" +
@@ -467,7 +473,7 @@ public class DetailActivity extends AppCompatActivity {
                 usage + ";" +
                 sdf.format(date) + ";" +
                 value;
-    }
+    }*/
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
