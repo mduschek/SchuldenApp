@@ -271,5 +271,4 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onSaveInstanceState(outState);
     }
-
 }

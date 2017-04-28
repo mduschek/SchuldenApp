@@ -15,8 +15,8 @@ public class Debt
     public static final String LASTNAME ="lastname";
     public static final String USAGE ="usage";
     public static final String IBAN="iban";
+    public static final String BIC="bic";
     public static final String STATUS="status";
     public static final String VALUE ="value";
     public static final String DATE="date";
-
 }
