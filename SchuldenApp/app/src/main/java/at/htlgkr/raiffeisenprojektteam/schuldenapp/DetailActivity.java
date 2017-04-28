@@ -47,12 +47,10 @@ public class DetailActivity extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     //private CalendarView calendarView;
 
-
     private String firstname = "", lastname = "", usage = "", value = "", iban = "", bic="", partnerIsCreditor = "";
     private Date date = new Date();
 
     //public int dialogWich = -1;
-
 
     public Debt debt;
     public boolean iAmCreditor = true;
@@ -413,30 +411,6 @@ public class DetailActivity extends AppCompatActivity {
         cv.put(TblDebts.VALUE, DBData.value);
         cv.put(TblDebts.DATE, sdf.format(date));
         MainActivity.db.insert(TblDebts.TABLE_NAME, null, cv);
-
-        /*
-        if (iAmCreditor) {//iAmCreditor==true == wir sind Gläubiger== wir leihen geld
-            ContentValues cv = new ContentValues();
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_DATE, sdf.format(date));
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_FIRSTNAME, DBData.firstname);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_IBAN, DBData.iban);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_USUAGE, DBData.usuage);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_LASTNAME, DBData.lastname);
-            cv.put(TblWhoOwesMe.PERS_WHO_OWES_ME_VALUE, DBData.value);
-            cv.put(TblWhoOwesMe.STATUS, status);
-            MainActivity.db.insert(TblWhoOwesMe.TABLE_NAME, null, cv);
-        } else {
-            ContentValues cv = new ContentValues();
-            cv.put(TblMyDebts.PERS_I_OWE_DATE, sdf.format(date));
-            cv.put(TblMyDebts.PERS_I_OWE_FIRSTNAME, DBData.firstname);
-            cv.put(TblMyDebts.PERS_I_OWE_IBAN, DBData.iban);
-            cv.put(TblMyDebts.PERS_I_OWE_USUAGE, DBData.usuage);
-            cv.put(TblMyDebts.PERS_I_OWE_LASTNAME, DBData.lastname);
-            cv.put(TblMyDebts.PERS_I_OWE_VALUE, DBData.value);
-            cv.put(TblMyDebts.STATUS, status);
-            MainActivity.db.insert(TblMyDebts.TABLE_NAME, null, cv);
-        }
-        */
     }
 
     private boolean checkInputValues() {
