@@ -71,6 +71,7 @@ public class DetailActivity extends AppCompatActivity {
 
         textViewDate = (TextView) findViewById(R.id.textViewDate);
         textViewIban = (TextView) findViewById(R.id.tvIban);
+        textViewBic = (TextView) findViewById(R.id.tvBic);
         textViewCreateLoanDescription = (TextView) findViewById(R.id.textViewCreateLoanDescription);
         textViewStatus = (TextView) findViewById(R.id.textViewStatus);
         buttonSelectDate = (Button) findViewById(R.id.buttonSelectDate);
@@ -226,21 +227,8 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Bitte aktivieren Sie NFC und drücken Sie dann zurück, um hierher zurückzukehren!", Toast.LENGTH_LONG).show();
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         } else {
-            //region
-            /*if (debt != null) {
-                if (debt.isiAmCreditor()) {
-                    MainActivity.db.execSQL("DELETE FROM " + TblWhoOwesMe.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
-                    Toast.makeText(this, "DELETED TblWhoOwesMe", Toast.LENGTH_LONG).show();
-                } else {
-                    MainActivity.db.execSQL("DELETE FROM " + TblMyDebts.TABLE_NAME + " WHERE " + TblWhoOwesMe.ID + " = " + debt.getId());
-                    Toast.makeText(this, "DELETED TblMyDebts", Toast.LENGTH_LONG).show();
-                }
-            }*/
-            //endregion
-
             initTexts();
             Intent i = new Intent(this, NFCSender.class);
-            //Klcck in ich schulde partneriscreditor ist falsch... bei neu anlegen stimmts aber
             Log.w(TAG, "iAmCreditor " + iAmCreditor + "partnerIsCreditor " + partnerIsCreditor);
             i.putExtra("partneriscreditor", partnerIsCreditor + "");
             i.putExtra("firstname", firstname);
@@ -280,9 +268,9 @@ public class DetailActivity extends AppCompatActivity {
         if (debt != null) {             //Wenn existierende Schuld aufgerufen wird
             if (debt.getId() == -1) {
                 edIBAN.setText(debt.getiBan() + "");
+                edBIC.setText(debt.getBic() + "");
                 edFirstname.setText(debt.getDeptorFirstName() + "");
                 edLastname.setText(debt.getDeptorLastName() + "");
-                edBIC.setText(debt.getBic()+"");
                 radioButtonDebtor.setChecked(true);
                 radioGroupCreditorDebtor.setEnabled(false);
                 iAmCreditor = false;
@@ -304,7 +292,7 @@ public class DetailActivity extends AppCompatActivity {
                 edVal.setText(debt.getValue() + "");
                 edUsuage.setText(debt.getUsuage() + "");
                 edIBAN.setText(debt.getiBan() + "");
-                edBIC.setText(debt.getBic()+"");
+                edBIC.setText(debt.getBic() + "");
                 edFirstname.setText(debt.getDeptorFirstName() + "");
                 edLastname.setText(debt.getDeptorLastName() + "");
                 textViewStatus.setText(debt.getStatus() + "");
@@ -394,16 +382,16 @@ public class DetailActivity extends AppCompatActivity {
         DBData.firstname = edFirstname.getText().toString();
         DBData.lastname = edLastname.getText().toString();
         DBData.usuage = edUsuage.getText().toString();
-        DBData.bic = edBIC.getText().toString();
         DBData.iban = edIBAN.getText().toString();
+        DBData.bic = edBIC.getText().toString();
         DBData.value = edVal.getText().toString();
 
         partnerIsCreditor = !iAmCreditor + "";
 
         firstname = UserData.firstname;
         lastname = UserData.lastname;
-        bic = UserData.bic;
         iban = UserData.iban;
+        bic = UserData.bic;
         value = DBData.value;
         usage = DBData.usuage;
 
