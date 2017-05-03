@@ -154,9 +154,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 qrgenint.putExtra("shareData", URLEncoder.encode(shareData));
                 qrgenint.putExtra("stuzzaData", URLEncoder.encode(stuzzaData));
-                qrgenint.putExtra("debtId", debt.getId());
                 startActivityForResult(qrgenint, QR_GEN_REQ_CODE);
-                finish();
                 break;
             case R.id.buttonOther:
                 initTexts();
@@ -436,6 +434,9 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d("ActivityResult", "requestCode: " + requestCode);
+
         if (requestCode == QR_GEN_REQ_CODE){
             if(resultCode == RESULT_OK)
             {
@@ -451,6 +452,8 @@ public class DetailActivity extends AppCompatActivity {
             {
                 Log.d("ActivityResult", "RESULT CANCELED");
             }
+
+            finish();
         }
     }
 
