@@ -447,13 +447,13 @@ public class DetailActivity extends AppCompatActivity {
                     MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 Log.d("ActivityResult", "RESULT OK");
+
+                finish();
             }
             if(resultCode == RESULT_CANCELED)
             {
                 Log.d("ActivityResult", "RESULT CANCELED");
             }
-
-            finish();
         }
     }
 

@@ -98,6 +98,12 @@ public class QrGeneratorActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
     public void createQrCode(String data) {
         Log.d("Data", URLDecoder.decode(data));
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
