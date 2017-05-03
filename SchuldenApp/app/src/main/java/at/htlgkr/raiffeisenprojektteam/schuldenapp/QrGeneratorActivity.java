@@ -87,16 +87,21 @@ public class QrGeneratorActivity extends AppCompatActivity {
     public void onButtonClicked(View source){
         switch (source.getId()) {
             case R.id.buttonQrCodeScannerCancel:
-                setResult(RESULT_CANCELED,null);
+                setResult(RESULT_CANCELED);
                 finish();
                 break;
 
             case R.id.buttonQrCodeScannerConfirmation:
-                setResult(RESULT_OK,null);
+                setResult(RESULT_OK);
                 finish();
                 break;
-
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
     public void createQrCode(String data) {
