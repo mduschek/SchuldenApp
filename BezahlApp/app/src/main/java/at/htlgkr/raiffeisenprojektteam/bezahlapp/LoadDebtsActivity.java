@@ -64,5 +64,4 @@ public class LoadDebtsActivity extends AppCompatActivity{
             }
         });
     }
-
 }

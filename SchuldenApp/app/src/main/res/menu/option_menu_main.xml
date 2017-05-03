@@ -8,25 +8,23 @@
         app:showAsAction="always"
         android:title="@string/newDept"/>
 
-    <!--<item
-        android:id="@+id/option_menu_userdata"
-        android:title="Userdata"/>-->
-
     <item
         android:id="@+id/option_menu_qr_scanner"
         android:title="@string/qrCodeScanner"/>
-    <item
-        android:id="@+id/option_menu_preferences"
-        android:title="@string/settings"/>
 
-    <item
-        android:id="@+id/option_menu_archive"
-        android:title="@string/archive"/>
     <item
         android:id="@+id/option_menu_qr_code_bank_details"
         android:title="Bankdaten mit QR-Code übertragen"/>
 
     <item
+        android:id="@+id/option_menu_archive"
+        android:title="@string/archive"/>
+
+    <item
         android:id="@+id/option_menu_open_payapp"
         android:title="Bezahlapp aufrufen" />
+
+    <item
+        android:id="@+id/option_menu_preferences"
+        android:title="@string/settings"/>
 </menu>
