@@ -40,12 +40,13 @@ public class LoadDebtsActivity extends AppCompatActivity{
             String usage = cursor.getString(cursor.getColumnIndex(Debt.USAGE));
             String date = cursor.getString(cursor.getColumnIndex(Debt.DATE));
             String iban = cursor.getString(cursor.getColumnIndex(Debt.IBAN));
+            String bic = cursor.getString(cursor.getColumnIndex(Debt.BIC));
             String status = cursor.getString(cursor.getColumnIndex(Debt.STATUS));
             double value = cursor.getDouble(cursor.getColumnIndex(Debt.VALUE));
             boolean iAmCreditor = false;
 
-            //Debt d = new Debt(id,iAmCreditor,firstname,lastname,usage,iban,status,value,date);
-            Transaction transaction = new Transaction("",firstname+ " "+lastname,iban,(float)value,"","",usage,usage);
+            //public Transaction(String bic, String creditor, String iban, float amount, String reason, String reference, String text, String message)
+            Transaction transaction = new Transaction(bic,firstname+ " "+lastname,iban,(float)value,"","",usage,usage);
             transaction.setID(id);
             transactions.add(transaction);
         }
