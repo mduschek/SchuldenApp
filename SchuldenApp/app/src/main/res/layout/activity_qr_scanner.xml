@@ -60,13 +60,14 @@
         android:text="Scannen Sie mit einem anderen Handy diese Daten ab"/>
 
     <LinearLayout
+        android:id="@+id/linearLayoutButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayoutButtons">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/buttonQrCodeScannerCancel"
+            android:onClick="onButtonClicked"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,6 +76,7 @@
 
         <Button
             android:id="@+id/buttonQrCodeScannerConfirmation"
+            android:onClick="onButtonClicked"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

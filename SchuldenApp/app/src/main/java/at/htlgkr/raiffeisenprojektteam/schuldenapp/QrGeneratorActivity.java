@@ -1,13 +1,16 @@
 package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -23,8 +26,10 @@ public class QrGeneratorActivity extends AppCompatActivity {
 
     RadioGroup radioGroupQrCode;
     RadioButton radioButtonCreateShareQrCode, onRadioButtonCreateStuzzaQrCode;
+    //Button buttonQrCodeScannerCancel, buttonQrCodeScannerConfirmation;
     String shareData;
     String stuzzaData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +55,11 @@ public class QrGeneratorActivity extends AppCompatActivity {
         radioButtonCreateShareQrCode = (RadioButton) findViewById(R.id.radioButtonCreateShareQrCode);
         //onRadioButtonCreateStuzzaQrCode = (RadioButton) findViewById(R.id.onRadioButtonCreateStuzzaQrCode);
 
-        //Log.d("shareData", shareData);
-        //Log.d("stuzzaData", stuzzaData);
+        //buttonQrCodeScannerCancel = (Button) findViewById(R.id.buttonQrCodeScannerCancel);
+        //buttonQrCodeScannerConfirmation = (Button) findViewById(R.id.buttonQrCodeScannerConfirmation);
+
+        Log.d("shareData", shareData);
+        Log.d("stuzzaData", stuzzaData);
     }
 
     @Override
@@ -73,6 +81,21 @@ public class QrGeneratorActivity extends AppCompatActivity {
             case R.id.onRadioButtonCreateStuzzaQrCode:
                 createQrCode(stuzzaData);
                 break;
+        }
+    }
+
+    public void onButtonClicked(View source){
+        switch (source.getId()) {
+            case R.id.buttonQrCodeScannerCancel:
+                setResult(RESULT_CANCELED,null);
+                finish();
+                break;
+
+            case R.id.buttonQrCodeScannerConfirmation:
+                setResult(RESULT_OK,null);
+                finish();
+                break;
+
         }
     }
 

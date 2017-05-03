@@ -56,6 +56,8 @@ public class DetailActivity extends AppCompatActivity {
     public boolean iAmCreditor = true;
     public boolean isArchiveEntry = false;
 
+    public final int QR_GEN_REQ_CODE = 1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,14 +154,8 @@ public class DetailActivity extends AppCompatActivity {
 
                 qrgenint.putExtra("shareData", URLEncoder.encode(shareData));
                 qrgenint.putExtra("stuzzaData", URLEncoder.encode(stuzzaData));
-                startActivity(qrgenint);
-                if (debt == null || debt.getId() == -1) {
-                    insert("not_paid");
-                } else {
-                    Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
-
-                    MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
-                }
+                qrgenint.putExtra("debtId", debt.getId());
+                startActivityForResult(qrgenint, QR_GEN_REQ_CODE);
                 finish();
                 break;
             case R.id.buttonOther:
@@ -436,6 +432,27 @@ public class DetailActivity extends AppCompatActivity {
                 sdf.format(date) + ";" +
                 value;
     }*/
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == QR_GEN_REQ_CODE){
+            if(resultCode == RESULT_OK)
+            {
+                if (debt == null || debt.getId() == -1) {
+                    insert("not_paid");
+                } else {
+                    Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
+                    MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
+                }
+                Log.d("ActivityResult", "RESULT OK");
+            }
+            if(resultCode == RESULT_CANCELED)
+            {
+                Log.d("ActivityResult", "RESULT CANCELED");
+            }
+        }
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
