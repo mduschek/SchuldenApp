@@ -31,7 +31,7 @@ public class DebtsContentProvider extends ContentProvider {
         public static final String DATE = TblDebts.DATE;
 
     }
-
+//
     private static final int DEBTS =1;
     private static final int DEBT_ID=2;
 
