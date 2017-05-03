@@ -3,4 +3,7 @@
     <color name="yellow">#FED700</color>
     <color name="blue">#00203C</color>
     <color name="red">#EC382F</color>
+    <color name="mainblue">#605484</color>
+    <color name="darkblue">#362A5A</color>
+    <color name="buttonyellow">#FFD300</color>
 </resources>

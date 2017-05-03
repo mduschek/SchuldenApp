@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/mainblue</item>
         <item name="colorPrimaryDark">@color/mainblue</item>
         <item name="colorAccent">@color/buttonyellow</item>
         <item name="colorControlActivated">@color/blue</item>
+        <item name="android:statusBarColor">@color/darkblue</item>
     </style>
 </resources>
