@@ -7,8 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>-->
 
-        <item name="colorPrimary">@color/yellow</item>
-        <item name="colorPrimaryDark">@color/yellow</item>
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">@color/reddark</item>
         <item name="colorAccent">@color/blue</item>
         <item name="colorControlActivated">@color/blue</item>
     </style>

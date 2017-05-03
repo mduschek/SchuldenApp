@@ -242,7 +242,10 @@
         android:text="Transaktion laden"
         android:id="@+id/buttonLoadTransaction"
         android:onClick="buttonLoadTransactionClicked"
-        style="@style/Widget.AppCompat.Button.Colored" />
+        style="@style/Widget.AppCompat.Button.Colored"
+        />
+    <!--style="@style/Widget.AppCompat.Button.Colored"-->
+
 
 
     <Button
@@ -251,7 +254,9 @@
         android:text="Transaktion löschen"
         android:id="@+id/buttonDeleteTransaction"
         android:onClick="buttonDeleteTransactionClicked"
-        style="@style/Widget.AppCompat.Button.Colored" />
+        style="@style/Widget.AppCompat.Button.Colored"/>
+    <!--style="@style/Widget.AppCompat.Button.Colored"-->
+
 
     <Button
         android:layout_width="match_parent"
@@ -259,5 +264,7 @@
         android:text="Transaktion ausführen"
         android:id="@+id/buttonTransaction"
         android:onClick="buttonTransactionClicked"
-        style="@style/Widget.AppCompat.Button.Colored" />
+        style="@style/Widget.AppCompat.Button.Colored"/>
+        <!--style="@style/Widget.AppCompat.Button.Colored"-->
+
 </LinearLayout>
