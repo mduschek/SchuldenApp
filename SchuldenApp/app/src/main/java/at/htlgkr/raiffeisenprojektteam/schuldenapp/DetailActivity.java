@@ -161,6 +161,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
+                Log.w(TAG, "bic: "+bic);
                 String dataString = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + bic + ";" + value + ";" + sdf.format(date);
                 dataString = URLEncoder.encode(dataString);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, LINK + dataString);
