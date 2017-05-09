@@ -47,7 +47,7 @@ public class DetailActivity extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     //private CalendarView calendarView;
 
-    private String firstname = "", lastname = "", usage = "", value = "", iban = "", bic="", partnerIsCreditor = "";
+    private String firstname = "", lastname = "", usage = "", value = "", iban = "", bic = "", partnerIsCreditor = "";
     private Date date = new Date();
 
     //public int dialogWich = -1;
@@ -150,7 +150,7 @@ public class DetailActivity extends AppCompatActivity {
                 String shareData = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + bic + ";" + value + ";" + sdf.format(date);
                 //createStuzziString(); //
 
-                String stuzzaData = MainActivity.createStuzzaString(firstname, lastname, iban,bic, Float.parseFloat(value), usage);
+                String stuzzaData = MainActivity.createStuzzaString(firstname, lastname, iban, bic, Float.parseFloat(value), usage);
 
                 qrgenint.putExtra("shareData", URLEncoder.encode(shareData));
                 qrgenint.putExtra("stuzzaData", URLEncoder.encode(stuzzaData));
@@ -161,7 +161,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 //STRUKTUR: ?content=depttype;Michael;Duschek;Usuage;IBAN;30.65;12.12.16
-                String dataString = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + value + ";" + sdf.format(date);
+                String dataString = partnerIsCreditor + ";" + firstname + ";" + lastname + ";" + usage + ";" + iban + ";" + bic + ";" + value + ";" + sdf.format(date);
                 dataString = URLEncoder.encode(dataString);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, LINK + dataString);
                 sendIntent.setType("text/plain");
@@ -185,7 +185,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent baintent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
                 //baintent.putExtra("BezahlApp", transactionToStringConverter());
                 initTexts();
-                baintent.putExtra("BezahlApp", MainActivity.createStuzzaString(firstname, lastname, iban,bic, Float.parseFloat(value), usage));
+                baintent.putExtra("BezahlApp", MainActivity.createStuzzaString(firstname, lastname, iban, bic, Float.parseFloat(value), usage));
                 startActivity(baintent);
                 break;
             case R.id.buttonSelectDate:
@@ -227,7 +227,7 @@ public class DetailActivity extends AppCompatActivity {
             i.putExtra("lastname", lastname);
             i.putExtra("usage", usage);
             i.putExtra("iban", iban);
-            i.putExtra("bic",bic);
+            i.putExtra("bic", bic);
             i.putExtra("value", value);
             i.putExtra("date", sdf.format(date));
             if (debt == null || debt.getId() == -1) {
@@ -237,7 +237,7 @@ public class DetailActivity extends AppCompatActivity {
                 i.putExtra("isNewEntry", false);
                 i.putExtra("updateId", debt.getId());
             }
-            Log.w(TAG, firstname + lastname + usage + iban + value + partnerIsCreditor);
+            Log.w(TAG, firstname + lastname + usage + iban +bic+ value + partnerIsCreditor);
             startActivity(i);
         }
     }
@@ -387,7 +387,7 @@ public class DetailActivity extends AppCompatActivity {
         value = DBData.value;
         usage = DBData.usuage;
 
-        Log.w(TAG + "senddat", firstname + lastname + iban +bic+ value + usage);
+        Log.w(TAG + "senddat", firstname + lastname + iban + bic + value + usage);
     }
 
     private void insert(String status) {
@@ -437,9 +437,8 @@ public class DetailActivity extends AppCompatActivity {
 
         Log.d("ActivityResult", "requestCode: " + requestCode);
 
-        if (requestCode == QR_GEN_REQ_CODE){
-            if(resultCode == RESULT_OK)
-            {
+        if (requestCode == QR_GEN_REQ_CODE) {
+            if (resultCode == RESULT_OK) {
                 if (debt == null || debt.getId() == -1) {
                     insert("not_paid");
                 } else {
@@ -450,8 +449,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 finish();
             }
-            if(resultCode == RESULT_CANCELED)
-            {
+            if (resultCode == RESULT_CANCELED) {
                 Log.d("ActivityResult", "RESULT CANCELED");
             }
         }
