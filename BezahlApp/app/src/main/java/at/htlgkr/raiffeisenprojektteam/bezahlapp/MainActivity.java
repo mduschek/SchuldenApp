@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TRANSACTION_KEY = "transactionKey";
@@ -206,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             textViewBic.setText(transaction.getBic());
             textViewCreditor.setText(transaction.getCreditor());
             textViewIban.setText(transaction.getIban());
-            textViewAmount.setText(transaction.getAmount() + "");
+            textViewAmount.setText(new DecimalFormat("0.00").format(transaction.getAmount()));
             textViewReason.setText(transaction.getReason());
             textViewReference.setText(transaction.getReference());
             textViewText.setText(transaction.getText());
