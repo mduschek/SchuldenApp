@@ -51,7 +51,7 @@ public class DebtListFragment extends Fragment {
         if (iAmCreditor) iAmCreditorInt = 1;
         if (!iAmCreditor) iAmCreditorInt = 0;
 
-        Cursor c = MainActivity.db.rawQuery("SELECT * FROM Debts WHERE iAmCreditor = " + iAmCreditorInt + " AND status = 'not_paid' OR status = 'open';", null);
+        Cursor c = MainActivity.db.rawQuery("SELECT * FROM Debts WHERE iAmCreditor = " + iAmCreditorInt + " AND status = 'not_paid' OR iAmCreditor = " + iAmCreditorInt + " AND status = 'open';", null);
 //        Cursor c = getActivity().getContentResolver().query(      //Funktioniert noch nicht
 //                DebtsContentProvider.DEBT_URI,
 //                null,
