@@ -18,7 +18,7 @@
     <string name="firstnamePartner">Vorname Partner</string>
     <string name="lastnamePartner">Nachname Partner</string>
     <string name="ibanPartner">IBAN von Partner</string>
-    <string name="chooseDate">Datum auswälen</string>
+    <string name="chooseDate">Datum auswählen</string>
     <string name="iban">IBAN</string>
     <string name="bic">BIC</string>
     <string name="bicOptional">BIC von Partner (optional)</string>
