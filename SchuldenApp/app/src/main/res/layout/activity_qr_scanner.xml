@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Wählen sie, ob sie einen QR-Code zum Teilen an eine andere Schuldenapp oder zum Bezahlen im STUZZA Standard erstellen wollen"/>
+        android:text="@string/chooseQrCodeType"/>
 
 
     <RadioGroup
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:checked="true"
             android:onClick="onRadioButtonClicked"
-            android:text="Schuldenapp" />
+            android:text="@string/debtApp" />
 
         <RadioButton
             android:id="@+id/onRadioButtonCreateStuzzaQrCode"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onRadioButtonClicked"
-            android:text="Bezahlen" />
+            android:text="@string/pay" />
     </RadioGroup>
 
     <Space
@@ -46,7 +46,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Teilen Sie Ihre Bezahlinformation als QR-Code."/>
+        android:text="@string/shareYourTransactionInformation"/>
     <!-- Folgende Informationen werden geteilt: Kontoinhaber, Betrag, Verwendung, IBAN, Datum-->
     <ImageView
         android:layout_weight="1"
@@ -57,7 +57,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Scannen Sie mit einem anderen Handy diese Daten ab"/>
+        android:text="@string/scanYourDataWithOtherSmartphone"/>
 
     <LinearLayout
         android:id="@+id/linearLayoutButtons"
@@ -67,12 +67,12 @@
 
         <Button
             android:id="@+id/buttonQrCodeScannerCancel"
-            android:onClick="onButtonClicked"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Abbrechen" />
+            android:onClick="onButtonClicked"
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/buttonQrCodeScannerConfirmation"
@@ -81,6 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Gelesen" />
+            android:text="@string/read" />
     </LinearLayout>
 </LinearLayout>

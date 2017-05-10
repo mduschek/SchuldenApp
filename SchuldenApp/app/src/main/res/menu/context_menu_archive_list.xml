@@ -2,5 +2,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/context_menu_archive_list_delete"
-        android:title="Eintrag Löschen"/>
+        android:title="@string/deleteEntry"/>
 </menu>

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="yellow">#FED700</color>
-    <color name="blue">#00203C</color>
+    <color name="orange">#FF9800</color>
     <color name="red">#EC382F</color>
-    <color name="mainblue">#605484</color>
-    <color name="darkblue">#362A5A</color>
-    <color name="buttonyellow">#FFD300</color>
+    <color name="blue">#2196F3</color>
+    <color name="green">#4CAF50</color>
+    <color name="teal">#009688</color>
+    <color name="darkblueprimary">#00304C</color>
+    <color name="darkbluesecondary">#00203C</color>
+    <color name="mainblue">#607D8B</color>
+
 </resources>
