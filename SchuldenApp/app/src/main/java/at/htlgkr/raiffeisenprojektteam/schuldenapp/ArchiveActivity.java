@@ -27,7 +27,7 @@ public class ArchiveActivity extends AppCompatActivity {
     //private ArrayAdapter<Debt> adapter;
     private DebtsArchiveAdapter adapter;
     private int clickedIndex;
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
