@@ -6,23 +6,23 @@
         <EditTextPreference
             android:defaultValue="Michael"
             android:key="pref_userdata_firstname"
-            android:summary="Geben Sie Ihren Vornamen ein"
+            android:summary="@string/enterYourFirstname"
             android:title="@string/firstname" />
         <EditTextPreference
             android:defaultValue="Duschek"
             android:key="pref_userdata_lastname"
-            android:summary="Geben Sie Ihren Nachnamen ein"
+            android:summary="@string/enterYourLastname"
             android:title="@string/lastname" />
         <EditTextPreference
             android:defaultValue="AT611904300234573201"
             android:key="pref_userdata_iban"
-            android:summary="Geben Sie Ihren IBAN ein"
-            android:title="IBAN" />
+            android:summary="@string/enterYourIban"
+            android:title="@string/iban" />
         <EditTextPreference
             android:defaultValue="ABCDATWW"
             android:key="pref_userdata_bic"
-            android:summary="Geben Sie Ihren BIC ein"
-            android:title="BIC" />
+            android:summary="@string/enterYourBic"
+            android:title="@string/bic" />
         <!--<EditTextPreference
             android:defaultValue="duschek54321@gmail.com"
             android:key="pref_userdata_email"

@@ -299,8 +299,8 @@ public class DetailActivity extends AppCompatActivity {
 
 
                 if (debt.getStatus() != "open") {           //Wenn status "open" ist
-                    radioButtonCreditor.setClickable(false);
-                    radioButtonDebtor.setClickable(false);
+                    radioButtonCreditor.setEnabled(false);
+                    radioButtonDebtor.setEnabled(false);
                     edVal.setEnabled(false);
                     edUsuage.setEnabled(false);
                     edIBAN.setEnabled(false);
@@ -368,6 +368,7 @@ public class DetailActivity extends AppCompatActivity {
             buttonConfirmPayment.setVisibility(View.GONE);
             buttonGenerateQrCode.setVisibility(View.GONE);
             buttonOther.setVisibility(View.GONE);
+            textViewCreateLoanDescription.setVisibility(View.GONE);
         }
     }
 

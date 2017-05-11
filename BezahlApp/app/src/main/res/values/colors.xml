@@ -5,6 +5,7 @@
     <color name="colorAccent">#303F9F</color>-->
 
     <color name="red">#f44336</color>
-    <color name="blue">#304ffe</color>
+    <color name="blue_2">#304ffe</color>
+    <color name="blue">#2196F3</color>
     <color name="reddark">#d32f2f</color>
 </resources>

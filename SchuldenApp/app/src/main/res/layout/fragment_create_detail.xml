@@ -15,7 +15,7 @@
             android:id="@+id/textViewIamThe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ich bin " />
+            android:text="@string/iAm" />
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -26,12 +26,12 @@
                 android:checked="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kreditor"
+                android:text="@string/creditor"
                 android:onClick="onRadioButtonClicked" />
             <RadioButton android:id="@+id/radioButtonDebtor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Debitor"
+                android:text="@string/debtor"
                 android:onClick="onRadioButtonClicked" />
         </RadioGroup>
 
@@ -59,8 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:editable="false" />
+            android:inputType="textPersonName"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +71,7 @@
                 android:id="@+id/tvIban"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/iban" />
+                android:text="@string/ibanPartner" />
 
             <EditText
                 android:id="@+id/editTextIban"
@@ -106,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Vorname Partner"
+                    android:hint="@string/firstnamePartner"
                     android:inputType="textPersonName" />
 
                 <EditText
@@ -115,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Nachname Partner"
+                    android:hint="@string/lastnamePartner"
                     android:inputType="textPersonName" />
 
             </LinearLayout>
@@ -140,7 +139,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Datum auswälen"
+            android:text="@string/chooseDate"
             android:id="@+id/buttonSelectDate"
             android:onClick="onButtonPressed"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -156,13 +155,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
-            <TextView
+            <!--<TextView
                 android:text="Status: "
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" />-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -179,7 +177,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:text="Wählen Sie eine Methode, eine neue Schuld zu übertragen:"
+                android:text="@string/chooseMethodToTransferDebt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewCreateLoanDescription" />
@@ -188,7 +186,7 @@
                 android:id="@+id/buttonManualInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Manuelle Eingabe"
+                android:text="@string/manualInput"
                 android:onClick="onButtonPressed"
                 android:visibility="visible"
                 style="@style/Widget.AppCompat.Button.Colored" />
@@ -203,7 +201,7 @@
                 style="@style/Widget.AppCompat.Button.Colored" />-->
 
             <Button
-                android:text="NFC"
+                android:text="@string/nfc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonNfc"
@@ -212,7 +210,7 @@
                 style="@style/Widget.AppCompat.Button.Colored" />
 
             <Button
-                android:text="QR Code Generieren"
+                android:text="@string/generateQrCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonGenerateQrCode"
@@ -221,7 +219,7 @@
                 style="@style/Widget.AppCompat.Button.Colored" />
 
             <Button
-                android:text="Andere Methoden"
+                android:text="@string/otherMethods"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonOther"
@@ -229,7 +227,7 @@
                 android:visibility="visible"
                 style="@style/Widget.AppCompat.Button.Colored" />
             <Button
-                android:text="Bezahlen"
+                android:text="@string/pay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonPayDebt"
@@ -237,7 +235,7 @@
                 android:visibility="visible"
                 style="@style/Widget.AppCompat.Button.Colored" />
             <Button
-                android:text="Bestätigen"
+                android:text="@string/confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonConfirmPayment"
