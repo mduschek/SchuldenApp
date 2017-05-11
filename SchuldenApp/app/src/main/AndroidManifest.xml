@@ -47,7 +47,8 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity" />
+        <activity android:name=".DetailActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".ArchiveActivity"/>
         <activity android:name=".QrGeneratorActivity"/>
         <activity android:name=".NFCSender"/>
