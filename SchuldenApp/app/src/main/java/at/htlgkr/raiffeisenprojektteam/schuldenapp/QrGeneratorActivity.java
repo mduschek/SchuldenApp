@@ -43,23 +43,26 @@ public class QrGeneratorActivity extends AppCompatActivity {
 
         if (extras != null) {
             shareData = extras.getString("shareData");
-
             stuzzaData = extras.getString("stuzzaData");
         }
 
         //Falls nur 1 QR Code verfügbar, RadioGroup ausschalten
-        if (extras.getString("shareData") == null || extras.getString("stuzzaData") == null){
+        if (shareData == null || stuzzaData == null){
             radioGroupQrCode.setVisibility(View.GONE);
+
+            if (shareData == null && stuzzaData != null)  shareData = stuzzaData;
+            else if (stuzzaData == null && shareData != null)  stuzzaData = shareData;
         }
 
         radioButtonCreateShareQrCode = (RadioButton) findViewById(R.id.radioButtonCreateShareQrCode);
+
         //onRadioButtonCreateStuzzaQrCode = (RadioButton) findViewById(R.id.onRadioButtonCreateStuzzaQrCode);
 
         //buttonQrCodeScannerCancel = (Button) findViewById(R.id.buttonQrCodeScannerCancel);
         //buttonQrCodeScannerConfirmation = (Button) findViewById(R.id.buttonQrCodeScannerConfirmation);
 
-        Log.d("shareData", shareData);
-        Log.d("stuzzaData", stuzzaData);
+        //Log.d("shareData", shareData);
+        //Log.d("stuzzaData", stuzzaData);
     }
 
     @Override
