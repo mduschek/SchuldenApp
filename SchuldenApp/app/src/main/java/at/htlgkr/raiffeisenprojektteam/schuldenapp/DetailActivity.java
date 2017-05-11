@@ -368,6 +368,7 @@ public class DetailActivity extends AppCompatActivity {
             buttonConfirmPayment.setVisibility(View.GONE);
             buttonGenerateQrCode.setVisibility(View.GONE);
             buttonOther.setVisibility(View.GONE);
+            textViewCreateLoanDescription.setVisibility(View.GONE);
         }
     }
 
