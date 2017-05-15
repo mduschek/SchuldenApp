@@ -157,8 +157,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.option_menu_open_payapp:
-                intent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
-                startActivity(intent);
+                try
+                {
+
+                    intent = this.getPackageManager().getLaunchIntentForPackage("at.htlgkr.raiffeisenprojektteam.bezahlapp");
+                    startActivity(intent);
+                }catch (Exception ex)
+                {
+                    Toast.makeText(this,"Die BezahlApp ist nicht installiert!",Toast.LENGTH_LONG).show();
+                }
 
             default:
                 return super.onOptionsItemSelected(item);
