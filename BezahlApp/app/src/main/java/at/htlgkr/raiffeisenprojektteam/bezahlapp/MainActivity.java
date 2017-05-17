@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                     splitArr[11]);
 
         } catch (Exception e) {
-            Toast.makeText(this, "Fehler stuzzaStringToTransactionConverter", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Fehler stuzzaStringToTransactionConverter", Toast.LENGTH_LONG).show();
             Log.e("Error", e.toString());
         }
     }

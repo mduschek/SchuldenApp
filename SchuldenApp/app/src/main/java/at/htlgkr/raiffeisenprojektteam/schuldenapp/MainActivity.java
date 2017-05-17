@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
             NdefRecord NdefRecord_0 = inNdefRecords[0];
             String inMsg = new String(NdefRecord_0.getPayload());
             Log.d(TAG, "onResume " + inMsg);
-            Toast.makeText(this, inMsg, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, inMsg, Toast.LENGTH_LONG).show();
             final String split[] = inMsg.split(";");
             insertIntoDb(split);
         }
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 ContentValues cv = new ContentValues();
-                Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "inputAccepted", Toast.LENGTH_LONG).show();
                 cv.put(TblDebts.I_AM_CREDITOR, i_am_creditor);
                 cv.put(TblDebts.FIRSTNAME, split[1]);
                 cv.put(TblDebts.LASTNAME, split[2]);
@@ -319,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         } else {
             if (result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
 
 
             } else {
@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
                     i.putExtra("object", d);
                     startActivity(i);
                 }
-                Toast.makeText(this, string, Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, string, Toast.LENGTH_LONG).show();
                 //startActivity(intent);
             }
         }

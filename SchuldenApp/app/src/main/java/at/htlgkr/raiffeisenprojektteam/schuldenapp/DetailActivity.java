@@ -169,9 +169,9 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(sendIntent, "App zum Senden auswählen"));
                 if (debt == null) {
                     insert("not_paid");
-                    Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
                     if (debt.isiAmCreditor())
                         MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                     else
@@ -199,7 +199,7 @@ public class DetailActivity extends AppCompatActivity {
                     public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
                         GregorianCalendar gregorianCalendar = new GregorianCalendar(dp.getYear(), dp.getMonth(), dp.getDayOfMonth());
                         date = gregorianCalendar.getTime();
-                        Toast.makeText(getApplicationContext(), sdf.format(date), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), sdf.format(date), Toast.LENGTH_LONG).show();
                         Log.d(TAG, "+" + sdf.format(date));
                     }
                 });
@@ -233,7 +233,7 @@ public class DetailActivity extends AppCompatActivity {
             i.putExtra("date", sdf.format(date));
             if (debt == null || debt.getId() == -1) {
                 i.putExtra("isNewEntry", true);
-                Toast.makeText(this, "NewEntry", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "NewEntry", Toast.LENGTH_LONG).show();
             } else {
                 i.putExtra("isNewEntry", false);
                 i.putExtra("updateId", debt.getId());
@@ -396,7 +396,7 @@ public class DetailActivity extends AppCompatActivity {
         initTexts();
 
         ContentValues cv = new ContentValues();
-        Toast.makeText(getApplicationContext(), "insert", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "insert", Toast.LENGTH_LONG).show();
         cv.put(TblDebts.I_AM_CREDITOR, iAmCreditor);
         cv.put(TblDebts.FIRSTNAME, DBData.firstname);
         cv.put(TblDebts.LASTNAME, DBData.lastname);
@@ -444,7 +444,7 @@ public class DetailActivity extends AppCompatActivity {
                 if (debt == null || debt.getId() == -1) {
                     insert("not_paid");
                 } else {
-                    Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "UPDATED", Toast.LENGTH_LONG).show();
                     MainActivity.db.execSQL("UPDATE " + TblDebts.TABLE_NAME + " SET status = 'not_paid' WHERE _id = " + debt.getId() + ";");
                 }
                 Log.d("ActivityResult", "RESULT OK");
