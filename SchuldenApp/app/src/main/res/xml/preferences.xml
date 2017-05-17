@@ -4,22 +4,18 @@
         android:title="@string/userdata"
         android:key="pref_userdata">
         <EditTextPreference
-            android:defaultValue="Michael"
             android:key="pref_userdata_firstname"
             android:summary="@string/enterYourFirstname"
             android:title="@string/firstname" />
         <EditTextPreference
-            android:defaultValue="Duschek"
             android:key="pref_userdata_lastname"
             android:summary="@string/enterYourLastname"
             android:title="@string/lastname" />
         <EditTextPreference
-            android:defaultValue="AT611904300234573201"
             android:key="pref_userdata_iban"
             android:summary="@string/enterYourIban"
             android:title="@string/iban" />
         <EditTextPreference
-            android:defaultValue="ABCDATWW"
             android:key="pref_userdata_bic"
             android:summary="@string/enterYourBic"
             android:title="@string/bic" />
