@@ -144,6 +144,9 @@
             android:onClick="onButtonPressed"
             style="@style/Widget.AppCompat.Button.Colored"
             />
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="14dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -154,7 +157,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
             android:orientation="horizontal">
 
             <!--<TextView
@@ -168,6 +170,11 @@
                 android:id="@+id/textViewStatus"/>
         </LinearLayout>
 
+        <View
+            android:layout_marginTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#2196F3"/>
 
         <LinearLayout
             android:layout_width="match_parent"

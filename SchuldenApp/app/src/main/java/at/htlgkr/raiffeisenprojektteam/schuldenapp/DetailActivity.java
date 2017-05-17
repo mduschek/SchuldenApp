@@ -135,7 +135,7 @@ public class DetailActivity extends AppCompatActivity {
         switch (source.getId()) {
             case R.id.buttonManualInput:
                 insert("open");
-                Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
                 finish();
                 break;
             case R.id.buttonNfc:
@@ -288,10 +288,15 @@ public class DetailActivity extends AppCompatActivity {
                 edBIC.setText(debt.getBic() + "");
                 edFirstname.setText(debt.getDeptorFirstName() + "");
                 edLastname.setText(debt.getDeptorLastName() + "");
-                textViewStatus.setText(debt.getStatus() + "");
+                switch (debt.getStatus())
+                {
+                    case "open": textViewStatus.setText("Status: Offen"); break;
+                    case "paid": textViewStatus.setText("Status: Bezahlt"); break;
+                    case "not_paid": textViewStatus.setText("Status: Nicht bezahlt");break;
+                }
 
                 try {
-                    textViewDate.setText(sdf.parse(debt.getDate()).toString());
+                    textViewDate.setText("Datum: "+debt.getDate());
                     date = sdf.parse(debt.getDate());
                 } catch (ParseException e) {
                     e.printStackTrace();

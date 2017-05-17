@@ -7,7 +7,7 @@
     <string name="using">Verwendung</string>
     <string name="pay">Bezahlen</string>
     <string name="ok">OK</string>
-    <string name="confirm">Bestätigen</string>
+    <string name="confirm">Wurde Bezahlt</string>
     <string name="cancel">Abbrechen</string>
     <string name="read">Gelesen</string>
     <string name="debtApp">Schuldenapp</string>
@@ -28,7 +28,7 @@
     <string name="settings">Einstellungen</string>
     <string name="archive">Archiv</string>
     <string name="qrCodeScanner">QR-Code Scanner</string>
-    <string name="chooseMethodToTransferDebt">Wählen Sie eine Methode, eine neue Schuld zu übertragen:</string>
+    <string name="chooseMethodToTransferDebt">Wählen Sie eine Methode, eine Schuld zu übertragen:</string>
     <string name="manualInput">Manuelle Eingabe</string>
     <string name="nfc">NFC</string>
     <string name="generateQrCode">QR Code generieren</string>
