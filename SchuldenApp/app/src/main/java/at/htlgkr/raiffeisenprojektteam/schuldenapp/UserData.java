@@ -7,7 +7,6 @@ package at.htlgkr.raiffeisenprojektteam.schuldenapp;
 public class UserData {
     public static String firstname,lastname, iban, bic;
 
-
     public static String getString() {
         return firstname+lastname +iban+bic;
     }
