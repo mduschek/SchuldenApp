@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
@@ -19,6 +20,8 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.net.URLDecoder;
+
+import static android.view.View.GONE;
 
 public class QrGeneratorActivity extends AppCompatActivity {
 
@@ -30,6 +33,9 @@ public class QrGeneratorActivity extends AppCompatActivity {
     String shareData;
     String stuzzaData;
 
+    Button confirm, cancel;
+    TextView tvDescription, tvDescription2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +44,20 @@ public class QrGeneratorActivity extends AppCompatActivity {
 
         imgVw = (ImageView) findViewById(R.id.imgView);
         radioGroupQrCode = (RadioGroup)findViewById(R.id.radioGroupQrCode);
+        confirm = (Button) findViewById(R.id.buttonQrCodeScannerConfirmation);
+        cancel = (Button) findViewById(R.id.buttonQrCodeScannerCancel);
+        tvDescription = (TextView) findViewById(R.id.textViewQRDescription);
+        tvDescription2 = (TextView) findViewById(R.id.textViewQRDescription2);
 
         Bundle extras = getIntent().getExtras();
+        if(getIntent().getBooleanExtra("showNothing",false))
+        {
+            radioGroupQrCode.setVisibility(GONE);
+            confirm.setVisibility(GONE);
+            cancel.setVisibility(GONE);
+            tvDescription.setVisibility(GONE);
+            tvDescription2.setVisibility(GONE);
+        }
 
         if (extras != null) {
             shareData = extras.getString("shareData");
@@ -48,7 +66,7 @@ public class QrGeneratorActivity extends AppCompatActivity {
 
         //Falls nur 1 QR Code verfügbar, RadioGroup ausschalten
         if (shareData == null || stuzzaData == null){
-            radioGroupQrCode.setVisibility(View.GONE);
+            radioGroupQrCode.setVisibility(GONE);
 
             if (shareData == null && stuzzaData != null)  shareData = stuzzaData;
             else if (stuzzaData == null && shareData != null)  stuzzaData = shareData;

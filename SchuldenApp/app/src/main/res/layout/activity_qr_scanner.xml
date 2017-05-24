@@ -4,15 +4,16 @@
     android:id="@+id/activity_qr_scanner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.QrGeneratorActivity"
+    android:layout_weight="1"
     android:orientation="vertical"
-    android:layout_weight="1" >
+    android:padding="16dp"
+    tools:context="at.htlgkr.raiffeisenprojektteam.schuldenapp.QrGeneratorActivity">
 
     <TextView
+        android:id="@+id/textViewQRDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/chooseQrCodeType"/>
+        android:text="@string/chooseQrCodeType" />
 
 
     <RadioGroup
@@ -44,20 +45,21 @@
         android:layout_height="50px" />
 
     <TextView
+        android:id="@+id/textViewQRDescription2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/shareYourTransactionInformation"/>
+        android:text="@string/shareYourTransactionInformation" />
     <!-- Folgende Informationen werden geteilt: Kontoinhaber, Betrag, Verwendung, IBAN, Datum-->
     <ImageView
-        android:layout_weight="1"
         android:id="@+id/imgView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/scanYourDataWithOtherSmartphone"/>
+        android:text="@string/scanYourDataWithOtherSmartphone" />
 
     <LinearLayout
         android:id="@+id/linearLayoutButtons"
@@ -76,11 +78,11 @@
 
         <Button
             android:id="@+id/buttonQrCodeScannerConfirmation"
-            android:onClick="onButtonClicked"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onButtonClicked"
             android:text="@string/read" />
     </LinearLayout>
 </LinearLayout>

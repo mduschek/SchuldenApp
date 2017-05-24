@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.option_menu_qr_code_bank_details:
                 intent = new Intent(this, QrGeneratorActivity.class);
                 intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra("showNothing",true);
                 intent.putExtra("shareData", URLEncoder.encode(createBankDetailsString()));
                 startActivity(intent);
                 return true;

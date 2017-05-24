@@ -35,7 +35,7 @@
     <string name="otherMethods">Andere Methoden</string>
     <string name="chooseQrCodeType">Wählen sie, ob sie einen QR-Code zum Teilen an eine andere Schuldenapp oder zum Bezahlen im STUZZA Standard erstellen wollen</string>
     <string name="shareYourTransactionInformation">Teilen Sie Ihre Bezahlinformation als QR-Code.</string>
-    <string name="scanYourDataWithOtherSmartphone">Scannen Sie mit einem anderen Smartphone diese Daten ab</string>
+    <string name="scanYourDataWithOtherSmartphone">Scannen Sie mit einem anderen Smartphone diese Daten ab.</string>
     <string name="date">Datum</string>
     <string name="name">Name</string>
     <string name="debtorOrCreditor">Debitor oder Kreditor</string>
