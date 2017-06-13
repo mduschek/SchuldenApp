@@ -201,11 +201,11 @@ public class DetailActivity extends AppCompatActivity {
                         date = gregorianCalendar.getTime();
                         //Toast.makeText(getApplicationContext(), sdf.format(date), Toast.LENGTH_LONG).show();
                         Log.d(TAG, "+" + sdf.format(date));
+                        textViewDate.setText(sdf.format(date).toString());
                     }
                 });
 
                 dateDialog.show();
-                textViewDate.setText(sdf.format(date).toString());
                 break;
 
             case R.id.buttonConfirmPayment:
