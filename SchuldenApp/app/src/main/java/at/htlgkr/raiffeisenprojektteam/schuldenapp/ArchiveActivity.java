@@ -27,7 +27,7 @@ public class ArchiveActivity extends AppCompatActivity {
     //private ArrayAdapter<Debt> adapter;
     private DebtsArchiveAdapter adapter;
     private int clickedIndex;
-//
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +52,6 @@ public class ArchiveActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.context_menu_archive_list_delete:
-                //SQL für DELETE
                 deleteEntry(info.position);
         }
         return super.onContextItemSelected(item);

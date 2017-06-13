@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "*=MainActivity";
     private Transaction transaction;
     public static final int PICK_DEBT_REQUEST = 1;
-    private Debt selectedDebt;
+    //private Debt selectedDebt;
     private final Uri debtsUri = Uri.parse("content://at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/debts");
 
     @Override
@@ -111,25 +111,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-
-            if (result == null) {
-                super.onActivityResult(requestCode, resultCode, data);
-            } else {
-                if (result.getContents() == null) {
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-                } else {
-                    //Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
-                    //stringToTransactionConverter(result.getContents());
-                    stuzzaStringToTransactionConverter(result.getContents());
-                    updateViews();
-                }
-            }
-        }
-    */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

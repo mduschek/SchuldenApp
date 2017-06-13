@@ -29,7 +29,7 @@ public class LoadDebtsActivity extends AppCompatActivity{
         ContentResolver contentResolver=getContentResolver();
         final Uri debtsUri=Uri.parse("content://at.htlgkr.raiffeisenprojektteam.schuldenapp.DebtsContentProvider/debts");
         Cursor cursor=contentResolver.query(debtsUri,null,"("+Debt.STATUS +" = 'not_paid' OR status = 'open') AND "+Debt.I_AM_CREDITOR +" = "+0,null,Debt.ID);
-        Toast.makeText(this,"Geladen",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"Geladen",Toast.LENGTH_LONG).show();
         lv = (ListView) findViewById(R.id.lstAllDebts);
 
         while(cursor.moveToNext())
@@ -38,12 +38,12 @@ public class LoadDebtsActivity extends AppCompatActivity{
             String firstname = cursor.getString(cursor.getColumnIndex(Debt.FIRSTNAME));
             String lastname = cursor.getString(cursor.getColumnIndex(Debt.LASTNAME));
             String usage = cursor.getString(cursor.getColumnIndex(Debt.USAGE));
-            String date = cursor.getString(cursor.getColumnIndex(Debt.DATE));
+            //String date = cursor.getString(cursor.getColumnIndex(Debt.DATE));
             String iban = cursor.getString(cursor.getColumnIndex(Debt.IBAN));
             String bic = cursor.getString(cursor.getColumnIndex(Debt.BIC));
-            String status = cursor.getString(cursor.getColumnIndex(Debt.STATUS));
+            //String status = cursor.getString(cursor.getColumnIndex(Debt.STATUS));
             double value = cursor.getDouble(cursor.getColumnIndex(Debt.VALUE));
-            boolean iAmCreditor = false;
+            //boolean iAmCreditor = false;
 
             //public Transaction(String bic, String creditor, String iban, float amount, String reason, String reference, String text, String message)
             Transaction transaction = new Transaction(bic,firstname+ " "+lastname,iban,(float)value,"","",usage,usage);

@@ -59,7 +59,7 @@ public class NFCSender extends AppCompatActivity implements NfcAdapter.CreateNde
 
         if(!isNewEntry) updateId = i.getIntExtra("updateId",-1);
 
-        Toast.makeText(this,TAG+"isNewEntry "+isNewEntry+"ID:"+updateId,Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,TAG+"isNewEntry "+isNewEntry+"ID:"+updateId,Toast.LENGTH_LONG).show();
         Log.w(TAG, firstname + lastname + usage + iban +bic+ value + partnerIsCreditor+ isNewEntry);
 
         adapter.setNdefPushMessageCallback(this, this);
