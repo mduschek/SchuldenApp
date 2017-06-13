@@ -267,6 +267,8 @@ public class DetailActivity extends AppCompatActivity {
                 radioButtonDebtor.setChecked(true);
                 radioGroupCreditorDebtor.setEnabled(false);
                 iAmCreditor = false;
+                buttonConfirmPayment.setVisibility(View.GONE);
+                buttonPayDebt.setVisibility(View.GONE);
                 Log.w(TAG, "iamCreditor: " + debt.isiAmCreditor());
             } else {
                 if (debt.isiAmCreditor()) {
